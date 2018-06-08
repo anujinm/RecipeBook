@@ -1,9 +1,9 @@
+import shoppinglist from '@/pages/ShoppingList'
 import dashboard from '@/pages/Dashboard'
-import welcome from '@/pages/Welcome'
 
 const pages = {
   dashboard,
-  welcome
+  shoppinglist
 }
 
 export default pages

@@ -15,17 +15,17 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/welcome'
-    },
-    {
-      path: '/welcome',
-      name: 'Welcome',
-      component: pages.welcome
+      redirect: '/dashboard'
     },
     {
       path: '/dashboard',
       name: 'Dashboard',
       component: pages.dashboard
+    },
+    {
+      path: '/shoppinglist',
+      name: 'ShoppingList',
+      component: pages.shoppinglist
     }
   ]
 })

@@ -1,11 +1,9 @@
 <template lang="pug">
   .dashboard
-    h1 Dashboard Page
-    home
+    h3 Dashboard Page
 </template>
 
 <script>
-import home from '@/components/Home'
 import debug from 'debug'
 let log = debug('component:Dashboard')
 export default {
@@ -25,7 +23,6 @@ export default {
   methods: {
   },
   components: {
-    'home': home
   }
 }
 </script>
