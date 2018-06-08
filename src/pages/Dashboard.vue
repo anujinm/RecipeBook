@@ -49,6 +49,8 @@ export default {
   // overflow: scroll;
   // height: 0px;
   display: block;
+  padding-bottom: 100px;
+  background: linear-gradient(transparent, #DEE1E2);
   .row {
     margin-top: 40px;
     margin-bottom: 10px;
@@ -74,16 +76,15 @@ export default {
     }
   }
   
-  .r-container {
+  &.r-container {
     left: auto;
     // overflow: scroll;
     width: 100%;
     height: 100%;
     z-index: 2;
     position: absolute;
-    display: block;
+    display: block; 
   }
-
   @media #{$mobile} {
     .row {
       margin-left: 20px;

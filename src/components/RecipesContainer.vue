@@ -44,15 +44,16 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .recipes {
-  overflow: scroll;
-  display: flex;
-
-  .recipeBox {
-    // z-index: 1;
-    display: inline-block;
-    left: 10%;
-    top: 10%;
-    position: absolute;
+  overflow-y: scroll;
+  // display: flex;
+  // display: inline-block;
+  height: 600px;
+  &.recipeBox {
+    // z-index: 90;
+    // display: inline-block;
+    // left: 10%;
+    // top: 10%;
+    position: relative;
 
   }
   .outerbox {
@@ -62,7 +63,7 @@ export default {
     width: 1400px;
     height: 600px;
     border-radius: 18px;
-    z-index: -1;
+    z-index: 0;
     position: absolute;
     left: 7.4%;
     box-shadow: 5px 5px 6px $gray30;
@@ -70,13 +71,12 @@ export default {
   .insidebox {
     position: absolute;
     left: 7.5%;
-    top: 0.2%;
     // border: 1px solid black;
     width: 1395px;
     height: 595px;
     border-radius: 18px;
     background: $white;
-    z-index: 0;
+    z-index: 1;
   }
   @media #{$tablet} {
     .outerbox {
