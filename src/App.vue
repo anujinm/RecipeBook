@@ -2,6 +2,7 @@
   #app
     app-nav.normal
     app-nav-phone.phone
+    app-footer.footer
     //- transition(name="vt-page")
     router-view
 </template>
@@ -9,6 +10,7 @@
 <script>
 import Nav from '@/components/Nav'
 import NavPhone from '@/components/NavPhone'
+import Footer from '@/components/Footer'
 import debug from 'debug'
 let log = debug('App')
 export default {
@@ -23,7 +25,8 @@ export default {
   },
   components: {
     'app-nav': Nav,
-    'app-nav-phone': NavPhone
+    'app-nav-phone': NavPhone,
+    'app-footer': Footer
   }
 }
 </script>
@@ -35,5 +38,10 @@ export default {
   @media #{$mobile} {
     .normal { visibility: hidden; }
     .phone { visibility: visible; }  }
+  .footer {
+    bottom: 0;
+    position: fixed;
+    color: $white;
+  }
 }
 </style>
