@@ -1,11 +1,11 @@
 <template lang="pug">
   .shoppinglist
-    h1 Shopping list Page
-    home
+    h3 Shopping list Page
+    list-box
 </template>
 
 <script>
-import home from '@/components/Home'
+import listbox from '@/components/ListBox'
 import debug from 'debug'
 let log = debug('component:ShoppingList')
 export default {
@@ -25,7 +25,7 @@ export default {
   methods: {
   },
   components: {
-    'home': home
+    'list-box': listbox
   }
 }
 </script>

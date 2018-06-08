@@ -1,15 +1,15 @@
 <template lang="pug">
-  .home
+  .listbox
     //- TODO: demonstrate v-on v-bind v-for v-if {{ }}, scoped styles, transitions
-    h2 Home
+    h2 List
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
 import debug from 'debug'
-let log = debug('component:Home')
+let log = debug('component:LsitBox')
 export default {
-  name: 'home',
+  name: 'listbox',
   props: [],
   data () {
     return {
@@ -42,6 +42,6 @@ export default {
 <style scoped lang="scss">
 @import "../styles/_variables";
 @import "../styles/_mixins";
-.home {
+.listbox {
 }
 </style>
