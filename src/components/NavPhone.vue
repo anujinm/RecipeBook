@@ -21,7 +21,7 @@ export default {
   props: [],
   data () {
     return {
-      showMenu: true
+      showMenu: false
     }
   },
   beforeCreate: function () {

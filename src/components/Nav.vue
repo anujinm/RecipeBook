@@ -71,7 +71,7 @@ i {
   top: 18px;
   color: $gray90;
   font-size: 16px;
-  text-shadow: 1px 1px 8px $gray70;
+  text-shadow: 1px 1px 6px $gray70;
   button {
     cursor: pointer;
     background: transparent;

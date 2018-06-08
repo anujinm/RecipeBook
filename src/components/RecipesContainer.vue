@@ -43,23 +43,23 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .recipes {
+  // overflow: scroll;
   .outerbox {
     border: none;
-    background-image: linear-gradient(transparent, #A37E44, #598043);
-    border-color: linear-gradient($white, #A37E44, #598043);
+    background-image: linear-gradient(to right bottom, transparent,#A37E44, #598043);
+    border-color: linear-gradient(to right bottom, white, #A37E44, #598043);
     width: 1400px;
     height: 600px;
     border-radius: 18px;
     z-index: -1;
     position: absolute;
-    top: 22.2%;
     left: 7.4%;
     box-shadow: 5px 5px 6px $gray30;
   }
   .insidebox {
     position: absolute;
-    top: 22.5%;
     left: 7.5%;
+    top: 0.2%;
     // border: 1px solid black;
     width: 1395px;
     height: 595px;
@@ -77,17 +77,15 @@ export default {
   }
   @media #{$mobile} {
     .outerbox {
-      width: 360px;
-      height: 700px;
-      top: 30%;
-      margin-bottom: 40px;
+      width: 320px;
+      height: 600px;
+      // margin-bottom: 40px;
     }
     .insidebox{
-      left: 33px;
-      height: 697px;
-      width: 355px;
-      top: 30.5%;
-      margin-bottom: 40px;
+      left: 24px;
+      height: 597px;
+      width: 315px;
+      // margin-bottom: 40px;
     }
   }
 }

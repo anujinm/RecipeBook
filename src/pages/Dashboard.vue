@@ -1,8 +1,7 @@
 <template lang="pug">
   .dashboard
-    .row.justify-content-center
-      h4 Dashboard Page
-      r-container.r-container
+    h5 Dashboard Page
+    r-container.r-container
 </template>
 
 <script>
@@ -35,11 +34,18 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .dashboard {
+  // overflow: scroll;
+  // height: 0px;
+  display: block;
+
   .r-container {
-    margin-top: 100px;
+    left: auto;
+    // overflow: scroll;
     width: 100%;
     height: 100%;
-    
+    z-index: 2;
+    position: absolute;
+    display: block;
   }
 }
 </style>

@@ -11,6 +11,7 @@
 import Nav from '@/components/Nav'
 import NavPhone from '@/components/NavPhone'
 import Footer from '@/components/Footer'
+import Dashboard from '@/pages/Dashboard'
 import debug from 'debug'
 let log = debug('App')
 export default {
@@ -26,7 +27,8 @@ export default {
   components: {
     'app-nav': Nav,
     'app-nav-phone': NavPhone,
-    'app-footer': Footer
+    'app-footer': Footer,
+    'app-dashboard': Dashboard
   }
 }
 </script>
@@ -34,14 +36,16 @@ export default {
 <style lang="scss">
 @import "./styles/main";
 #app {
+  height: auto;
   .phone { visibility: hidden; }
   @media #{$mobile} {
     .normal { visibility: hidden; }
-    .phone { visibility: visible; }  }
+    .phone { visibility: visible; z-index: 4;}  }
   .footer {
     bottom: 0;
     position: fixed;
     color: $white;
+    z-index: 3;
   }
 }
 </style>
