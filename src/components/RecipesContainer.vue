@@ -2,17 +2,27 @@
   .recipes
     .outerbox
     .insidebox
+    .recipeBox
+        recipe-box
+        recipe-box
+        recipe-box
+
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
 import debug from 'debug'
+import RecipeBox from '@/components/RecipeBox'
 let log = debug('component:RecipesContainer')
 export default {
   name: 'recipesContainer',
   props: [],
   data () {
     return {
+      recipes: [
+        'recipe1',
+        'recipe2',
+        'recipe3'
+      ]
     }
   },
   beforeCreate: function () {
@@ -21,20 +31,11 @@ export default {
     log('Mounted')
   },
   computed: {
-    ...mapState('tasks', {
-      tasksSorted: state => state.all.slice().sort((a, b) => a.title.localeCompare(b.title))
-    })
   },
   methods: {
-    ...mapActions('tasks', [
-      'syncTask',
-      'setActiveTask'
-    ]) // ,
-    // toggleComplete (task) {
-    //   task.isComplete = !task.isComplete
-    // }
   },
   components: {
+    'recipe-box': RecipeBox
   }
 }
 </script>
@@ -43,7 +44,17 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .recipes {
-  // overflow: scroll;
+  overflow: scroll;
+  display: flex;
+
+  .recipeBox {
+    // z-index: 1;
+    display: inline-block;
+    left: 10%;
+    top: 10%;
+    position: absolute;
+
+  }
   .outerbox {
     border: none;
     background-image: linear-gradient(to right bottom, transparent,#A37E44, #598043);
@@ -82,7 +93,7 @@ export default {
       // margin-bottom: 40px;
     }
     .insidebox{
-      left: 24px;
+      left: 33px;
       height: 597px;
       width: 315px;
       // margin-bottom: 40px;

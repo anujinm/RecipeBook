@@ -1,6 +1,18 @@
 <template lang="pug">
   .dashboard
-    h5 Dashboard Page
+    .row.justify-content-start
+      .col-1
+      .col-md-2.favs
+        i.fas.fa-star
+        button Favorites
+      .col-md-2.sort
+        select.select
+          option all
+          option dinner
+          option lunch
+          option breakfast
+          option baking
+          option soup
     r-container.r-container
 </template>
 
@@ -37,7 +49,31 @@ export default {
   // overflow: scroll;
   // height: 0px;
   display: block;
+  .row {
+    margin-top: 40px;
+    margin-bottom: 10px;
+    .favs {
+      margin: 10px 5px;
 
+      i {color: #F8E71C;}
+      button {
+        background: transparent;
+        font-size: 20px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+      }
+    }
+    .sort {
+      margin: 18px 0px;
+      font-size: 20px;
+      .select {
+        outline: none;
+        background: transparent;
+      }
+    }
+  }
+  
   .r-container {
     left: auto;
     // overflow: scroll;
@@ -46,6 +82,13 @@ export default {
     z-index: 2;
     position: absolute;
     display: block;
+  }
+
+  @media #{$mobile} {
+    .row {
+      margin-left: 20px;
+      display: inline-block;
+    }
   }
 }
 </style>
