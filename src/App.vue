@@ -13,6 +13,7 @@ import NavPhone from '@/components/NavPhone'
 import Footer from '@/components/Footer'
 import Dashboard from '@/pages/Dashboard'
 import debug from 'debug'
+
 let log = debug('App')
 export default {
   name: 'app',

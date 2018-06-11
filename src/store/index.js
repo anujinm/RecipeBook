@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import debug from 'debug'
 import root from './root'
+import recipes from './recipes'
 import tasks from './tasks'
 
 let log = debug('store')
@@ -9,7 +10,8 @@ let log = debug('store')
 Vue.use(Vuex)
 
 root.modules = {
-  tasks
+  tasks,
+  recipes
 }
 
 const store = new Vuex.Store(root)

@@ -2,10 +2,10 @@
   .dashboard
     .row.justify-content-start
       .col-1
-      .col-md-2.favs
-        i.fas.fa-star
-        button Favorites
-      .col-md-2.sort
+      .col-sm-2.favs
+        i.fas.fa-heart
+          button Favorites
+      .col-sm-2.sort
         select.select
           option all
           option dinner
@@ -13,6 +13,8 @@
           option breakfast
           option baking
           option soup
+      .col-sm-2.add
+        button +
     r-container.r-container
 </template>
 
@@ -54,16 +56,22 @@ export default {
   .row {
     margin-top: 40px;
     margin-bottom: 10px;
+    button {
+      background: linear-gradient($white, $gray90);
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      outline: none;
+    }
     .favs {
       margin: 10px 5px;
-
-      i {color: #F8E71C;}
+      &:hover {
+        transform: scale(1.1,1.1);
+      }
+      i {color: #990000;}
       button {
         background: transparent;
-        font-size: 20px;
-        cursor: pointer;
         border: none;
-        outline: none;
       }
     }
     .sort {
@@ -73,6 +81,11 @@ export default {
         outline: none;
         background: transparent;
       }
+    }
+    .add button {
+      box-shadow: 2px 2px 2px $gray60;
+      margin-top: 18px;
+      margin-left: 700px;
     }
   }
   
@@ -85,10 +98,18 @@ export default {
     position: absolute;
     display: block; 
   }
+
+  @media #{$tablet} {
+    .row {
+      .favs {width: 100px;}
+      .add button{ margin-left: 350px;}
+    }
+  }
   @media #{$mobile} {
     .row {
       margin-left: 20px;
       display: inline-block;
+      .add button{ margin-left: 0px;}
     }
   }
 }

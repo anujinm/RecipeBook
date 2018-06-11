@@ -1,41 +1,77 @@
 <template lang="pug">
   .recipes
-    .outerbox
-    .insidebox
+    ul  
+      li(v-for="(recipe, index) in recipes" :key="'recipe'+index") {{ recipe.title }}
+    // .outerbox
+    // .insidebox
     .recipeBox
-        recipe-box
-        recipe-box
-        recipe-box
-
+      // recipe-box(v-for="recipe in recipes" :key="recipe" :recipes="recipes")
+      // carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[768,2],[1400,3]]")
+      //   slide
+      //     recipe-box
+      //   slide  
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box
+      //   slide
+      //     recipe-box 
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import debug from 'debug'
 import RecipeBox from '@/components/RecipeBox'
+import { Carousel, Slide } from 'vue-carousel'
 let log = debug('component:RecipesContainer')
 export default {
   name: 'recipesContainer',
   props: [],
   data () {
     return {
-      recipes: [
-        'recipe1',
-        'recipe2',
-        'recipe3'
-      ]
     }
   },
   beforeCreate: function () {
   },
   mounted: function () {
     log('Mounted')
+    log(this.state)
   },
   computed: {
+    ...mapGetters('recipes', [
+      'recipes'
+    ])
+    // ...mapState({
+    //   recipes: state => state.recipes
+    // })
   },
   methods: {
   },
   components: {
-    'recipe-box': RecipeBox
+    'recipe-box': RecipeBox,
+    Carousel,
+    Slide
   }
 }
 </script>
@@ -43,23 +79,30 @@ export default {
 <style scoped lang="scss">
 @import "../styles/_variables";
 @import "../styles/_mixins";
-.recipes {
-  overflow-y: scroll;
-  // display: flex;
-  // display: inline-block;
-  height: 600px;
-  &.recipeBox {
-    // z-index: 90;
-    // display: inline-block;
-    // left: 10%;
-    // top: 10%;
-    position: relative;
+.VueCarousel{
+  margin-top: 20px;
+}
 
+.recipes {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  height: 600px;
+  width: 1300px;
+  margin-left: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .recipeBox {
+    width: 1200px;
+    display: inline-block;
+    position: relative;
   }
   .outerbox {
     border: none;
     background-image: linear-gradient(to right bottom, transparent,#A37E44, #598043);
-    border-color: linear-gradient(to right bottom, white, #A37E44, #598043);
+    // border-color: linear-gradient(to right bottom, white, #A37E44, #598043);
     width: 1400px;
     height: 600px;
     border-radius: 18px;
@@ -71,14 +114,18 @@ export default {
   .insidebox {
     position: absolute;
     left: 7.5%;
-    // border: 1px solid black;
     width: 1395px;
     height: 595px;
     border-radius: 18px;
-    background: $white;
-    z-index: 1;
+    background: linear-gradient($white, #DEE1E2);
+    z-index: 0;
   }
   @media #{$tablet} {
+    width: 650px;
+    margin-left: 80px;
+    .recipeBox{
+      width: 605px;
+    }
     .outerbox {
       width: 700px;
     }
@@ -87,6 +134,15 @@ export default {
     }
   }
   @media #{$mobile} {
+    width: 300px;
+    margin-left: 30px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: normal;
+    .recipeBox {
+      margin-top: 60px;
+      width: 300px;
+    }
     .outerbox {
       width: 320px;
       height: 600px;
