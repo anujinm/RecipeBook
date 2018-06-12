@@ -52,13 +52,17 @@ export default {
   border-top-right-radius: 20px;
   position: relative;
   background: linear-gradient(#A4CF74, #4F8A27);
+  // vertical-align: top;
   
   .name {
     position: absolute;
-    top: 35%;
+    top: 20%;
     left: 20%;
     font-weight: 400;
     color: $gray10;
+    font-size: large;
+    white-space: normal;
+    max-width: 120px;
   }
   button {
     width: 35px;
@@ -81,8 +85,8 @@ export default {
   img {
     width: 3em;
     position: absolute;
-    top: 0; 
-    right: 0;
+    top: 3%; 
+    right: 3%;
   }
 
   @media #{$tablet} {

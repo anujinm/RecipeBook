@@ -10,6 +10,56 @@ const recipes = {
 
   state: {
     recipesObj: {
+      '000': {
+        title: 'Cookies',
+        image: require('../../Cookies.png'),
+        fav: true,
+        ingredients: [
+          {
+            name: 'flour',
+            amount: '1.5',
+            measurement: 'cups'
+          },
+          {
+            name: 'sugar',
+            amount: '1',
+            measurement: 'cup'
+          },
+          {
+            name: 'vanilla extract',
+            amount: '0.5',
+            measurement: 'tsp'
+          },
+          {
+            name: 'baking powder',
+            amount: '1.25',
+            measurement: 'tsp'
+          },
+          {
+            name: 'unsulted butter',
+            amount: '1',
+            measurement: 'stick'
+          },
+          {
+            name: 'whole milk',
+            amount: '.66',
+            measurement: 'cup'
+          },
+          {
+            name: 'eggs',
+            amount: '2',
+            measurement: '-'
+          }
+        ],
+        instructions: {
+          instruction: [
+            'Mix: Flour + sugar + baking powder + salt',
+            'Add: butter + vanilla + eggs + milk',
+            'Oven: 350 degrees Flour',
+            'Bake: 20 minutes'],
+          notes: 'Can add chocolate chips'
+        }
+      },
       '001': {
         title: 'Cupcakes',
         image: require('../../cupcake.png'),
@@ -61,8 +111,8 @@ const recipes = {
         }
       },
       '002': {
-        title: 'Cheesecake',
-        image: require('../../cheesecake2.png'),
+        title: 'Cheesecake with green tea',
+        image: require('../../gtcheesecake.jpg'),
         fav: true,
         ingredients: [
           {
@@ -113,7 +163,7 @@ const recipes = {
         }
       },
       '003': {
-        title: 'Cheesecake2',
+        title: 'Cheesecake',
         image: require('../../cheesecake2.png'),
         fav: true,
         ingredients: [
@@ -162,56 +212,6 @@ const recipes = {
             'Oven: 350 degrees Flour',
             'Bake: 60-70 minutes'],
           notes: 'Can add macha'
-        }
-      },
-      '004': {
-        title: 'Cupcakes2',
-        image: require('../../cupcake.png'),
-        fav: false,
-        ingredients: [
-          {
-            name: 'flour',
-            amount: '1.5',
-            measurement: 'cups'
-          },
-          {
-            name: 'sugar',
-            amount: '1',
-            measurement: 'cup'
-          },
-          {
-            name: 'vanilla extract',
-            amount: '0.5',
-            measurement: 'tsp'
-          },
-          {
-            name: 'baking powder',
-            amount: '1.25',
-            measurement: 'tsp'
-          },
-          {
-            name: 'unsulted butter',
-            amount: '1',
-            measurement: 'stick'
-          },
-          {
-            name: 'whole milk',
-            amount: '.66',
-            measurement: 'cup'
-          },
-          {
-            name: 'eggs',
-            amount: '2',
-            measurement: '-'
-          }
-        ],
-        instructions: {
-          instruction: [
-            'Mix: Flour + sugar + baking powder + salt',
-            'Add: butter + vanilla + eggs + milk',
-            'Oven: 350 degrees Flour',
-            'Bake: 20 minutes'],
-          notes: 'Can add chocolate chips'
         }
       }
     }

@@ -6,8 +6,8 @@
       // recipe-box(v-for="(recipe, index) in recipes" :key="'recipe' + index" :data="recipe" :index="index")
       // carousel(:indicators="indicators" :controls="controls" :interval="interval")  
       carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
-        slide(v-for="(recipe, index) in recipes")
-          recipe-box(:key="'recipe' + index" :data="recipe" :index="index")
+        slide(v-for="(recipe, index) in recipes" :key="'recipe' + index")
+          recipe-box(:data="recipe" :index="index")
       
 </template>
 

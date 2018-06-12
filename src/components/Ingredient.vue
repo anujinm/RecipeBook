@@ -4,8 +4,9 @@
       .col-1
         button.add +
       .col-1
-        h6.amount {{ amount.whole }}
+        h6.amount(v-if="amount.whole") {{ amount.whole }}
           span.fraction(v-if="amount.fraction") {{ amount.fraction }}
+        h6.amount(v-if="amount.fraction && !amount.whole") {{ amount.fraction }}
       .col-2
         button.measurement {{ item.measurement }}
       .col-5 
@@ -49,6 +50,8 @@ export default {
         fraction = '1/2'
       } else if (fraction === 0.75) {
         fraction = '3/4'
+      } else if (whole === 0) {
+        whole = null
       }
       // const returnVal = `${whole} ${fraction}`
       return {
@@ -79,16 +82,16 @@ export default {
   // }
 
   .fraction{
-    font-size: 0.5em;
+    font-size: 0.6em;
     vertical-align: super;
   }
   button {
+    cursor: pointer;
     background: transparent;
     height: 25px;
     font-size: 15px;
     border-radius: 5px;
     outline: none;
-    cursor: pointer;
     &.add {
       width: 25px;
     }
@@ -98,11 +101,11 @@ export default {
     white-space: normal;
     font-size: 15px;
     font-weight: 400;
-    margin-top: 5px;
+    margin-top: 12px;
     border: 1px solid $gray70; 
     border-radius: 5px;
     // height: 25px;
-    padding-top: 3px;
+    padding-top: 4px;
     &.amount{width: 35px; height: 25px; text-align: center;}
     &.name {width: 135px; height: 70%; margin-left: 10px;
      padding-left: 5px;} 
