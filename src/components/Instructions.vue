@@ -1,11 +1,7 @@
 <template lang="pug">
   .instructions
-    h5 Mix: Flour + sugar + baking powder + salt
-    h5 Add: butter + vanilla + eggs + milk
-    h5 Oven: 350 degrees Flour
-    h5 Cok: 20 minutes
-    h5.notes Notes: Can add chocolate chips
-   
+    h5(v-for="item in instruction" :key="instruction.data") {{ item }}
+    h5.notes Notes: {{ notes }}
 </template>
 
 <script>
@@ -13,7 +9,10 @@ import debug from 'debug'
 let log = debug('component:RecipeBoxInstructions')
 export default {
   name: 'recipeBoxInstructions',
-  props: [],
+  props: [
+    'instruction',
+    'notes'
+  ],
   data () {
     return {
     }
@@ -22,6 +21,8 @@ export default {
   },
   mounted: function () {
     log('Mounted')
+    log(this.instruction)
+    log(this.notes)
   },
   computed: {
   },
@@ -47,11 +48,14 @@ export default {
     padding:10px;
     font-weight: 400;
   }
+  .notes {
+    color: green;
+  }
   @media #{$tablet} {
     width: 260px;
   }
   @media #{$mobile} {
-    width: 260px;
+    width: 240px;
   }
 }
 </style>

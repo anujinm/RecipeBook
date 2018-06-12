@@ -1,42 +1,14 @@
 <template lang="pug">
-  .recipes
-    ul  
-      li(v-for="(recipe, index) in recipes" :key="'recipe'+index") {{ recipe.title }}
-    // .outerbox
-    // .insidebox
+  .recipes  
+    .outerbox
+    .insidebox
     .recipeBox
-      // recipe-box(v-for="recipe in recipes" :key="recipe" :recipes="recipes")
-      // carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[768,2],[1400,3]]")
-      //   slide
-      //     recipe-box
-      //   slide  
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box
-      //   slide
-      //     recipe-box 
+      // recipe-box(v-for="(recipe, index) in recipes" :key="'recipe' + index" :data="recipe" :index="index")
+      // carousel(:indicators="indicators" :controls="controls" :interval="interval")  
+      carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
+        slide(v-for="(recipe, index) in recipes")
+          recipe-box(:key="'recipe' + index" :data="recipe" :index="index")
+      
 </template>
 
 <script>
@@ -56,7 +28,6 @@ export default {
   },
   mounted: function () {
     log('Mounted')
-    log(this.state)
   },
   computed: {
     ...mapGetters('recipes', [
@@ -79,13 +50,9 @@ export default {
 <style scoped lang="scss">
 @import "../styles/_variables";
 @import "../styles/_mixins";
-.VueCarousel{
-  margin-top: 20px;
-}
-
 .recipes {
-  overflow-x: hidden;
-  overflow-y: hidden;
+  // overflow-x: hidden;
+  // overflow-y: hidden;
   white-space: nowrap;
   height: 600px;
   width: 1300px;
@@ -122,9 +89,11 @@ export default {
   }
   @media #{$tablet} {
     width: 650px;
-    margin-left: 80px;
+    margin-left: 100px;
     .recipeBox{
       width: 605px;
+      // overflow: hidden;
+      margin-left: 7px;
     }
     .outerbox {
       width: 700px;
@@ -134,14 +103,16 @@ export default {
     }
   }
   @media #{$mobile} {
-    width: 300px;
-    margin-left: 30px;
-    overflow-y: hidden;
-    overflow-x: scroll;
-    white-space: normal;
+    width: 320px;
+    margin-left: 40px;
+    // overflow-y: hidden;
+    // overflow-x: scroll;
+    // white-space: normal;
     .recipeBox {
-      margin-top: 60px;
-      width: 300px;
+      margin-top: 0px;
+      width: 330px;
+      // overflow: hidden;
+      margin-left: 7px;
     }
     .outerbox {
       width: 320px;
@@ -153,6 +124,26 @@ export default {
       height: 597px;
       width: 315px;
       // margin-bottom: 40px;
+    }
+  }
+}
+</style>
+<style lang="scss">
+@import "../styles/_variables";
+.VueCarousel{
+  .VueCarousel-navigation-button {
+    color: $gray20;
+    margin-right: 70px;
+  }
+  @media #{$tablet} {
+    .VueCarousel-navigation-button {
+      margin-right: 0px;
+    }
+  }
+  @media #{$mobile} {
+    .VueCarousel-navigation-button {
+      margin-left: 20px;
+      margin-right: 60px;
     }
   }
 }

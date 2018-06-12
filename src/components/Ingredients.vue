@@ -1,10 +1,6 @@
 <template lang="pug">
   .ingredients
-    ingredient-row
-    ingredient-row
-    ingredient-row
-    ingredient-row
-    ingredient-row
+    ingredient-row(v-for="ingredient in ingredients" :key="ingredient.data" :item="ingredient")
 </template>
 
 <script>
@@ -13,7 +9,9 @@ import debug from 'debug'
 let log = debug('component:RecipeBoxIngredients')
 export default {
   name: 'recipeBoxIngredients',
-  props: [],
+  props: [
+    'ingredients'
+  ],
   data () {
     return {
     }
@@ -37,14 +35,14 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .ingredients {
-  width: 260px;
+  width: 280px;
   // height: 150px;
   // border: 1px solid $gray60;
   // position: relative;
   // overflow: scroll;
   
   .ingredient {
-    margin: 5px;
+    // margin: 5px;
   }
 
 

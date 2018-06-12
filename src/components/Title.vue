@@ -1,9 +1,12 @@
 <template lang="pug">
   .title
-    button
-      i.fas.fa-heart
-    // h3.name(v-html="recipes.title")
-    img(src='../../cupcake.png')
+    button(v-if="!isFav")
+      i.fas.fa-heart.notFav
+    button(v-if="isFav")
+      i.fas.fa-heart.isFav
+    h5.name {{ title }}
+    img(:src='image')
+    // img(src='../../cupcake.png')
     
 </template>
 
@@ -14,7 +17,9 @@ let log = debug('component:RecipeBoxTitle')
 export default {
   name: 'recipeBoxTitle',
   props: [
-    'recipes'
+    'title',
+    'image',
+    'isFav'
   ],
   data () {
     return {
@@ -50,8 +55,10 @@ export default {
   
   .name {
     position: absolute;
-    top: 20%;
+    top: 35%;
     left: 20%;
+    font-weight: 400;
+    color: $gray10;
   }
   button {
     width: 35px;
@@ -65,7 +72,11 @@ export default {
     &:hover {
       transform: scale(1.1,1.1);
     }
-    i {color: #bd7272; margin-left:-3.9px;}
+    i {
+      color: #d19696; 
+      margin-left:-3.9px;
+      &.isFav{color: #990000;}
+    }
   }
   img {
     width: 3em;
@@ -81,7 +92,7 @@ export default {
     }
   }
   @media #{$mobile} {
-    width: 280px;
+    width: 260px;
     button{
       margin-left: 10px;
     }
