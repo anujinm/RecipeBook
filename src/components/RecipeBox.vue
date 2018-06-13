@@ -57,7 +57,23 @@ export default {
       // return this.$refs.ingredientInput.$refs.newIngredientVals[0].newAmountWholeVal
       let item = 0
       for (item; item < (this.$refs.ingredientInput.$refs.newIngredientVals.length); item++) {
-        return this.$refs.ingredientInput.$refs.newIngredientVals[item].newAmountWholeVal
+        let whole = parseFloat(this.$refs.ingredientInput.$refs.newIngredientVals[item].newAmountWholeVal)
+        let frac = this.$refs.ingredientInput.$refs.newIngredientVals[item].newAmountFracVal
+        if (frac === '1/2') {
+          frac = 0.5
+        } else if (frac === '1/3') {
+          frac = 0.33
+        } else if (frac === '2/3') {
+          frac = 0.66
+        } else if (frac === '1/4') {
+          frac = 0.25
+        } else if (frac === '3/4') {
+          frac = 0.75
+        } else if (frac === '0') {
+          frac = 0
+        }
+        let returnVal = whole + frac
+        return String(returnVal)
       }
     },
     ingredientMeasurement () {
@@ -74,6 +90,7 @@ export default {
     ]),
     addData () {
       console.log('here!! ', this.$refs.ingredientInput)
+      console.log(this.retrunVal)
       const recipe = {
         title: this.title,
         image: require('../../food2.png'),
