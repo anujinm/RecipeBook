@@ -1,6 +1,6 @@
 <template lang="pug">
   .ingredient
-    .row.justify-content-start
+    .row.justify-content-start(v-if="!showAddBox")
       .col-1
         button.add +
       .col-1
@@ -11,6 +11,31 @@
         button.measurement {{ item.measurement }}
       .col-5 
         h6.name {{ item.name }}
+    .row.justify-content-start(v-if="showAddBox" @change="print")
+      .col-1
+        input.amount-empty.amount-whole(v-model="newAmountWholeVal" type="number" min="0" placeholder="0")
+      .col-2 
+        select.amount-empty.amount-fraction(v-model="newAmountFracVal")
+          option 0
+          option 1/2
+          option 1/3
+          option 1/4
+          option 2/3
+          option 3/4
+      .col-2
+        select.amount-empty.measurement(v-model="newMeasurementVal")
+          option -
+          option cups
+          option tsp.
+          option tbsp.
+          option lbs
+          option oz
+          option g
+          option kg
+          option ml
+          option L
+      .col-3
+        input.amount-empty.name(v-model="newNameVal")
 </template>
 
 <script>
@@ -19,10 +44,16 @@ let log = debug('component:RecipeBoxIngredient')
 export default {
   name: 'recipeBoxIngredient',
   props: [
-    'item'
+    'item',
+    'showAddBox',
+    'index'
   ],
   data () {
     return {
+      newAmountWholeVal: '',
+      newAmountFracVal: '',
+      newMeasurementVal: '',
+      newNameVal: ''
     }
   },
   beforeCreate: function () {
@@ -36,6 +67,12 @@ export default {
     }
   },
   methods: {
+    print (event) {
+      console.log(this.newAmountWholeVal)
+      console.log(this.newAmountFracVal)
+      console.log(this.newMeasurementVal)
+      console.log(this.newNameVal, this.index)
+    },
     convertNumber (amount) {
       let number = parseFloat(amount)
       let fraction = number % 1
@@ -109,6 +146,31 @@ export default {
     &.amount{width: 35px; height: 25px; text-align: center;}
     &.name {width: 135px; height: 70%; margin-left: 10px;
      padding-left: 5px;} 
+  }
+
+  .amount-empty {
+    white-space: normal;
+    font-size: 15px;
+    font-weight: 400;
+    margin-top: 12px;
+    border: 1px solid $gray70; 
+    border-radius: 5px;
+    height: 30px;
+    width: 28px;
+    outline: none;
+    &.amount-whole {
+      padding-left: 3px;
+    }
+    &.amount-fraction {
+      width: 45px;
+    }
+    &.measurement {
+      width: 55px;
+    }
+    &.name {
+      width: 110px;
+      margin-left: 10px;
+    }
   }
 
   @media #{$tablet} {

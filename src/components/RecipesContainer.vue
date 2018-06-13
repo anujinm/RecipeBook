@@ -3,7 +3,8 @@
     .outerbox
     .insidebox
     .recipeBox
-      recipe-box(v-if="showAddBox" :showAddBox="showAddBox")
+      .row.justify-content-center
+        recipe-box(v-if="showAddBox " :showAddBox="showAddBox")
       carousel(v-if="!showAddBox" :navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
         slide(v-for="(recipe, index) in recipes" :key="'recipe' + index")
           recipe-box(:data="recipe")
@@ -41,7 +42,7 @@ export default {
   },
   mounted: function () {
     log('Mounted')
-    log(this.showAddBox)
+    // log(this.showAddBox)
   },
   computed: {
     ...mapGetters('recipes', [

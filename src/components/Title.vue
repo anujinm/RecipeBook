@@ -5,7 +5,7 @@
     button(v-if="isFav" @click="isFav = !isFav")
       i.fas.fa-heart.isFav
 
-    input.name(v-if="showAddBox" placeholder="title")
+    input.name(v-if="showAddBox" v-model="newTitleVal" placeholder="title" ref="newTitle")
     button.camera(v-if="showAddBox")
       i.fas.fa-camera
       
@@ -29,6 +29,7 @@ export default {
   ],
   data () {
     return {
+      newTitleVal: ''
     }
   },
   beforeCreate: function () {

@@ -14,7 +14,9 @@
           option baking
           option soup
       .col-sm-2.add
-        button(@click="showAddBox = ! showAddBox") +
+        button(v-if="!showAddBox" @click="showAddBox = ! showAddBox") +
+      .col-sm-2.close(v-if="showAddBox")
+        button(@click="showAddBox = false") Close
     r-container.r-container(:showAddBox="showAddBox")
 </template>
 
@@ -34,7 +36,7 @@ export default {
   },
   mounted: function () {
     log('Mounted')
-    log(this.showAddBox)
+    // log(this.showAddBox)
   },
   computed: {
   },
@@ -88,6 +90,14 @@ export default {
       box-shadow: 2px 2px 2px $gray60;
       margin-top: 18px;
       margin-left: 700px;
+    }
+    .close button {
+      font-size: 15px;
+      width: 80px;
+      height: 30px;
+      box-shadow: 2px 2px 2px $gray60;
+      margin-top: 18px;
+      margin-left: 150px;
     }
   }
   

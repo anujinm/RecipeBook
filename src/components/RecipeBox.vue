@@ -1,17 +1,18 @@
 <template lang="pug">
   .box
-    title-box.title(v-if="showAddBox" :showAddBox="showAddBox")
+    title-box.title(v-if="showAddBox" ref="titleInput" :showAddBox="showAddBox")
     title-box.title(v-if="!showAddBox" :title="data.title" :image="data.image" :isFav="data.fav")
     .main
-      ingredients-box.ingredients.empty(v-if="showAddBox" :showAddBox="showAddBox") 
+      ingredients-box.ingredients.empty(v-if="showAddBox" ref="ingredientInput" :showAddBox="showAddBox") 
       ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients")
       hr
-      instructions-box.instructions.empty(v-if="showAddBox" :showAddBox="showAddBox")
+      instructions-box.instructions.empty(v-if="showAddBox"  ref="instructionsInput" :showAddBox="showAddBox")
       instructions-box.instructions(v-if="!showAddBox" :instruction="data.instructions.instruction" :notes="data.instructions.notes")
+      button(v-if="showAddBox" @click="addData") Add
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import debug from 'debug'
 import Title from '@/components/Title'
 import Ingredients from '@/components/Ingredients'
@@ -25,7 +26,7 @@ export default {
   ],
   data () {
     return {
-      title: 'Title'
+      // title: 'Title'
     }
   },
   beforeCreate: function () {
@@ -37,8 +38,63 @@ export default {
     // ...mapGetters('recipes', [
     //   'recipes'
     // ])
+    title () {
+      return this.$refs.titleInput.newTitleVal
+    },
+    instruction () {
+      return this.$refs.instructionsInput.newInstructionVal
+    },
+    notes () {
+      return this.$refs.instructionsInput.newNotesVal
+    },
+    ingredientName () {
+      let item = 0
+      for (item; item < (this.$refs.ingredientInput.$refs.newIngredientVals.length); item++) {
+        return this.$refs.ingredientInput.$refs.newIngredientVals[item].newNameVal
+      }
+    },
+    ingredientAmount () {
+      // return this.$refs.ingredientInput.$refs.newIngredientVals[0].newAmountWholeVal
+      let item = 0
+      for (item; item < (this.$refs.ingredientInput.$refs.newIngredientVals.length); item++) {
+        return this.$refs.ingredientInput.$refs.newIngredientVals[item].newAmountWholeVal
+      }
+    },
+    ingredientMeasurement () {
+      // return this.$refs.ingredientInput.$refs.newIngredientVals[0].newMeasurementVal
+      let item = 0
+      for (item; item < (this.$refs.ingredientInput.$refs.newIngredientVals.length); item++) {
+        return this.$refs.ingredientInput.$refs.newIngredientVals[item].newMeasurementVal
+      }
+    }
   },
   methods: {
+    ...mapActions('recipes', [
+      'addRecipe'
+    ]),
+    addData () {
+      console.log('here!! ', this.$refs.ingredientInput)
+      const recipe = {
+        title: this.title,
+        image: require('../../food2.png'),
+        fav: false,
+        ingredients: [
+          {
+            name: this.ingredientName,
+            amount: this.ingredientAmount,
+            measurement: this.ingredientMeasurement
+            // amount: '',
+            // measurement: ''
+          }
+        ],
+        instructions: {
+          instruction: [
+            this.instruction],
+          notes: this.notes
+        }
+      }
+      this.addRecipe(recipe)
+    }
   },
   components: {
     'title-box': Title,
@@ -67,7 +123,7 @@ export default {
     border: 1px solid $gray60;
     position: relative;
     overflow-y: scroll;
-    // overflow-x: hidden;
+    overflow-x: hidden;
     height: 380px;
     width: 280px;
     margin: 10px;
@@ -77,6 +133,20 @@ export default {
   }
   .instructions {
     padding-top: 0;
+  }
+
+  button {
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    bottom: 0;
+    left: 70%;
+    width: 60px;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    background: linear-gradient(#A4CF74, #4F8A27);
+    box-shadow: 2px 2px 6px rgb(30, 53, 16);
   }
 
   hr {margin: 8px;}

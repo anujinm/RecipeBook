@@ -1,6 +1,9 @@
 <template lang="pug">
   .ingredients
-    ingredient-row(v-if="showAddBox")
+    button(v-if="showAddBox" @click="addIngredient = !addIngredient") +
+    ingredient-row(v-for="(item, index) in 2" ref="newIngredientVals" :key="item + index" v-if="showAddBox"  :index="index" :showAddBox="showAddBox")
+    ingredient-row(v-for="item in 3" :key="item.line" v-if="showAddBox && addIngredient" :showAddBox="showAddBox")
+
     ingredient-row(v-for="ingredient in ingredients" :key="ingredient.data" :item="ingredient")
 </template>
 
@@ -13,10 +16,12 @@ export default {
   props: [
     'ingredients',
     'showAddBox'
-
   ],
   data () {
     return {
+      addIngredient: false,
+      showNextAdd: false,
+      index: this.newIngredientVals
     }
   },
   beforeCreate: function () {
@@ -47,7 +52,14 @@ export default {
   .ingredient {
     // margin: 5px;
   }
-
+  button {
+    outline: none;
+    width: 25px;
+    height: 25px;
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
 
   @media #{$tablet} {
     width: 260px;

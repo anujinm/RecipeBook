@@ -1,8 +1,8 @@
 'use strict'
 
-// import debug from 'debug'
-// let log = debug('store:recipes')
-// import Vue from 'vue'
+import debug from 'debug'
+let log = debug('store:recipes')
+import Vue from 'vue'
 
 const recipes = {
 
@@ -217,7 +217,21 @@ const recipes = {
     }
   },
   mutations: {
-
+    ADD_RECIPE (state, { recipe }) {
+      log('mutation ADD_RECIPE', recipe)
+      /* eslint-disable */
+      function guid() {
+        function s4() {
+          return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+      }
+      /* eslint-enable */
+      const id = guid()
+      Vue.set(state.recipesObj, id, recipe)
+    }
   },
 
   getters: {
@@ -230,6 +244,9 @@ const recipes = {
   },
 
   actions: {
+    addRecipe (context, recipe) {
+      context.commit('ADD_RECIPE', { recipe })
+    }
   }
 
 }
