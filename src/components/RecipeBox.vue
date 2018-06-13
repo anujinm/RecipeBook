@@ -1,10 +1,13 @@
 <template lang="pug">
   .box
-    title-box.title(:title="data.title" :image="data.image" :isFav="data.fav")
-    .main 
-      ingredients-box.ingredients(:ingredients="data.ingredients")
+    title-box.title(v-if="showAddBox" :showAddBox="showAddBox")
+    title-box.title(v-if="!showAddBox" :title="data.title" :image="data.image" :isFav="data.fav")
+    .main
+      ingredients-box.ingredients.empty(v-if="showAddBox" :showAddBox="showAddBox") 
+      ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients")
       hr
-      instructions-box.instructions(:instruction="data.instructions.instruction" :notes="data.instructions.notes")
+      instructions-box.instructions.empty(v-if="showAddBox" :showAddBox="showAddBox")
+      instructions-box.instructions(v-if="!showAddBox" :instruction="data.instructions.instruction" :notes="data.instructions.notes")
 </template>
 
 <script>
@@ -17,7 +20,8 @@ let log = debug('component:RecipeBox')
 export default {
   name: 'recipeBox',
   props: [
-    'data'
+    'data',
+    'showAddBox'
   ],
   data () {
     return {
@@ -28,7 +32,6 @@ export default {
   },
   mounted: function () {
     log('Mounted')
-    log(this.data.instructions.instruction)
   },
   computed: {
     // ...mapGetters('recipes', [

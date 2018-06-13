@@ -1,5 +1,6 @@
 <template lang="pug">
   .ingredients
+    ingredient-row(v-if="showAddBox")
     ingredient-row(v-for="ingredient in ingredients" :key="ingredient.data" :item="ingredient")
 </template>
 
@@ -10,7 +11,9 @@ let log = debug('component:RecipeBoxIngredients')
 export default {
   name: 'recipeBoxIngredients',
   props: [
-    'ingredients'
+    'ingredients',
+    'showAddBox'
+
   ],
   data () {
     return {

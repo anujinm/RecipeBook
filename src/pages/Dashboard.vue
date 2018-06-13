@@ -14,8 +14,8 @@
           option baking
           option soup
       .col-sm-2.add
-        button +
-    r-container.r-container
+        button(@click="showAddBox = ! showAddBox") +
+    r-container.r-container(:showAddBox="showAddBox")
 </template>
 
 <script>
@@ -27,12 +27,14 @@ export default {
   props: [],
   data () {
     return {
+      showAddBox: false
     }
   },
   beforeCreate: function () {
   },
   mounted: function () {
     log('Mounted')
+    log(this.showAddBox)
   },
   computed: {
   },

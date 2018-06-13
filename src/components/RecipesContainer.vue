@@ -3,11 +3,10 @@
     .outerbox
     .insidebox
     .recipeBox
-      // recipe-box(v-for="(recipe, index) in recipes" :key="'recipe' + index" :data="recipe" :index="index")
-      // carousel(:indicators="indicators" :controls="controls" :interval="interval")  
-      carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
+      recipe-box(v-if="showAddBox" :showAddBox="showAddBox")
+      carousel(v-if="!showAddBox" :navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
         slide(v-for="(recipe, index) in recipes" :key="'recipe' + index")
-          recipe-box(:data="recipe" :index="index")
+          recipe-box(:data="recipe")
       
 </template>
 
@@ -19,15 +18,30 @@ import { Carousel, Slide } from 'vue-carousel'
 let log = debug('component:RecipesContainer')
 export default {
   name: 'recipesContainer',
-  props: [],
+  props: [
+    'showAddBox'
+  ],
   data () {
     return {
+      // 'emptyData': {
+      //   '999': {
+      //     title: '',
+      //     image: '',
+      //     fav: '',
+      //     ingredients: [{name: '', amount: '', measurement: ''}],
+      //     instructions: {
+      //       instruction: [''],
+      //       notes: ''
+      //     }
+      //   }
+      // }
     }
   },
   beforeCreate: function () {
   },
   mounted: function () {
     log('Mounted')
+    log(this.showAddBox)
   },
   computed: {
     ...mapGetters('recipes', [

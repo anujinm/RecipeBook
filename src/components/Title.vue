@@ -1,12 +1,17 @@
 <template lang="pug">
   .title
-    button(v-if="!isFav")
+    button(v-if="!isFav" @click="isFav = !isFav")
       i.fas.fa-heart.notFav
-    button(v-if="isFav")
+    button(v-if="isFav" @click="isFav = !isFav")
       i.fas.fa-heart.isFav
+
+    input.name(v-if="showAddBox" placeholder="title")
+    button.camera(v-if="showAddBox")
+      i.fas.fa-camera
+      
     h5.name {{ title }}
     img(:src='image')
-    // img(src='../../cupcake.png')
+    
     
 </template>
 
@@ -19,7 +24,8 @@ export default {
   props: [
     'title',
     'image',
-    'isFav'
+    'isFav',
+    'showAddBox'
   ],
   data () {
     return {
@@ -81,6 +87,12 @@ export default {
       margin-left:-3.9px;
       &.isFav{color: #990000;}
     }
+    &.camera { margin-left: 170px; }
+  }
+  input {
+    border-radius: 5px;
+    background: transparent;
+    padding: 5px;
   }
   img {
     width: 3em;
