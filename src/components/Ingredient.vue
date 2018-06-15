@@ -77,17 +77,18 @@ export default {
       let number = parseFloat(amount)
       let fraction = number % 1
       let whole = number - fraction
-      if (fraction === 0.33) {
-        fraction = '1/3'
-      } else if (fraction === 0.66) {
-        fraction = '2/3'
-      } else if (fraction === 0.25) {
+      if (fraction === 0.25) {
         fraction = '1/4'
+      } else if (fraction === 0.33) {
+        fraction = '1/3'
       } else if (fraction === 0.5) {
         fraction = '1/2'
+      } else if (fraction <= 0.68) {
+        fraction = '2/3'
       } else if (fraction === 0.75) {
         fraction = '3/4'
-      } else if (whole === 0) {
+      }
+      if (whole === 0) {
         whole = null
       }
       // const returnVal = `${whole} ${fraction}`

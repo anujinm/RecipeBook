@@ -24,18 +24,6 @@ export default {
   ],
   data () {
     return {
-      // 'emptyData': {
-      //   '999': {
-      //     title: '',
-      //     image: '',
-      //     fav: '',
-      //     ingredients: [{name: '', amount: '', measurement: ''}],
-      //     instructions: {
-      //       instruction: [''],
-      //       notes: ''
-      //     }
-      //   }
-      // }
     }
   },
   beforeCreate: function () {
@@ -80,6 +68,7 @@ export default {
     width: 1200px;
     display: inline-block;
     position: relative;
+    margin-top: 20px;
   }
   .outerbox {
     border: none;

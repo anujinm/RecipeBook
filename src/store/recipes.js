@@ -17,32 +17,32 @@ const recipes = {
         ingredients: [
           {
             name: 'flour',
-            amount: '1.5',
+            amount: '1.25',
             measurement: 'cups'
           },
           {
             name: 'sugar',
-            amount: '1',
+            amount: '1.5',
             measurement: 'cup'
           },
           {
             name: 'vanilla extract',
-            amount: '0.5',
+            amount: '0.33',
             measurement: 'tsp'
           },
           {
             name: 'baking powder',
-            amount: '1.25',
+            amount: '1.66',
             measurement: 'tsp'
           },
           {
             name: 'unsulted butter',
-            amount: '1',
+            amount: '2.75',
             measurement: 'stick'
           },
           {
             name: 'whole milk',
-            amount: '.66',
+            amount: '0.66',
             measurement: 'cup'
           },
           {
@@ -92,7 +92,7 @@ const recipes = {
           },
           {
             name: 'whole milk',
-            amount: '.66',
+            amount: '1.66',
             measurement: 'cup'
           },
           {
@@ -137,7 +137,7 @@ const recipes = {
           },
           {
             name: 'unsulted butter',
-            amount: '.33',
+            amount: '2.33',
             measurement: 'stick'
           },
           {
@@ -189,7 +189,7 @@ const recipes = {
           },
           {
             name: 'unsulted butter',
-            amount: '.33',
+            amount: '0.33',
             measurement: 'stick'
           },
           {
@@ -231,6 +231,11 @@ const recipes = {
       /* eslint-enable */
       const id = guid()
       Vue.set(state.recipesObj, id, recipe)
+    },
+    REMOVE_RECIPE (state, { recipe }) {
+      log('mutation REMOVE_RECIPE', recipe)
+      const { id } = recipe
+      Vue.delete(state.recipesObj, id)
     }
   },
 
@@ -246,6 +251,9 @@ const recipes = {
   actions: {
     addRecipe (context, recipe) {
       context.commit('ADD_RECIPE', { recipe })
+    },
+    removeRecipe (context, recipe) {
+      context.commit('REMOVE_RECIPE', { recipe })
     }
   }
 

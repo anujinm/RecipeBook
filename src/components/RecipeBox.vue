@@ -1,7 +1,7 @@
 <template lang="pug">
   .box
     title-box.title(v-if="showAddBox" ref="titleInput" :showAddBox="showAddBox")
-    title-box.title(v-if="!showAddBox" :title="data.title" :image="data.image" :isFav="data.fav")
+    title-box.title(v-if="!showAddBox" :data="data" :image="data.image" :isFav="data.fav")
     .main
       ingredients-box.ingredients.empty(v-if="showAddBox" ref="ingredientInput" :showAddBox="showAddBox") 
       ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients")
@@ -52,36 +52,6 @@ export default {
       for (item; item < (this.$refs.ingredientInput.$refs.newIngredientVals.length); item++) {
         return this.$refs.ingredientInput.$refs.newIngredientVals[item].newNameVal
       }
-    },
-    ingredientAmount () {
-      // return this.$refs.ingredientInput.$refs.newIngredientVals[0].newAmountWholeVal
-      let item = 0
-      for (item; item < (this.$refs.ingredientInput.$refs.newIngredientVals.length); item++) {
-        let whole = parseFloat(this.$refs.ingredientInput.$refs.newIngredientVals[item].newAmountWholeVal)
-        let frac = this.$refs.ingredientInput.$refs.newIngredientVals[item].newAmountFracVal
-        if (frac === '1/2') {
-          frac = 0.5
-        } else if (frac === '1/3') {
-          frac = 0.33
-        } else if (frac === '2/3') {
-          frac = 0.66
-        } else if (frac === '1/4') {
-          frac = 0.25
-        } else if (frac === '3/4') {
-          frac = 0.75
-        } else if (frac === '0') {
-          frac = 0
-        }
-        let returnVal = whole + frac
-        return String(returnVal)
-      }
-    },
-    ingredientMeasurement () {
-      // return this.$refs.ingredientInput.$refs.newIngredientVals[0].newMeasurementVal
-      let item = 0
-      for (item; item < (this.$refs.ingredientInput.$refs.newIngredientVals.length); item++) {
-        return this.$refs.ingredientInput.$refs.newIngredientVals[item].newMeasurementVal
-      }
     }
   },
   methods: {
@@ -89,28 +59,56 @@ export default {
       'addRecipe'
     ]),
     addData () {
-      console.log('here!! ', this.$refs.ingredientInput)
+      console.log('here!! ', this.$refs.ingredientInput.$refs.newIngredientVals)
       console.log(this.retrunVal)
-      const recipe = {
+      const { newIngredientVals } = this.$refs.ingredientInput.$refs
+
+      console.log(newIngredientVals)
+
+      let myRecipe = {
         title: this.title,
         image: require('../../food2.png'),
         fav: false,
-        ingredients: [
-          {
-            name: this.ingredientName,
-            amount: this.ingredientAmount,
-            measurement: this.ingredientMeasurement
-            // amount: '',
-            // measurement: ''
-          }
-        ],
+        ingredients: [],
         instructions: {
           instruction: [
             this.instruction],
           notes: this.notes
         }
       }
-      this.addRecipe(recipe)
+      if (Array.isArray(newIngredientVals)) {
+        newIngredientVals.forEach((ingredient) => {
+          console.log('ingredient is:', ingredient)
+          if (ingredient.newNameVal !== '' && ingredient.newAmountFracVal !== '' && ingredient.newAmountWholeVal !== '' && ingredient.newMeasurementVal !== '') {
+            const { newNameVal, newAmountFracVal, newAmountWholeVal, newMeasurementVal } = ingredient
+            let newFracVal = this.convertAmount(newAmountFracVal)
+            const newAmountVal = String(parseFloat(newAmountWholeVal) + parseFloat(newFracVal))
+            myRecipe.ingredients.push({ name: newNameVal, amount: newAmountVal, measurement: newMeasurementVal })
+          }
+        })
+      } else {
+        const { newNameVal, newAmountFracVal, newAmountWholeVal, newMeasurementVal } = newIngredientVals
+        let newFracVal = this.convertAmount(newAmountFracVal)
+        const newAmountVal = String(parseFloat(newAmountWholeVal) + parseFloat(newFracVal))
+        myRecipe.ingredients.push({ name: newNameVal, amount: newAmountVal, measurement: newMeasurementVal })
+      }
+      this.addRecipe(myRecipe)
+    },
+    convertAmount (newFracVal) {
+      if (newFracVal === '0') {
+        newFracVal = 0
+      } else if (newFracVal === '1/4') {
+        newFracVal = 0.25
+      } else if (newFracVal === '1/3') {
+        newFracVal = 0.33
+      } else if (newFracVal === '1/2') {
+        newFracVal = 0.5
+      } else if (newFracVal === '2/3') {
+        newFracVal = 0.66
+      } else if (newFracVal === '3/4') {
+        newFracVal = 0.75
+      }
+      return newFracVal
     }
   },
   components: {

@@ -1,35 +1,39 @@
 <template lang="pug">
   .title
-    button(v-if="!isFav" @click="isFav = !isFav")
+    button.fav(v-if="!isFav" @click="isFav = !isFav")
       i.fas.fa-heart.notFav
-    button(v-if="isFav" @click="isFav = !isFav")
+    button.fav(v-if="isFav" @click="isFav = !isFav")
       i.fas.fa-heart.isFav
+    button.delete(v-if="!showAddBox" @click="showDelete = !showDelete")
+      i.fas.fa-angle-down
+    button.deleteBtn(v-if="showDelete" @click="deleteRecipe") Delete
 
-    input.name(v-if="showAddBox" v-model="newTitleVal" placeholder="title" ref="newTitle")
-    button.camera(v-if="showAddBox")
+    input.name(v-if="showAddBox" v-model="newTitleVal" placeholder="title")
+    button.fav.camera(v-if="showAddBox")
       i.fas.fa-camera
       
-    h5.name {{ title }}
-    img(:src='image')
+    h5.name(v-if="!showAddBox") {{ data.title }}
+    // img(:src='image')
     
     
 </template>
 
 <script>
-// import { mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 import debug from 'debug'
 let log = debug('component:RecipeBoxTitle')
 export default {
   name: 'recipeBoxTitle',
   props: [
-    'title',
+    'data',
     'image',
     'isFav',
     'showAddBox'
   ],
   data () {
     return {
-      newTitleVal: ''
+      newTitleVal: '',
+      showDelete: false
     }
   },
   beforeCreate: function () {
@@ -43,6 +47,13 @@ export default {
     // ])
   },
   methods: {
+    ...mapActions('recipes', [
+      'removeRecipe'
+    ]),
+    deleteRecipe () {
+      const recipe = this.data
+      this.removeRecipe(recipe)
+    }
   },
   components: {
   }
@@ -63,32 +74,62 @@ export default {
   
   .name {
     position: absolute;
-    top: 20%;
-    left: 20%;
-    font-weight: 400;
-    color: $gray10;
-    font-size: large;
+    top: 30%;
+    left: 25%;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px $gray10;
+    color: $white;
+    font-size: .7em;
     white-space: normal;
     max-width: 120px;
   }
-  button {
-    width: 35px;
-    height: 35px;
-    border-radius: 10px;
-    margin: 10px;
-    margin-left: 15px;
-    box-shadow:  1px 1px 2px $gray40;
-    cursor: pointer;
+  button{
     outline: none;
-    &:hover {
-      transform: scale(1.1,1.1);
+    &.fav {
+      width: 35px;
+      height: 40px;
+      border-radius: 10px;
+      // border: none;
+      margin: 10px;
+      margin-left: 15px;
+      // box-shadow:  1px 1px 2px $gray40;
+      background: transparent;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.1,1.1);
+      }
+      i {
+        color: #eeeeeeaf; 
+        margin-left:-3px;
+        padding-bottom: 4px;
+        font-size: 25px;
+        &.isFav{color:  #990000;}
+      }
+      &.camera { margin-left: 170px; }
     }
-    i {
-      color: #d19696; 
-      margin-left:-3.9px;
-      &.isFav{color: #990000;}
+    &.delete {
+      background: transparent;
+      border: none;
+      position: absolute;
+      z-index: 1;
+      top: 6%;
+      right: 2%;
+      font-size: 15px;
+      color: white;
+      cursor: pointer;
     }
-    &.camera { margin-left: 170px; }
+  }
+  .deleteBtn {
+    color: $gray30;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    position: absolute;
+    top: 20%;
+    right: 3%;
+    padding: 5px;
+    font-size: 15px;
+    &:hover{ transform: scale(1.1,1.1)}
   }
   input {
     border-radius: 5px;
@@ -96,9 +137,9 @@ export default {
     padding: 5px;
   }
   img {
-    width: 3em;
+    width: 2em;
     position: absolute;
-    top: 3%; 
+    top: 25%; 
     right: 3%;
   }
 
