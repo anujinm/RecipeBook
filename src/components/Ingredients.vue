@@ -1,8 +1,8 @@
 <template lang="pug">
   .ingredients
     button(v-if="showAddBox" @click="addIngredient = !addIngredient") +
-    ingredient-row(v-for="(item, index) in 5" ref="newIngredientVals" :key="item + index" v-if="showAddBox"  :index="index" :showAddBox="showAddBox")
-    ingredient-row(v-for="(item, index) in 5" ref="newIngredientVals" :key="item.line" v-if="showAddBox && addIngredient" :showAddBox="showAddBox")
+    ingredient-row(v-for="(item, index) in 5" ref="newIngredientVals" :key="item + index" v-if="showAddBox"  :index="index" :showAddBox="showAddBox" :recipe="recipe")
+    ingredient-row(v-for="(item, index) in 5" ref="newIngredientVals" :key="item.line" v-if="showAddBox && addIngredient" :showAddBox="showAddBox" :recipe="recipe")
 
     ingredient-row(v-for="ingredient in ingredients" :key="ingredient.data" :item="ingredient")
 </template>
@@ -15,7 +15,8 @@ export default {
   name: 'recipeBoxIngredients',
   props: [
     'ingredients',
-    'showAddBox'
+    'showAddBox',
+    'recipe'
   ],
   data () {
     return {

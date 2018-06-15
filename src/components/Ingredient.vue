@@ -5,13 +5,13 @@
         button.add +
       .col-1
         h6.amount(v-if="amount.whole") {{ amount.whole }}
-          span.fraction(v-if="amount.fraction") {{ amount.fraction }}
+          span.fraction(v-if="measurementChanged(amount.whole, amount.fraction, item.measurement).fraction") {{ amount.fraction }}
         h6.amount(v-if="amount.fraction && !amount.whole") {{ amount.fraction }}
       .col-2
-        button.measurement {{ item.measurement }}
+        button.measurement(@click="measurementChanged(amount.whole, amount.fraction, item.measurement)") {{ item.measurement }}
       .col-5 
         h6.name {{ item.name }}
-    .row.justify-content-start(v-if="showAddBox" @change="print")
+    .row.justify-content-start(v-if="showAddBox")
       .col-1
         input.amount-empty.amount-whole(v-model="newAmountWholeVal" type="number" min="0" placeholder="0")
       .col-2 
@@ -26,8 +26,8 @@
         select.amount-empty.measurement(v-model="newMeasurementVal")
           option -
           option cups
-          option tsp.
-          option tbsp.
+          option tsp
+          option tbsp
           option lbs
           option oz
           option g
@@ -46,7 +46,8 @@ export default {
   props: [
     'item',
     'showAddBox',
-    'index'
+    'index',
+    'recipe'
   ],
   data () {
     return {
@@ -67,23 +68,17 @@ export default {
     }
   },
   methods: {
-    print (event) {
-      console.log(this.newAmountWholeVal)
-      console.log(this.newAmountFracVal)
-      console.log(this.newMeasurementVal)
-      console.log(this.newNameVal, this.index)
-    },
     convertNumber (amount) {
       let number = parseFloat(amount)
       let fraction = number % 1
       let whole = number - fraction
       if (fraction === 0.25) {
         fraction = '1/4'
-      } else if (fraction === 0.33) {
+      } else if (fraction <= 0.34 && fraction > 0.25) {
         fraction = '1/3'
       } else if (fraction === 0.5) {
         fraction = '1/2'
-      } else if (fraction <= 0.68) {
+      } else if (fraction <= 0.68 && fraction > 0.5) {
         fraction = '2/3'
       } else if (fraction === 0.75) {
         fraction = '3/4'
@@ -92,10 +87,29 @@ export default {
         whole = null
       }
       // const returnVal = `${whole} ${fraction}`
-      return {
-        whole,
-        fraction
-      }
+      return {whole, fraction}
+    },
+    measurementChanged (whole, fraction, measurement) {
+      console.log('PRINTING! ', whole)
+      console.log(fraction)
+      console.log(measurement)
+      console.log(this.item, this.recipe)
+      // this.editMeasurement(this.item, this.recipe)
+    //   let amount = parseFloat(whole) + parseFloat(fraction)
+    //   if (measurement === 'tbsp') {
+    //     measurement = 'tsp'
+    //     amount = amount * 3
+    //     fraction = amount % 1
+    //     whole = amount - fraction
+    //   }
+    //   if (measurement === 'tsp' && measurement % 3 === 0) {
+    //     measurement = 'tbsp'
+    //     amount /= 3
+    //     whole = amount
+    //     fraction = 0
+    //     console.log('changed ', whole, fraction, measurement)
+    //   }
+      return {measurement, whole, fraction}
     }
   },
   components: {
@@ -133,7 +147,7 @@ export default {
     &.add {
       width: 25px;
     }
-    &.measurement { margin-left: 10px; }
+    &.measurement { margin-left: 10px; width: 40px; }
   }
   h6 {
     white-space: normal;

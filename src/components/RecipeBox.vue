@@ -3,7 +3,7 @@
     title-box.title(v-if="showAddBox" ref="titleInput" :showAddBox="showAddBox")
     title-box.title(v-if="!showAddBox" :data="data" :image="data.image" :isFav="data.fav")
     .main
-      ingredients-box.ingredients.empty(v-if="showAddBox" ref="ingredientInput" :showAddBox="showAddBox") 
+      ingredients-box.ingredients.empty(v-if="showAddBox" ref="ingredientInput" :showAddBox="showAddBox" :recipe="data") 
       ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients")
       hr
       instructions-box.instructions.empty(v-if="showAddBox"  ref="instructionsInput" :showAddBox="showAddBox")

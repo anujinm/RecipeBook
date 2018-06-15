@@ -236,6 +236,10 @@ const recipes = {
       log('mutation REMOVE_RECIPE', recipe)
       const { id } = recipe
       Vue.delete(state.recipesObj, id)
+    },
+    EDIT_MEASUREMENT (state, { recipe }) {
+      log('mutation EDIT_MEASUREMENT', recipe)
+      // const { id } = recipe
     }
   },
 
@@ -254,6 +258,9 @@ const recipes = {
     },
     removeRecipe (context, recipe) {
       context.commit('REMOVE_RECIPE', { recipe })
+    },
+    editMeasurement (context, recipe) {
+      context.commit('EDIT_MEASUREMENT', { recipe })
     }
   }
 
