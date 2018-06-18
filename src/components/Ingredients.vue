@@ -1,10 +1,14 @@
 <template lang="pug">
   .ingredients
     button(v-if="showAddBox" @click="addIngredient = !addIngredient") +
-    ingredient-row(v-for="(item, index) in 5" ref="newIngredientVals" :key="item + index" v-if="showAddBox"  :index="index" :showAddBox="showAddBox" :recipe="data")
-    ingredient-row(v-for="(item, index) in 5" ref="newIngredientVals" :key="item.line" v-if="showAddBox && addIngredient" :showAddBox="showAddBox" :recipe="data")
+    ingredient-row(v-if="showAddBox" v-for="(item, index) in 5" ref="newIngredientVals" 
+      :key="item + index" :index="index" :showAddBox="showAddBox"
+      :recipe="data")
+    ingredient-row(v-if="showAddBox && addIngredient" v-for="(item, index) in 5" ref="newIngredientVals" 
+      :key="item.line" :showAddBox="showAddBox" :recipe="data")
 
-    ingredient-row(v-for="(ingredient, index) in ingredients" :key="ingredient.data" :item="ingredient" :recipe="recipe" :index="index")
+    ingredient-row(v-for="(ingredient, index) in ingredients" :key="ingredient.data"
+     :item="ingredient" :recipe="recipe" :index="index" :mesSystem="mesSystem" :convertFrac="convertFrac")
 </template>
 
 <script>
@@ -16,7 +20,9 @@ export default {
   props: [
     'recipe',
     'ingredients',
-    'showAddBox'
+    'showAddBox',
+    'mesSystem',
+    'convertFrac'
   ],
   data () {
     return {

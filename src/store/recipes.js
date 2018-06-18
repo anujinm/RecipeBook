@@ -18,7 +18,7 @@ const recipes = {
           {
             name: 'flour',
             amount: '1.25',
-            measurement: 'cups'
+            measurement: 'cup'
           },
           {
             name: 'sugar',
@@ -42,7 +42,7 @@ const recipes = {
           },
           {
             name: 'whole milk',
-            amount: '0.66',
+            amount: '1',
             measurement: 'cup'
           },
           {
@@ -111,7 +111,7 @@ const recipes = {
         }
       },
       '002': {
-        title: 'Cheesecake with green tea',
+        title: 'Macha Cheesecake',
         image: require('../../gtcheesecake.jpg'),
         fav: true,
         ingredients: [
@@ -163,55 +163,92 @@ const recipes = {
         }
       },
       '003': {
-        title: 'Cheesecake',
+        title: 'Lasagna',
         image: require('../../cheesecake2.png'),
         fav: true,
         ingredients: [
           {
-            name: 'graham cracker crumbs',
-            amount: '1.75',
+            name: 'lasagna noodles',
+            amount: '9',
+            measurement: '-'
+          },
+          {
+            name: 'sausage',
+            amount: '1',
+            measurement: 'lbs'
+          },
+          {
+            name: 'ground beef',
+            amount: '3/4',
+            measurement: 'lbs'
+          },
+          {
+            name: 'medium onion',
+            amount: '1',
+            measurement: '-'
+          },
+          {
+            name: 'minced garlic',
+            amount: '3',
+            measurement: 'cloves'
+          },
+          {
+            name: 'tomato paste',
+            amount: '43',
+            measurement: 'oz'
+          },
+          {
+            name: 'water',
+            amount: '2/3',
             measurement: 'cup'
           },
           {
             name: 'sugar',
-            amount: '1.25',
-            measurement: 'cup'
+            amount: '2',
+            measurement: 'tbsp'
           },
           {
-            name: 'vanilla extract',
+            name: 'basil',
             amount: '2',
             measurement: 'tsp'
           },
           {
-            name: 'cream cheese',
-            amount: '24',
+            name: 'salt',
+            amount: '3/4',
+            measurement: 'tsp'
+          },
+          {
+            name: 'egg',
+            amount: '1',
+            measurement: '-'
+          },
+          {
+            name: 'ricotta cheese',
+            amount: '15',
             measurement: 'oz'
           },
           {
-            name: 'unsulted butter',
-            amount: '0.33',
-            measurement: 'stick'
-          },
-          {
-            name: 'sour cream',
-            amount: '1',
+            name: 'mozzarella cheese',
+            amount: '4',
             measurement: 'cup'
           },
           {
-            name: 'eggs',
-            amount: '3',
-            measurement: '-'
+            name: 'parmesan cheese',
+            amount: '3/4',
+            measurement: 'cup'
           }
         ],
         instructions: {
           instruction: [
-            'Mix: Graham crumbs + butter + sugar',
-            '9-inch springform pan',
-            'Mix: cream cheese',
-            'Add: vanilla + sour cream + eggs',
-            'Oven: 350 degrees Flour',
-            'Bake: 60-70 minutes'],
-          notes: 'Can add macha'
+            'Cook: sausage + beef + onion + garlic',
+            'Drain',
+            'Stir: tomatoes + tomato paste + water + sugar + parsley + basil + salt + pepper',
+            'Boil: 30 minutes, stirring occasionally',
+            'Mix: egg + ricotta cheese + parsley + salt',
+            'Oven: 375 degrees F',
+            'Spread 2 cups meat sauce into an ungreased 13x9-in. baking dish. Layer with three noodles and a third of the ricotta mixture. Sprinkle with 1 cup mozzarella cheese and 2 tablespoons Parmesan cheese. Repeat layers twice. Top with remaining meat sauce and cheeses',
+            'Bake: 25 minutes'],
+          notes: 'can add fennel'
         }
       }
     }

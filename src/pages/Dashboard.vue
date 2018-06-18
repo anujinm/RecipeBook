@@ -13,11 +13,16 @@
           option breakfast
           option baking
           option soup
+      .col-sm-2
       .col-sm-2.add
         button(v-if="!showAddBox" @click="showAddBox = ! showAddBox") +
-      .col-sm-2.close(v-if="showAddBox")
+      .col-sm-1.close(v-if="showAddBox")
         button(@click="showAddBox = false") Close
-    r-container.r-container(:showAddBox="showAddBox")
+      .col-sm-2.mesSystem(v-if="!showAddBox")
+        select.select(@change="getSystem")
+          option(value="imperial") Imperial
+          option(value="metric") Metric
+    r-container.r-container(:showAddBox="showAddBox" :mesSystem="mesSystem")
 </template>
 
 <script>
@@ -29,7 +34,8 @@ export default {
   props: [],
   data () {
     return {
-      showAddBox: false
+      showAddBox: false,
+      mesSystem: 'imperial'
     }
   },
   beforeCreate: function () {
@@ -41,6 +47,11 @@ export default {
   computed: {
   },
   methods: {
+    getSystem (event) {
+      const { value } = event.target
+      this.mesSystem = value
+      console.log(this.mesSystem)
+    }
   },
   components: {
     'r-container': recipesContainer
@@ -79,7 +90,7 @@ export default {
       }
     }
     .sort {
-      margin: 18px 0px;
+      margin: 18px 0px 0 0;
       font-size: 20px;
       .select {
         outline: none;
@@ -89,7 +100,7 @@ export default {
     .add button {
       box-shadow: 2px 2px 2px $gray60;
       margin-top: 18px;
-      margin-left: 700px;
+      margin-left: 90%;
     }
     .close button {
       font-size: 15px;
@@ -97,7 +108,17 @@ export default {
       height: 30px;
       box-shadow: 2px 2px 2px $gray60;
       margin-top: 18px;
-      margin-left: 150px;
+      // margin-left: 40%;
+    }
+    .mesSystem {
+      .select {
+        height: 30px;
+        outline: none;
+        background: transparent;
+        // margin-left: 70%;
+      }
+      font-size: 20px;
+      margin-top: 20px;
     }
   }
   
@@ -114,7 +135,9 @@ export default {
   @media #{$tablet} {
     .row {
       .favs {width: 100px;}
-      .add button{ margin-left: 350px;}
+      // .add button{ margin-right: 10%;}
+      // .close button {margin-left: 200%;}
+      // .mesSystem {margin-left: 0%;}
     }
   }
   @media #{$mobile} {
@@ -122,6 +145,7 @@ export default {
       margin-left: 20px;
       display: inline-block;
       .add button{ margin-left: 0px;}
+      .mesSystem {margin-left: 0px;}
     }
   }
 }

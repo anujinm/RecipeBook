@@ -4,7 +4,7 @@
     title-box.title(v-if="!showAddBox" :data="data" :image="data.image" :isFav="data.fav")
     .main
       ingredients-box.ingredients.empty(v-if="showAddBox" ref="ingredientInput" :showAddBox="showAddBox") 
-      ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients" :recipe="data")
+      ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients" :recipe="data" :mesSystem="mesSystem" :convertFrac="convertAmount")
       hr
       instructions-box.instructions.empty(v-if="showAddBox"  ref="instructionsInput" :showAddBox="showAddBox")
       instructions-box.instructions(v-if="!showAddBox" :instruction="data.instructions.instruction" :notes="data.instructions.notes" :recipe="data")
@@ -22,11 +22,11 @@ export default {
   name: 'recipeBox',
   props: [
     'data',
-    'showAddBox'
+    'showAddBox',
+    'mesSystem'
   ],
   data () {
     return {
-      // title: 'Title'
     }
   },
   beforeCreate: function () {
@@ -35,9 +35,6 @@ export default {
     log('Mounted')
   },
   computed: {
-    // ...mapGetters('recipes', [
-    //   'recipes'
-    // ])
     title () {
       return this.$refs.titleInput.newTitleVal
     },

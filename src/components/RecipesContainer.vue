@@ -7,7 +7,7 @@
         recipe-box(v-if="showAddBox " :showAddBox="showAddBox")
       carousel(v-if="!showAddBox" :navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
         slide(v-for="(recipe, index) in recipes" :key="'recipe' + index")
-          recipe-box(:data="recipe")
+          recipe-box(:data="recipe" :mesSystem="mesSystem")
       
 </template>
 
@@ -20,7 +20,8 @@ let log = debug('component:RecipesContainer')
 export default {
   name: 'recipesContainer',
   props: [
-    'showAddBox'
+    'showAddBox',
+    'mesSystem'
   ],
   data () {
     return {
