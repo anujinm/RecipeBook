@@ -13,7 +13,7 @@ const recipes = {
       '000': {
         title: 'Cookies',
         image: require('../../Cookies.png'),
-        fav: true,
+        fav: false,
         ingredients: [
           {
             name: 'flour',

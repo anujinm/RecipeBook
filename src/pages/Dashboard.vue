@@ -4,7 +4,7 @@
       .col-1
       .col-sm-2.favs
         i.fas.fa-heart
-          button Favorites
+          button(@click="FavClicked = !FavClicked") Favorites
       .col-sm-2.sort
         select.select
           option all
@@ -22,7 +22,7 @@
         select.select(@change="getSystem")
           option(value="imperial") Imperial
           option(value="metric") Metric
-    r-container.r-container(:showAddBox="showAddBox" :mesSystem="mesSystem")
+    r-container.r-container(:showAddBox="showAddBox" :mesSystem="mesSystem" :FavClicked="FavClicked")
 </template>
 
 <script>
@@ -35,6 +35,7 @@ export default {
   data () {
     return {
       showAddBox: false,
+      FavClicked: true,
       mesSystem: 'imperial'
     }
   },
@@ -117,7 +118,7 @@ export default {
         background: transparent;
         // margin-left: 70%;
       }
-      font-size: 20px;
+      font-size: 15px;
       margin-top: 20px;
     }
   }

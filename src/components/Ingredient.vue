@@ -2,7 +2,7 @@
   .ingredient
     .row.justify-content-start(v-if="!showAddBox")
       .col-1
-        button.add +
+        button.add(@click="addToList") +
       .col-1
         h6.amount(v-if="amount.whole && mesSystem === 'imperial'") {{ amount.whole }}
           span.fraction(v-if="amount.fraction") {{ amount.fraction }}
@@ -82,6 +82,9 @@ export default {
     ...mapActions('recipes', [
       'editMeasurement'
     ]),
+    addToList () {
+
+    },
     convertNumber (amount) {
       let number = parseFloat(amount)
       let fraction = (number % 1)
