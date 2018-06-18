@@ -28,7 +28,7 @@ const recipes = {
           {
             name: 'vanilla extract',
             amount: '0.33',
-            measurement: 'tsp'
+            measurement: 'tbsp'
           },
           {
             name: 'baking powder',
@@ -68,7 +68,7 @@ const recipes = {
           {
             name: 'flour',
             amount: '1.5',
-            measurement: 'cups'
+            measurement: 'cup'
           },
           {
             name: 'sugar',
@@ -118,7 +118,7 @@ const recipes = {
           {
             name: 'graham cracker crumbs',
             amount: '1.75',
-            measurement: 'cups'
+            measurement: 'cup'
           },
           {
             name: 'sugar',
@@ -170,7 +170,7 @@ const recipes = {
           {
             name: 'graham cracker crumbs',
             amount: '1.75',
-            measurement: 'cups'
+            measurement: 'cup'
           },
           {
             name: 'sugar',
@@ -239,7 +239,8 @@ const recipes = {
     },
     EDIT_MEASUREMENT (state, { recipe }) {
       log('mutation EDIT_MEASUREMENT', recipe)
-      // const { id } = recipe
+      const { id } = recipe
+      Vue.set(state.recipesObj, id, recipe)
     }
   },
 

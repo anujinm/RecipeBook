@@ -5,12 +5,13 @@
         button.add +
       .col-1
         h6.amount(v-if="amount.whole") {{ amount.whole }}
-          span.fraction(v-if="measurementChanged(amount.whole, amount.fraction, item.measurement).fraction") {{ amount.fraction }}
+          span.fraction(v-if="amount.fraction") {{ amount.fraction }}
         h6.amount(v-if="amount.fraction && !amount.whole") {{ amount.fraction }}
       .col-2
         button.measurement(@click="measurementChanged(amount.whole, amount.fraction, item.measurement)") {{ item.measurement }}
       .col-5 
         h6.name {{ item.name }}
+    // Empty :
     .row.justify-content-start(v-if="showAddBox")
       .col-1
         input.amount-empty.amount-whole(v-model="newAmountWholeVal" type="number" min="0" placeholder="0")
@@ -30,6 +31,7 @@
           option tbsp
           option lbs
           option oz
+          option stick
           option g
           option kg
           option ml
@@ -39,6 +41,8 @@
 </template>
 
 <script>
+import _ from 'lodash'
+import { mapActions } from 'vuex'
 import debug from 'debug'
 let log = debug('component:RecipeBoxIngredient')
 export default {
@@ -68,48 +72,64 @@ export default {
     }
   },
   methods: {
+    ...mapActions('recipes', [
+      'editMeasurement'
+    ]),
     convertNumber (amount) {
       let number = parseFloat(amount)
       let fraction = number % 1
       let whole = number - fraction
       if (fraction === 0.25) {
         fraction = '1/4'
-      } else if (fraction <= 0.34 && fraction > 0.25) {
+      } else if (fraction <= 0.331 && fraction > 0.25) {
         fraction = '1/3'
       } else if (fraction === 0.5) {
         fraction = '1/2'
-      } else if (fraction <= 0.68 && fraction > 0.5) {
+      } else if (fraction <= 0.661 && fraction > 0.5) {
         fraction = '2/3'
       } else if (fraction === 0.75) {
         fraction = '3/4'
+      } else if (fraction === 0.99) {
+        whole += 1
+        fraction = 0
       }
       if (whole === 0) {
         whole = null
+      }
+      if (fraction === 0) {
+        fraction === null
       }
       // const returnVal = `${whole} ${fraction}`
       return {whole, fraction}
     },
     measurementChanged (whole, fraction, measurement) {
-      console.log('PRINTING! ', whole)
-      console.log(fraction)
-      console.log(measurement)
-      console.log(this.item, this.recipe)
-      // this.editMeasurement(this.item, this.recipe)
-    //   let amount = parseFloat(whole) + parseFloat(fraction)
-    //   if (measurement === 'tbsp') {
-    //     measurement = 'tsp'
-    //     amount = amount * 3
-    //     fraction = amount % 1
-    //     whole = amount - fraction
-    //   }
-    //   if (measurement === 'tsp' && measurement % 3 === 0) {
-    //     measurement = 'tbsp'
-    //     amount /= 3
-    //     whole = amount
-    //     fraction = 0
-    //     console.log('changed ', whole, fraction, measurement)
-    //   }
-      return {measurement, whole, fraction}
+      const { id } = this.recipe
+      console.log('Found it', id, ' index: ', this.index)
+      let mes = this.recipe.ingredients[this.index].measurement
+
+      const recipe = _.cloneDeep(this.recipe)
+
+      if (this.recipe.ingredients[this.index].name.includes('butter')) {
+        if (mes === 'stick') {
+          recipe.ingredients[this.index].measurement = 'cup'
+          recipe.ingredients[this.index].amount /= 2
+        } else if (mes === 'cup') {
+          recipe.ingredients[this.index].measurement = 'stick'
+          recipe.ingredients[this.index].amount *= 2
+        }
+      } else {
+        if (mes === 'tbsp') {
+          recipe.ingredients[this.index].measurement = 'tsp'
+          recipe.ingredients[this.index].amount *= 3
+        } else if (mes === 'cup' || mes === 'cups') {
+          recipe.ingredients[this.index].measurement = 'oz'
+          recipe.ingredients[this.index].amount *= 8
+        } else if (mes === 'oz') {
+          recipe.ingredients[this.index].measurement = 'cup'
+          recipe.ingredients[this.index].amount /= 8
+        }
+      }
+      this.editMeasurement(recipe)
     }
   },
   components: {

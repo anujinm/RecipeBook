@@ -3,11 +3,11 @@
     title-box.title(v-if="showAddBox" ref="titleInput" :showAddBox="showAddBox")
     title-box.title(v-if="!showAddBox" :data="data" :image="data.image" :isFav="data.fav")
     .main
-      ingredients-box.ingredients.empty(v-if="showAddBox" ref="ingredientInput" :showAddBox="showAddBox" :recipe="data") 
-      ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients")
+      ingredients-box.ingredients.empty(v-if="showAddBox" ref="ingredientInput" :showAddBox="showAddBox") 
+      ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients" :recipe="data")
       hr
       instructions-box.instructions.empty(v-if="showAddBox"  ref="instructionsInput" :showAddBox="showAddBox")
-      instructions-box.instructions(v-if="!showAddBox" :instruction="data.instructions.instruction" :notes="data.instructions.notes")
+      instructions-box.instructions(v-if="!showAddBox" :instruction="data.instructions.instruction" :notes="data.instructions.notes" :recipe="data")
       button(v-if="showAddBox" @click="addData") Add
 </template>
 
