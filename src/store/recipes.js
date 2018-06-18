@@ -274,8 +274,8 @@ const recipes = {
       const { id } = recipe
       Vue.delete(state.recipesObj, id)
     },
-    EDIT_MEASUREMENT (state, { recipe }) {
-      log('mutation EDIT_MEASUREMENT', recipe)
+    EDIT_RECIPE (state, { recipe }) {
+      log('mutation EDIT_RECIPE', recipe)
       const { id } = recipe
       Vue.set(state.recipesObj, id, recipe)
     }
@@ -297,8 +297,8 @@ const recipes = {
     removeRecipe (context, recipe) {
       context.commit('REMOVE_RECIPE', { recipe })
     },
-    editMeasurement (context, recipe) {
-      context.commit('EDIT_MEASUREMENT', { recipe })
+    editRecipe (context, recipe) {
+      context.commit('EDIT_RECIPE', { recipe })
     }
   }
 

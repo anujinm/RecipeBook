@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       showAddBox: false,
-      FavClicked: true,
+      FavClicked: false,
       mesSystem: 'imperial'
     }
   },

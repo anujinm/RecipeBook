@@ -1,8 +1,8 @@
 <template lang="pug">
   .title
-    button.fav(v-if="!isFav" @click="isFav = !isFav")
+    button.fav(v-if="!isFav" @click="FavChanged")
       i.fas.fa-heart.notFav
-    button.fav(v-if="isFav" @click="isFav = !isFav")
+    button.fav(v-if="isFav" @click="FavChanged")
       i.fas.fa-heart.isFav
     button.delete(v-if="!showAddBox" @click="showDelete = !showDelete")
       i.fas.fa-angle-down
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import { mapActions } from 'vuex'
 import debug from 'debug'
 let log = debug('component:RecipeBoxTitle')
@@ -48,11 +49,18 @@ export default {
   },
   methods: {
     ...mapActions('recipes', [
-      'removeRecipe'
+      'removeRecipe',
+      'editRecipe'
     ]),
     deleteRecipe () {
       const recipe = this.data
       this.removeRecipe(recipe)
+    },
+    FavChanged () {
+      // const { id } = this.data
+      const recipe = _.cloneDeep(this.data)
+      recipe.fav = !recipe.fav
+      this.editRecipe(recipe)
     }
   },
   components: {

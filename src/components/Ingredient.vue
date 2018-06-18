@@ -80,10 +80,9 @@ export default {
   },
   methods: {
     ...mapActions('recipes', [
-      'editMeasurement'
+      'editRecipe'
     ]),
     addToList () {
-
     },
     convertNumber (amount) {
       let number = parseFloat(amount)
@@ -146,7 +145,7 @@ export default {
           }
         }
       }
-      this.editMeasurement(recipe)
+      this.editRecipe(recipe)
     },
     convertToMetric (whole, frac) {
       let mes = this.recipe.ingredients[this.index].measurement
