@@ -8,10 +8,12 @@
       :key="item.line" :showAddBox="showAddBox" :recipe="data")
 
     ingredient-row(v-for="(ingredient, index) in ingredients" :key="ingredient.data"
-     :item="ingredient" :recipe="recipe" :index="index" :mesSystem="mesSystem" :convertFrac="convertFrac")
+     :item="ingredient" :recipe="recipe" :index="index" :mesSystem="mesSystem"
+     :convertFrac="convertFrac" :added="inTheList(ingredient, added)")
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Ingredient from '@/components/Ingredient'
 import debug from 'debug'
 let log = debug('component:RecipeBoxIngredients')
@@ -28,7 +30,8 @@ export default {
     return {
       addIngredient: false,
       showNextAdd: false,
-      index: this.newIngredientVals
+      index: this.newIngredientVals,
+      added: false
     }
   },
   beforeCreate: function () {
@@ -37,8 +40,16 @@ export default {
     log('Mounted')
   },
   computed: {
+    ...mapState('recipes', [
+      'shoppingList'
+    ])
   },
   methods: {
+    inTheList (ingredient, added) {
+      if (this.shoppingList['list'].items.includes(ingredient.name)) {
+        return true
+      } else { return false }
+    }
   },
   components: {
     'ingredient-row': Ingredient

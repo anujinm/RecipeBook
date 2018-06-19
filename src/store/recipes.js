@@ -7,8 +7,13 @@ import Vue from 'vue'
 const recipes = {
 
   namespaced: true,
-
   state: {
+    newItem: '',
+    shoppingList: {
+      'list': {
+        items: ['potatoes', 'marshmellows', 'yeast']
+      }
+    },
     recipesObj: {
       '000': {
         title: 'Cookies',
@@ -278,6 +283,17 @@ const recipes = {
       log('mutation EDIT_RECIPE', recipe)
       const { id } = recipe
       Vue.set(state.recipesObj, id, recipe)
+    },
+    UPDATE_LIST (state, { list }) {
+      log('mutation UPDATE_LIST', list)
+      Vue.set(state.shoppingList, 'list', list)
+    },
+    ADD_TO_LIST (state, { item }) {
+      log('mutation ADD_TO_LIST', item)
+      if (!state.shoppingList['list'].items.includes(item)) {
+        state.shoppingList['list'].items.push(item)
+      }
+      Vue.set(state.shoppingList)
     }
   },
 
@@ -299,6 +315,12 @@ const recipes = {
     },
     editRecipe (context, recipe) {
       context.commit('EDIT_RECIPE', { recipe })
+    },
+    updateList (context, list) {
+      context.commit('UPDATE_LIST', {list})
+    },
+    addToList (context, item) {
+      context.commit('ADD_TO_LIST', {item})
     }
   }
 

@@ -67,7 +67,7 @@ export default {
   // overflow: scroll;
   // height: 0px;
   display: block;
-  padding-bottom: 100px;
+  padding-bottom: 210px;
   background: linear-gradient(transparent, #DEE1E2);
   .row {
     margin-top: 40px;

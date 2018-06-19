@@ -87,7 +87,7 @@ i {
 .router-link-active {
   background: $black;
   color: $white;
-  text-shadow: 2px 1px 5px $gray90;
+  text-shadow: 1px 1px 1px $gray80;
   &.isInactive {
     background: transparent;
     color:$gray90;

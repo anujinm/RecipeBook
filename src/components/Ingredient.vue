@@ -2,7 +2,9 @@
   .ingredient
     .row.justify-content-start(v-if="!showAddBox")
       .col-1
-        button.add(@click="addToList") +
+        button.add(v-if="!added" @click="add") +
+        button.add.added(v-if="added")
+          i.fas.fa-list-ul
       .col-1
         h6.amount(v-if="amount.whole && mesSystem === 'imperial'") {{ amount.whole }}
           span.fraction(v-if="amount.fraction") {{ amount.fraction }}
@@ -58,7 +60,8 @@ export default {
     'index',
     'recipe',
     'mesSystem',
-    'convertFrac'
+    'convertFrac',
+    'added'
   ],
   data () {
     return {
@@ -71,18 +74,23 @@ export default {
   beforeCreate: function () {
   },
   mounted: function () {
-    log('Mounted', this.mesSystem)
+    log('Mounted', this.added)
   },
   computed: {
+    // ...mapState('recipes', [
+    //   'shoppingList'
+    // ]),
     amount () {
       return this.convertNumber(this.item.amount)
     }
   },
   methods: {
     ...mapActions('recipes', [
-      'editRecipe'
+      'editRecipe',
+      'addToList'
     ]),
-    addToList () {
+    add () {
+      this.addToList(this.item.name)
     },
     convertNumber (amount) {
       let number = parseFloat(amount)
@@ -164,21 +172,6 @@ export default {
       console.log('this is it: ', whole, frac, mes)
       return [whole, frac, mes]
     }
-    // convertToImperial (whole, frac) {
-    //   let mes = this.recipe.ingredients[this.index].measurement
-    //   const temp = parseFloat(whole) / 450
-    //   if (mes === 'g') {
-    //     mes = 'lbs'
-    //     if (temp >= 0.75 && temp <= 1.3) {
-    //       whole = '1'
-    //     } else if (temp >= 1.75 && temp <= 2.3) {
-    //       whole = '2'
-    //     } else if (temp >= 2.75 && temp <= 3.3) {
-    //       whole = '3'
-    //     }
-    //   }
-    //   return [whole, mes]
-    // }
   },
   components: {
   }
@@ -214,6 +207,10 @@ export default {
     outline: none;
     &.add {
       width: 25px;
+      &.added {
+        background: rgb(27, 153, 75);
+        i {color: rgb(255, 255, 255); display: flex; margin-left: -3px; margin-bottom: -2px;}
+      }
     }
     &.measurement { margin-left: 10px; width: 40px; }
   }

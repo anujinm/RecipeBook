@@ -1,6 +1,6 @@
 <template lang="pug">
   .shoppinglist
-    h3 Shopping list Page
+    h4 Shopping list:
     list-box
 </template>
 
@@ -34,6 +34,19 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .shoppinglist {
-  
+  text-align: center;
+  h4 {
+    margin-left: -300px;
+    margin-top: 50px;
+    font-weight: 500;
+    text-shadow: 2px 2px 2px $gray70;
+    }
+
+  @media #{$mobile} {
+    h4 { 
+      font-size: 40px;
+      margin-left: -30px;
+    }
+  }
 }
 </style>

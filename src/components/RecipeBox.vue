@@ -161,7 +161,11 @@ export default {
     box-shadow: 2px 2px 6px rgb(30, 53, 16);
   }
 
-  hr {margin: 8px;}
+  hr {
+    margin: 8px;
+    border: .8px solid $gray80;
+  }
+
   @media #{$tablet} {
     width: 280px;
     .main {width: 260px;}
