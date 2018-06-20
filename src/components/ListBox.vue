@@ -29,6 +29,7 @@ export default {
   },
   mounted: function () {
     log('Mounted', this.shoppingList)
+    this.setupListeners()
   },
   computed: {
     ...mapState('recipes', [
@@ -56,10 +57,22 @@ export default {
       //   this.addToList(newItem)
       // }
       this.addToList(newItem)
+      this.clearText()
     },
     UpdateList () {
       const update = this.clicked()
       this.updateList(update)
+    },
+    setupListeners () {
+      window.addEventListener('keypress', this.onKeyPress.bind(this))
+    },
+    clearText () {
+      this.$refs.newitem.value = ''
+    },
+    onKeyPress (event) {
+      if (event.code === 'Enter') {
+        this.addItem()
+      }
     }
   },
   components: {

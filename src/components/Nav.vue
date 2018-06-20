@@ -29,6 +29,19 @@ export default {
     }
   },
   methods: {
+    // search () {
+
+    //   const list = []
+    //   const keys = Object.keys(recipesObj)
+    //   for (let i = 0; i < keys.length; i++) {
+    //     const key = keys[i]
+    //     const recipe = recipesObj[key]
+    //     recipe.ingredients.forEach((ingredient) => {
+    //       // if ingredient matches add recipe to list, otherwise dont do anything
+    //       break
+    //     })
+    //   }
+    // }
   },
   components: {
   }
