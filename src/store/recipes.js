@@ -184,7 +184,7 @@ const recipes = {
           },
           {
             name: 'ground beef',
-            amount: '3/4',
+            amount: '0.75',
             measurement: 'lbs'
           },
           {
@@ -204,7 +204,7 @@ const recipes = {
           },
           {
             name: 'water',
-            amount: '2/3',
+            amount: '0.66',
             measurement: 'cup'
           },
           {
@@ -219,7 +219,7 @@ const recipes = {
           },
           {
             name: 'salt',
-            amount: '3/4',
+            amount: '0.75',
             measurement: 'tsp'
           },
           {
@@ -239,7 +239,7 @@ const recipes = {
           },
           {
             name: 'parmesan cheese',
-            amount: '3/4',
+            amount: '0.75',
             measurement: 'cup'
           }
         ],

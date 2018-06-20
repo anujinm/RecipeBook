@@ -13,6 +13,7 @@ import NavPhone from '@/components/NavPhone'
 import Footer from '@/components/Footer'
 import Dashboard from '@/pages/Dashboard'
 import debug from 'debug'
+import axios from 'axios'
 
 let log = debug('App')
 export default {
@@ -20,6 +21,11 @@ export default {
   mounted: function () {
     log('App Mounted')
     this.$store.dispatch('loading', false)
+    axios.get('http://localhost:3001/recipes', {
+      id: 1
+    }).then(data => {
+      console.log(data)
+    })
   },
   computed: {
   },
