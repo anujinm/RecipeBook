@@ -1,6 +1,6 @@
 <template lang="pug">
   .instructions
-    h5(v-for="item in instruction" :key="instruction.data") {{ item }}
+    h5 {{ instruction }}
     h5.notes(v-if="!showAddBox") Notes: {{ notes }}
 
     textarea.instructionBox(v-if="showAddBox"  v-model="newInstructionVal" placeholder="enter instructions...") 
@@ -27,8 +27,6 @@ export default {
   },
   mounted: function () {
     log('Mounted')
-    // log(this.instruction)
-    // log(this.notes)
   },
   computed: {
   },

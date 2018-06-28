@@ -12,7 +12,6 @@ app.use(bodyParser.json())
 // allow requests from any domain
 app.use(cors())
 
-console.log(RecipeController)
 // routes
 app.get('/recipes', RecipeController.getRecipes)
 

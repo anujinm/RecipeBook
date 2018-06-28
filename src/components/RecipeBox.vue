@@ -7,7 +7,7 @@
       ingredients-box.ingredients(v-if="!showAddBox" :ingredients="data.ingredients" :recipe="data" :mesSystem="mesSystem" :convertFrac="convertAmount")
       hr
       instructions-box.instructions.empty(v-if="showAddBox"  ref="instructionsInput" :showAddBox="showAddBox")
-      instructions-box.instructions(v-if="!showAddBox" :instruction="data.instructions.instruction" :notes="data.instructions.notes" :recipe="data")
+      instructions-box.instructions(v-if="!showAddBox" :instruction="data.instructions" :notes="data.notes" :recipe="data")
       button(v-if="showAddBox" @click="addData") Add
 </template>
 
@@ -33,6 +33,7 @@ export default {
   },
   mounted: function () {
     log('Mounted')
+    console.log('my data is:', this.data)
   },
   computed: {
     title () {
@@ -64,14 +65,10 @@ export default {
 
       let myRecipe = {
         title: this.title,
-        image: require('../../food2.png'),
         fav: false,
         ingredients: [],
-        instructions: {
-          instruction: [
-            this.instruction],
-          notes: this.notes
-        }
+        instructions: this.instruction,
+        notes: this.notes
       }
       if (Array.isArray(newIngredientVals)) {
         newIngredientVals.forEach((ingredient) => {
