@@ -5,14 +5,7 @@ class RecipeController {
     console.log('constructor called')
   }
   getRecipes (req, res) {
-    // res.setHeader('Content-Type', 'application/json')
     // query(`SELECT * FROM recipes WHERE id = "${userQuery.id}"`)
-    //   .then(results => {
-    //     res.send(JSON.stringify({ results }))
-    //   })
-    //   .catch((error) => {
-    //     console.log(error)
-    //   })
     res.setHeader('Content-Type', 'application/json')
     query(`SELECT * FROM recipes`)
       .then(recipeResults => {
@@ -50,6 +43,26 @@ class RecipeController {
         console.log(error)
         res.send({ error: 'Something bad happened', status: 500 })
     })
+  }
+  postRecipe (req, res) {
+    res.setHeader('Content-Type', 'application/json')
+    // const recipe = theRecipe(req.body)
+    // has to be the recipe i'm adding. How to get it?
+    // let recipe = {
+    //   id: 100,
+    //   title: 'new Recipe',
+    //   fav: false,
+    //   ingredients: [],
+    //   instructions: 'instructions',
+    //   notes: 'no notes'
+    // }
+    // recipe.save()
+    // .then(recipe => {
+    //   res.send.JSON({'recipe':'recipe added'})
+    // }).catch(error => {
+    //   console.log(error)
+    // })
+
   }
 }
 

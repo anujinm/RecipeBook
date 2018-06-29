@@ -54,14 +54,13 @@ export default {
   },
   methods: {
     ...mapActions('recipes', [
-      'addRecipe'
+      'addRecipe',
+      'updateAllRecipes'
     ]),
     addData () {
-      console.log('here!! ', this.$refs.ingredientInput.$refs.newIngredientVals)
-      console.log(this.retrunVal)
+      // console.log(this.retrunVal)
       const { newIngredientVals } = this.$refs.ingredientInput.$refs
-
-      console.log(newIngredientVals)
+      console.log('here!! ', newIngredientVals)
 
       let myRecipe = {
         title: this.title,

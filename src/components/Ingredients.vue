@@ -3,11 +3,11 @@
     button(v-if="showAddBox" @click="addIngredient = !addIngredient") +
     ingredient-row(v-if="showAddBox" v-for="(item, index) in 5" ref="newIngredientVals" 
       :key="item + index" :index="index" :showAddBox="showAddBox"
-      :recipe="data")
+      :recipe="recipe")
     ingredient-row(v-if="showAddBox && addIngredient" v-for="(item, index) in 5" ref="newIngredientVals" 
-      :key="item.line" :showAddBox="showAddBox" :recipe="data")
+      :key="item.line" :showAddBox="showAddBox" :recipe="recipe")
 
-    ingredient-row(v-for="(ingredient, index) in ingredients" :key="ingredient.data"
+    ingredient-row(v-for="(ingredient, index) in ingredients" :key="ingredient.recipe"
      :item="ingredient" :recipe="recipe" :index="index" :mesSystem="mesSystem"
      :convertFrac="convertFrac" :added="inTheList(ingredient, added)")
 </template>

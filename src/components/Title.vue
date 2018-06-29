@@ -12,7 +12,7 @@
     button.fav.camera(v-if="showAddBox")
       i.fas.fa-camera
       
-    h5.name(v-if="!showAddBox") {{ data.title }}
+    h5.name(v-if="!showAddBox") {{  data.fav }} {{data.title}}
     // img(:src='image')
     
     

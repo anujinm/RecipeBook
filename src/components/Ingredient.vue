@@ -101,7 +101,7 @@ export default {
       }
       if (fraction < 0.25 && Math.round(fraction) === 0) {
         fraction === null
-        console.log('fractions is: ', fraction)
+        // console.log('fractions is: ', fraction)
       } else {
         if (fraction < 0.251 && fraction > 0) {
           fraction = '1/4'
