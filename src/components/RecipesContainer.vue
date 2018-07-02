@@ -8,7 +8,7 @@
       carousel(v-if="!showAddBox" :navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
         slide(v-for="(recipe, index) in recipes" :key="'recipe' + index" v-if="!FavClicked")
           recipe-box(:data="recipe" :mesSystem="mesSystem")
-        slide(v-for="(recipe, index) in recipes" :key="'recipe' + index" v-if="FavClicked && recipe.fav == true")
+        slide(v-for="(recipe, index) in recipes" :key="'recipe' + index" v-if="FavClicked && recipe.fav == 'true'")
           recipe-box(:data="recipe" :mesSystem="mesSystem")
       
 </template>

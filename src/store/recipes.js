@@ -94,10 +94,10 @@ const recipes = {
       recipe.id = id
       Vue.set(state.recipesObj, id, recipe)
     },
-    REMOVE_RECIPE (state, { recipe }) {
-      log('mutation REMOVE_RECIPE', recipe)
-      const { id } = recipe
-      Vue.delete(state.recipesObj, id)
+    REMOVE_RECIPE (state, { recipeid }) {
+      log('mutation REMOVE_RECIPE', recipeid)
+      // const { id } = recipe
+      Vue.delete(state.recipesObj, recipeid)
     },
     EDIT_RECIPE (state, { recipe }) {
       log('mutation EDIT_RECIPE', recipe)
@@ -134,18 +134,21 @@ const recipes = {
       })
     },
     addRecipe (context, recipe) {
-      context.commit('ADD_RECIPE', { recipe })
       axios.post('http://localhost:3001/recipes', recipe).then(response => {
-        console.log('POSTING!! PLEASE...', response)
+        context.commit('ADD_RECIPE', { recipe })
       }).catch(error => {
         console.log(error)
       })
     },
-    removeRecipe (context, recipe) {
-      context.commit('REMOVE_RECIPE', { recipe })
+    removeRecipe (context, recipeid) {
+      axios.delete('http://localhost:3001/recipes', {data: {id: recipeid}}).then(response => {
+        context.commit('REMOVE_RECIPE', { recipeid })
+      })
     },
     editRecipe (context, recipe) {
-      context.commit('EDIT_RECIPE', { recipe })
+      axios.put('http://localhost:3001/recipes', recipe).then(response => {
+        context.commit('EDIT_RECIPE', { recipe })
+      })
     },
     updateList (context, list) {
       context.commit('UPDATE_LIST', {list})

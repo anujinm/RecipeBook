@@ -1,8 +1,8 @@
 <template lang="pug">
   .title
-    button.fav(v-if="!isFav" @click="FavChanged")
+    button.fav(v-if="isFav=='false'" @click="FavChanged")
       i.fas.fa-heart.notFav
-    button.fav(v-if="isFav" @click="FavChanged")
+    button.fav(v-if="isFav == 'true'" @click="FavChanged")
       i.fas.fa-heart.isFav
     button.delete(v-if="!showAddBox" @click="showDelete = !showDelete")
       i.fas.fa-angle-down
@@ -54,12 +54,17 @@ export default {
     ]),
     deleteRecipe () {
       const recipe = this.data
-      this.removeRecipe(recipe)
+      console.log('deleting : ', recipe.id)
+      this.removeRecipe(recipe.id)
     },
     FavChanged () {
       // const { id } = this.data
       const recipe = _.cloneDeep(this.data)
-      recipe.fav = !recipe.fav
+      if (recipe.fav === 'true') {
+        recipe.fav = 'false'
+      } else if (recipe.fav === 'false') {
+        recipe.fav = 'true'
+      }
       this.editRecipe(recipe)
     }
   },
