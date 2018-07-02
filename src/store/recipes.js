@@ -91,6 +91,7 @@ const recipes = {
       }
       /* eslint-enable */
       const id = guid()
+      recipe.id = id
       Vue.set(state.recipesObj, id, recipe)
     },
     REMOVE_RECIPE (state, { recipe }) {

@@ -25,7 +25,7 @@ class RecipeController {
           // for every recipe, grab some extra data
           recipeResults.forEach((recipe) => {
             // query to get all of the recipe's ingredients
-            query(`SELECT * FROM ingredients WHERE recipe_id = ${recipe.id}`)
+            query(`SELECT * FROM ingredients WHERE recipe_id = '${recipe.id}'`)
             .then(ingredientList => {
               recipe.ingredients = ingredientList
               recipes.push(recipe)
@@ -46,22 +46,28 @@ class RecipeController {
   }
   postRecipe (req, res) {
     res.setHeader('Content-Type', 'application/json')
-    // const recipe = theRecipe(req.body)
-    // has to be the recipe i'm adding. How to get it?
-    // let recipe = {
-    //   id: 100,
-    //   title: 'new Recipe',
-    //   fav: false,
-    //   ingredients: [],
-    //   instructions: 'instructions',
-    //   notes: 'no notes'
-    // }
-    // recipe.save()
-    // .then(recipe => {
-    //   res.send.JSON({'recipe':'recipe added'})
-    // }).catch(error => {
-    //   console.log(error)
-    // })
+    const recipe = req.body
+    const { id } = recipe
+    console.log(recipe, id)
+    query("INSERT INTO `recipes` (id, title, fav, instructions, notes ) VALUES ('"+id+"' ,'"+recipe.title+"','" +recipe.fav+"', '"+recipe.instructions+"','"+recipe.notes+"')")
+    .then(recipe => {
+      console.log('recipe added')
+    })
+    .catch(error => {
+      console.log(error)
+      res.send({ error: 'Something bad happened', status: 500 })
+    })
+    recipe.ingredients.forEach((ingredient) => {
+       query("INSERT INTO `ingredients` (recipe_id, name, amount, measurement) VALUES ('"+id+"','"+ingredient.name+"', '"+ingredient.amount+"', '"+ingredient.measurement+"')")
+      .then(recipe => {
+        console.log('ingredient added')
+      })
+      .catch(error => {
+        console.log(error)
+        res.send({ error: 'Something bad happened', status: 500 })
+      })
+    })
+    res.send(recipe)
 
   }
 }
