@@ -16,7 +16,8 @@ app.use(cors())
 app.get('/recipes', RecipeController.getRecipes)
 app.post('/recipes', RecipeController.postRecipe)
 app.delete('/recipes', RecipeController.deleteRecipe)
-app.put('/recipes', RecipeController.editRecipe)
+app.put('/recipes/fav', RecipeController.editRecipeFav)
+// app.put('/recipes/ingr', RecipeController.editRecipeIngr)
 
 // start app
 const port = 3001

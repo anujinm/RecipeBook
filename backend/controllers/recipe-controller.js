@@ -86,7 +86,7 @@ class RecipeController {
     res.send(recipeID)
   }
 
-  editRecipe (req, res) {
+  editRecipeFav (req, res) {
     res.setHeader('Content-Type', 'application/json')
     const recipe = req.body
     const { id } = recipe
@@ -96,7 +96,7 @@ class RecipeController {
             WHEN (fav = "false") THEN "true"
             ELSE fav
             END)
-        WHERE id = ` + id)
+        WHERE id = ` + id.toString())
     .then( recipe => {
       console.log('set to false')
     })
@@ -105,6 +105,26 @@ class RecipeController {
     })
     res.send(recipe)
   }
+
+  editRecipeIngr (req, res) {
+    res.setHeader('Content-Type', 'application/json')
+    const recipe = req.body
+    const { id } = recipe
+    console.log(recipe.fav, typeof(id.toString()))
+    // Realized I actually don't need to update the db, so nothing to do here
+    //
+    // recipe.ingredients.forEach((ingredient) => {
+    //   query("UPDATE ingredients SET amount = " + ingredient.amount + " WHERE recipe_id = " + id.toString())
+    //   .then( recipe => {
+    //     console.log('recipe ingredients updated', ingredient.amount)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    // })
+    res.send(recipe)
+  }
+  
 }
 
 module.exports = new RecipeController()

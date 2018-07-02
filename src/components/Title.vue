@@ -12,7 +12,7 @@
     button.fav.camera(v-if="showAddBox")
       i.fas.fa-camera
       
-    h5.name(v-if="!showAddBox") {{  data.fav }} {{data.title}}
+    h5.name(v-if="!showAddBox") {{data.title}}
     // img(:src='image')
     
     
@@ -50,7 +50,7 @@ export default {
   methods: {
     ...mapActions('recipes', [
       'removeRecipe',
-      'editRecipe'
+      'editRecipeFav'
     ]),
     deleteRecipe () {
       const recipe = this.data
@@ -65,7 +65,7 @@ export default {
       } else if (recipe.fav === 'false') {
         recipe.fav = 'true'
       }
-      this.editRecipe(recipe)
+      this.editRecipeFav(recipe)
     }
   },
   components: {

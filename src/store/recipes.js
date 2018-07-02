@@ -104,6 +104,11 @@ const recipes = {
       const { id } = recipe
       Vue.set(state.recipesObj, id, recipe)
     },
+    // EDIT_RECIPE_INGR (state, {recipe}) {
+    //   log('mutation EDIT_RECIPE_INGR', recipe)
+    //   const { id } = recipe
+    //   Vue.set(state.recipesObj, id, recipe)
+    // },
     UPDATE_LIST (state, { list }) {
       log('mutation UPDATE_LIST', list)
       Vue.set(state.shoppingList, 'list', list)
@@ -145,10 +150,13 @@ const recipes = {
         context.commit('REMOVE_RECIPE', { recipeid })
       })
     },
-    editRecipe (context, recipe) {
-      axios.put('http://localhost:3001/recipes', recipe).then(response => {
+    editRecipeFav (context, recipe) {
+      axios.put('http://localhost:3001/recipes/fav', recipe).then(response => {
         context.commit('EDIT_RECIPE', { recipe })
       })
+    },
+    editRecipeIngr (context, recipe) {
+      context.commit('EDIT_RECIPE', { recipe })
     },
     updateList (context, list) {
       context.commit('UPDATE_LIST', {list})

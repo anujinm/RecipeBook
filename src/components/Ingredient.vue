@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     ...mapActions('recipes', [
-      'editRecipe',
+      'editRecipeIngr',
       'addToList'
     ]),
     add () {
@@ -153,7 +153,7 @@ export default {
           }
         }
       }
-      this.editRecipe(recipe)
+      this.editRecipeIngr(recipe)
     },
     convertToMetric (whole, frac) {
       let mes = this.recipe.ingredients[this.index].measurement
