@@ -63,6 +63,7 @@ export default {
       console.log('here!! ', newIngredientVals)
 
       let myRecipe = {
+        id: '100',
         title: this.title,
         fav: false,
         ingredients: [],
@@ -86,6 +87,7 @@ export default {
         myRecipe.ingredients.push({ name: newNameVal, amount: newAmountVal, measurement: newMeasurementVal })
       }
       this.addRecipe(myRecipe)
+      document.location.reload(true)
     },
     convertAmount (newFracVal) {
       if (newFracVal === '0') {

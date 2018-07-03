@@ -48,9 +48,19 @@ class RecipeController {
   postRecipe (req, res) {
     res.setHeader('Content-Type', 'application/json')
     const recipe = req.body
-    const { id } = recipe
+    /* eslint-disable */
+    function guid() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000);
+      }
+      return s4() + s4() + s4();
+    }
+    /* eslint-enable */
+    const id = guid()
+    recipe.id = id
+    // const { id } = recipe
     console.log(recipe, id)
-    query("INSERT INTO `recipes` (id, title, fav, instructions, notes ) VALUES ('"+id+"' ,'"+recipe.title+"','" +recipe.fav+"', '"+recipe.instructions+"','"+recipe.notes+"')")
+    query("INSERT INTO `recipes` (id, title, fav, instructions, notes ) VALUES ('"+recipe.id+"' ,'"+recipe.title+"','" +recipe.fav+"', '"+recipe.instructions+"','"+recipe.notes+"')")
     .then(recipe => {
       console.log('recipe added')
     })
@@ -58,8 +68,19 @@ class RecipeController {
       console.log(error)
       res.send({ error: 'Something bad happened', status: 500 })
     })
+    
     recipe.ingredients.forEach((ingredient) => {
-       query("INSERT INTO `ingredients` (recipe_id, name, amount, measurement) VALUES ('"+id+"','"+ingredient.name+"', '"+ingredient.amount+"', '"+ingredient.measurement+"')")
+      query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+ingredient.name+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+ingredient.name+"') LIMIT 1 ")
+      .then(recipe => {
+        console.log('ingredient added!!!')
+      })
+      .catch(error => {
+        console.log(error)
+        res.send({ error: 'Something bad happened', status: 500 })
+      })
+    })
+    recipe.ingredients.forEach((ingredient) => {
+       query("INSERT INTO `ingredients` (recipe_id, ingr_id, name, amount, measurement) VALUES ('"+id+"', '1','"+ingredient.name+"', '"+ingredient.amount+"', '"+ingredient.measurement+"')")
       .then(recipe => {
         console.log('ingredient added')
       })
@@ -68,6 +89,11 @@ class RecipeController {
         res.send({ error: 'Something bad happened', status: 500 })
       })
     })
+    
+    // recipe.ingredients.forEach((ingredient) => {
+    //   query("UPDATE ingredients SET ingr_id = (SELECT)")
+    // })
+
     res.send(recipe)
   }
 
@@ -75,7 +101,7 @@ class RecipeController {
     res.setHeader('Content-Type', 'application/json')
     const recipeID = req.body
     // console.log(req.body, recipeID.id)
-    query(`DELETE FROM recipes WHERE id = ` + recipeID.id)
+    query(`DELETE FROM recipes WHERE id = ` + recipeID.id.toString())
     .then(recipe => {
       console.log('Recipe Removed!')
     })
@@ -83,7 +109,7 @@ class RecipeController {
       console.log(error)
       res.send({ error: 'Something bad happened', status: 500 })
     })
-    res.send(recipeID)
+    // res.send(recipeID)
   }
 
   editRecipeFav (req, res) {

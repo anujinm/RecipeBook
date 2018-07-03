@@ -56,6 +56,7 @@ export default {
       const recipe = this.data
       console.log('deleting : ', recipe.id)
       this.removeRecipe(recipe.id)
+      document.location.reload(true)
     },
     FavChanged () {
       // const { id } = this.data
