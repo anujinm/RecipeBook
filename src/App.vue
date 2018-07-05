@@ -21,6 +21,7 @@ export default {
     log('App Mounted')
     this.$store.dispatch('loading', false)
     this.$store.dispatch('recipes/updateAllRecipes')
+    this.$store.dispatch('recipes/updateShoppingList')
   },
   computed: {
   },

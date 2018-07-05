@@ -112,6 +112,15 @@ const recipes = {
     //   const { id } = recipe
     //   Vue.set(state.recipesObj, id, recipe)
     // },
+
+    UPDATE_SHOPPING_LIST (state, { shopingList }) {
+      log('mutation UPDATE_SHOPPING_LIST')
+      if (shopingList && Array.isArray(shopingList)) {
+        shopingList.forEach((item) => {
+          Vue.set(state.shoppingList, 'list', shopingList)
+        })
+      }
+    },
     UPDATE_LIST (state, { list }) {
       log('mutation UPDATE_LIST', list)
       Vue.set(state.shoppingList, 'list', list)
@@ -142,7 +151,6 @@ const recipes = {
       })
     },
     addRecipe (context, recipe) {
-      console.log('Action Called: addRecipe')
       axios.post('http://localhost:3001/recipes', recipe).then(response => {
         context.commit('ADD_RECIPE', { recipe })
       }).catch(error => {
@@ -162,11 +170,22 @@ const recipes = {
     editRecipeIngr (context, recipe) {
       context.commit('EDIT_RECIPE', { recipe })
     },
+
+    updateShoppingList ({ commit }) {
+      axios.get('https://localhos:3001/recipes').then(response => {
+        const { shopingList } = response.data
+        commit('UPDATE_SHOPPING_LIST', { shopingList })
+      })
+    },
     updateList (context, list) {
       context.commit('UPDATE_LIST', {list})
     },
     addToList (context, item) {
-      context.commit('ADD_TO_LIST', {item})
+      axios.post('http://localhost:3001/shoppinglist', item).then(response => {
+        context.commit('ADD_TO_LIST', {item})
+      }).catch(error => {
+        console.log(error)
+      })
     }
   }
 

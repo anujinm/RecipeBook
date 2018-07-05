@@ -157,17 +157,70 @@ class RecipeController {
     const { id } = recipe
     console.log(recipe.fav, typeof(id.toString()))
     // Realized I actually don't need to update the db, so nothing to do here
-    //
-    // recipe.ingredients.forEach((ingredient) => {
-    //   query("UPDATE ingredients SET amount = " + ingredient.amount + " WHERE recipe_id = " + id.toString())
-    //   .then( recipe => {
-    //     console.log('recipe ingredients updated', ingredient.amount)
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
-    // })
+
+    /* recipe.ingredients.forEach((ingredient) => {
+       query("UPDATE ingredients SET amount = " + ingredient.amount + " WHERE recipe_id = " + id.toString())
+       .then( recipe => {
+         console.log('recipe ingredients updated', ingredient.amount)
+       })
+       .catch(error => {
+        console.log(error)
+       })
+     }) */
     res.send(recipe)
+  }
+
+  getShoppingList (req, res) {
+    res.setHeader('Conten-Type', 'application/json')
+    query(`SELECT * FROM shopping_list`)
+    .then(results => {
+      const shoppingList = []
+      if (results) {
+        let resolveCount = 0
+        const resolver = () => {
+          resolveCount += 1
+          if (resolveCount >= results.length) {
+            res.send(JSON.stringify({ shoppingLisst }))
+          }
+        }
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+      res.send( { error: 'Something bad happened', status: 500 })
+    })
+  }
+
+  addItemToShoppingList (req, res) {
+    res.setHeader('Conten-Type', 'application/json')
+    const item = Object.keys(req.body)[0].toString()
+    console.log(item)
+    query("INSERT INTO shopping_list (ingredient_id, ingredient_name) VALUES (1,'"+item+"')")
+    .then(item => {
+      console.log('Item added to Shopping List with id 1 and name!')
+    })
+    .catch(error => {
+      console.log(error)
+      res.send({ error: 'Something bad happened', status: 500 })
+    })
+
+    query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+item+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+item+"') LIMIT 1 ")
+    .then(recipe => {
+      console.log('ingredient added!!!')
+    })
+    .catch(error => {
+      console.log(error)
+      res.send({ error: 'Something bad happened', status: 500 })
+    })
+
+    query("UPDATE shopping_list INNER JOIN All_Ingredients ON ingredient_name = All_Ingredients.name SET shopping_list.ingredient_id = All_Ingredients.id")
+    .then(item => {
+      console.log('Item id updated!')
+    })
+    .catch(error => {
+      console.log(error)
+      res.send({ error: 'Something bad happened', status: 500 })
+    })
   }
   
 }
