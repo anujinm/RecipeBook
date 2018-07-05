@@ -89,10 +89,20 @@ class RecipeController {
         res.send({ error: 'Something bad happened', status: 500 })
       })
     })
-    
-    // recipe.ingredients.forEach((ingredient) => {
-    //   query("UPDATE ingredients SET ingr_id = (SELECT)")
-    // })
+
+    recipe.ingredients.forEach((ingredient) => {
+      // query("UPDATE ingredients SET ingr_id = (SELECT id FROM All_Ingredients WHERE name = name)")
+      query(`UPDATE ingredients
+              INNER JOIN All_Ingredients ON ingredients.name = All_Ingredients.name
+              SET ingredients.ingr_id = All_Ingredients.id`)
+      .then(recipe => {
+        console.log('ingredient id added')
+      })
+      .catch(error => {
+        console.log(error)
+        res.send({ error: 'Something bad happened', status: 500 })
+      })
+    })
 
     res.send(recipe)
   }
@@ -101,6 +111,15 @@ class RecipeController {
     res.setHeader('Content-Type', 'application/json')
     const recipeID = req.body
     // console.log(req.body, recipeID.id)
+    query(`DELETE FROM ingredients WHERE recipe_id = ` + recipeID.id.toString())
+    .then(recipe => {
+      console.log('Recipe Removed!')
+    })
+    .catch(error => {
+      console.log(error)
+      res.send({ error: 'Something bad happened', status: 500 })
+    })
+
     query(`DELETE FROM recipes WHERE id = ` + recipeID.id.toString())
     .then(recipe => {
       console.log('Recipe Removed!')
