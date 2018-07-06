@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     inTheList (ingredient, added) {
-      if (this.shoppingList['list'].items.includes(ingredient.name)) {
+      if (this.shoppingList.includes(ingredient.name)) {
         return true
       } else { return false }
     }

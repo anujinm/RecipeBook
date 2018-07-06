@@ -4,6 +4,25 @@ class RecipeController {
   constructor () {
     console.log('constructor called')
   }
+
+  getShoppingList (req, res) {
+    res.setHeader('Content-Type', 'application/json')
+    query(`SELECT ingredient_name FROM shopping_list`)
+    .then(results => {
+      const shoppingList = []
+      if (results) {
+        results.forEach((item) => {
+          shoppingList.push(Object.values(item)[0])
+        })
+      }
+      res.send(JSON.stringify(shoppingList))
+    })
+    .catch((error) => {
+      console.log(error, response.data)
+      res.send( { error: 'Something bad happened', status: 500 })
+    })
+  }
+  
   getRecipes (req, res) {
     // query(`SELECT * FROM recipes WHERE id = "${userQuery.id}"`)
     res.setHeader('Content-Type', 'application/json')
@@ -170,29 +189,8 @@ class RecipeController {
     res.send(recipe)
   }
 
-  getShoppingList (req, res) {
-    res.setHeader('Conten-Type', 'application/json')
-    query(`SELECT * FROM shopping_list`)
-    .then(results => {
-      const shoppingList = []
-      if (results) {
-        let resolveCount = 0
-        const resolver = () => {
-          resolveCount += 1
-          if (resolveCount >= results.length) {
-            res.send(JSON.stringify({ shoppingLisst }))
-          }
-        }
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-      res.send( { error: 'Something bad happened', status: 500 })
-    })
-  }
-
   addItemToShoppingList (req, res) {
-    res.setHeader('Conten-Type', 'application/json')
+    res.setHeader('Content-Type', 'application/json')
     const item = Object.keys(req.body)[0].toString()
     console.log(item)
     query("INSERT INTO shopping_list (ingredient_id, ingredient_name) VALUES (1,'"+item+"')")
@@ -216,6 +214,20 @@ class RecipeController {
     query("UPDATE shopping_list INNER JOIN All_Ingredients ON ingredient_name = All_Ingredients.name SET shopping_list.ingredient_id = All_Ingredients.id")
     .then(item => {
       console.log('Item id updated!')
+    })
+    .catch(error => {
+      console.log(error)
+      res.send({ error: 'Something bad happened', status: 500 })
+    })
+  }
+
+  deleteItemFromShoppingList (req, res) {
+    res.setHeader('Content-Type', 'application/json')
+    const item = Object.values(req.body)[0]
+    console.log(item)
+    query("DELETE FROM shopping_list WHERE ingredient_name = '" + item + "'")
+    .then(item => {
+      console.log('Item removed.')
     })
     .catch(error => {
       console.log(error)

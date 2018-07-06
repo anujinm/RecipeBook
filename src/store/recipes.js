@@ -10,11 +10,7 @@ const recipes = {
   namespaced: true,
   state: {
     newItem: '',
-    shoppingList: {
-      'list': {
-        items: ['potatoes', 'marshmellows', 'yeast']
-      }
-    },
+    shoppingList: ['potatoes', 'marshmellows', 'yeast'],
     recipesObj: {
       // '000': {
       //   title: 'Cookies',
@@ -113,24 +109,31 @@ const recipes = {
     //   Vue.set(state.recipesObj, id, recipe)
     // },
 
-    UPDATE_SHOPPING_LIST (state, { shopingList }) {
+    UPDATE_SHOPPING_LIST (state, { responseList }) {
       log('mutation UPDATE_SHOPPING_LIST')
-      if (shopingList && Array.isArray(shopingList)) {
-        shopingList.forEach((item) => {
-          Vue.set(state.shoppingList, 'list', shopingList)
-        })
+      if (responseList && Array.isArray(responseList)) {
+        // let updatedList = []
+        // responseList.forEach((item) => {
+        //   updatedList.push(item)
+        // })
+        // Vue.set(state.shoppingList, responseList)
+        state.shoppingList = responseList
       }
     },
-    UPDATE_LIST (state, { list }) {
-      log('mutation UPDATE_LIST', list)
-      Vue.set(state.shoppingList, 'list', list)
+    REMOVE_FROM_LIST (state, { index }) {
+      log('mutation REMOVE_FROM_LIST', index)
+      state.shoppingList.splice(index, 1)
+      // console.log('item removed from the list ', state.shoppingList)
     },
     ADD_TO_LIST (state, { item }) {
       log('mutation ADD_TO_LIST', item)
-      if (!state.shoppingList['list'].items.includes(item)) {
-        state.shoppingList['list'].items.push(item)
+      if (!state.shoppingList.includes(item)) {
+        console.log(state.shoppingList)
+        state.shoppingList.push(item)
       }
-      Vue.set(state.shoppingList)
+      console.log(state.shoppingList)
+
+      // Vue.set(state.shoppingList)
     }
   },
 
@@ -167,21 +170,33 @@ const recipes = {
         context.commit('EDIT_RECIPE', { recipe })
       })
     },
-    editRecipeIngr (context, recipe) {
-      context.commit('EDIT_RECIPE', { recipe })
-    },
+    // editRecipeIngr (context, recipe) {
+    //   context.commit('EDIT_RECIPE', { recipe })
+    // },
 
     updateShoppingList ({ commit }) {
-      axios.get('https://localhos:3001/recipes').then(response => {
-        const { shopingList } = response.data
-        commit('UPDATE_SHOPPING_LIST', { shopingList })
+      log('this is getting called')
+      axios.get('http://localhost:3001/shoppinglist').then(response => {
+        const responseList = response.data
+        commit('UPDATE_SHOPPING_LIST', { responseList })
+      }).catch(error => {
+        console.log(error)
       })
     },
-    updateList (context, list) {
-      context.commit('UPDATE_LIST', {list})
+    removeFromList (context, item) {
+      const index = this.state.recipes.shoppingList.indexOf(item)
+      console.log(item, index)
+      context.commit('REMOVE_FROM_LIST', { index })
+      axios.delete('http://localhost:3001/shoppinglist', {data: {ingredient_name: item}}).then(response => {
+        console.log('remove from list action')
+      }).catch(error => {
+        console.log(error)
+      })
     },
     addToList (context, item) {
+      context.commit('ADD_TO_LIST', {item})
       axios.post('http://localhost:3001/shoppinglist', item).then(response => {
+        console.log('add to list action')
         context.commit('ADD_TO_LIST', {item})
       }).catch(error => {
         console.log(error)

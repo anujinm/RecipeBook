@@ -18,8 +18,9 @@ app.post('/recipes', RecipeController.postRecipe)
 app.delete('/recipes', RecipeController.deleteRecipe)
 app.put('/recipes/fav', RecipeController.editRecipeFav)
 // app.put('/recipes/ingr', RecipeController.editRecipeIngr)
-app.get('/recipes', RecipeController.getShoppingList)
+app.get('/shoppinglist', RecipeController.getShoppingList)
 app.post('/shoppinglist', RecipeController.addItemToShoppingList)
+app.delete('/shoppinglist', RecipeController.deleteItemFromShoppingList)
 
 // start app
 const port = 3001

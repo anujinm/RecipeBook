@@ -6,8 +6,8 @@
         .row.justify-content-start.add
           input.col-8.input(placeholder="..." ref="newitem") 
           button.col-3(@click="addItem") Add
-        .list.row.justify-content-start(v-for="(item, index) in shoppingList['list'].items")
-          list-item.item(:index="index", :item="item", :list="shoppingList['list']")
+        .list.row.justify-content-start(v-for="(item, index) in shoppingList")
+          list-item.item(:index="index", :item="item", :list="shoppingList")
         br
         // button(@click="UpdateList(item, index, bought)") Update
 </template>
@@ -57,6 +57,7 @@ export default {
       //   this.addToList(newItem)
       // }
       this.addToList(newItem)
+      document.location.reload(true)
       this.clearText()
     },
     UpdateList () {

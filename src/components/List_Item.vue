@@ -36,27 +36,20 @@ export default {
   },
   methods: {
     ...mapActions('recipes', [
-      'updateList'
+      'removeFromList'
     ]),
     clicked (item, index, bought) {
-      let shlist = _.cloneDeep(this.list.items)
-      console.log('before: ', shlist, 'originally ', this.list.items)
-      // this.bought = !bought
-      // let shlist = ['a', 'b', 'c']
-      // console.log(shlist)
+      let shlist = _.cloneDeep(this.list)
+      console.log('before: ', shlist)
       if (bought === false) {
         console.log(false)
         shlist.splice(index, 1)
-        // this.bought = true
       }
-      // } else if (bought === true) {
-      //   console.log(true)
-      //   shlist.splice(index, 1, item)
-      //   this.bought = false
-      // }
-      const newL = { items: shlist }
-      this.updateList(newL)
-      console.log('after: ', shlist, 'then ', this.list.items)
+      console.log('Index to be deleted: ', index, item)
+      this.removeFromList(item, index)
+      document.location.reload(true)
+      // this.updateList(shlist)
+      console.log('after: ', this.list)
     }
   },
   components: {
