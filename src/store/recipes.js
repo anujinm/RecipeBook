@@ -4,13 +4,14 @@ import debug from 'debug'
 let log = debug('store:recipes')
 import Vue from 'vue'
 import axios from 'axios'
+// import { VueRouter } from 'vue-router/types/router';
 
 const recipes = {
 
   namespaced: true,
   state: {
     newItem: '',
-    shoppingList: ['potatoes', 'marshmellows', 'yeast'],
+    shoppingList: [],
     recipesObj: {
       // '000': {
       //   title: 'Cookies',
@@ -62,6 +63,10 @@ const recipes = {
       //     notes: 'Can add chocolate chips'
       //   }
       // }
+    },
+    RecipesByTitle: {},
+    searchList: [],
+    searchedRecipes: {
     }
   },
   mutations: {
@@ -112,19 +117,15 @@ const recipes = {
     UPDATE_SHOPPING_LIST (state, { responseList }) {
       log('mutation UPDATE_SHOPPING_LIST')
       if (responseList && Array.isArray(responseList)) {
-        // let updatedList = []
-        // responseList.forEach((item) => {
-        //   updatedList.push(item)
-        // })
-        // Vue.set(state.shoppingList, responseList)
         state.shoppingList = responseList
       }
     },
+
     REMOVE_FROM_LIST (state, { index }) {
       log('mutation REMOVE_FROM_LIST', index)
       state.shoppingList.splice(index, 1)
-      // console.log('item removed from the list ', state.shoppingList)
     },
+
     ADD_TO_LIST (state, { item }) {
       log('mutation ADD_TO_LIST', item)
       if (!state.shoppingList.includes(item)) {
@@ -132,15 +133,68 @@ const recipes = {
         state.shoppingList.push(item)
       }
       console.log(state.shoppingList)
+    },
 
-      // Vue.set(state.shoppingList)
+    ADD_TO_SEARCH (state, {item}) {
+      log('mutation ADD_TO_SEARCH')
+      state.searchList.push(item)
+      for (var recipe in state.recipesObj) {
+        var myrecipe = state.recipesObj[recipe]
+        for (var ingredient in myrecipe.ingredients) {
+          var myingredient = myrecipe.ingredients[ingredient]
+          if (state.searchList.includes(myingredient.name)) {
+            // console.log(state.searchList, myingredient)
+            // console.log('Found it: ', recipe, myingredient.name)
+            Vue.set(state.searchedRecipes, recipe, myrecipe)
+          }
+        }
+      }
+    },
+
+    REMOVE_FROM_SEARCH (state, {index}) {
+      log('mutation REMOVE_FROM_SEARCH')
+      state.searchList.splice(index, 1)
+      // console.log(state.searchList)
+      for (var recipe in state.searchedRecipes) {
+        var myrecipe = state.searchedRecipes[recipe]
+        var inSearch = false
+        for (var ingredient in myrecipe.ingredients) {
+          var myingredient = myrecipe.ingredients[ingredient]
+          // console.log(myingredient.name)
+          if (state.searchList.includes(myingredient.name)) {
+            inSearch = true
+          }
+        }
+        if (inSearch === false) {
+          Vue.delete(state.searchedRecipes, recipe, myrecipe)
+        }
+      }
+    },
+
+    FIND_BY_TITLE (state, { title }) {
+      log('mutation FIND_BY_TITLE')
+      for (var recipe in state.recipesObj) {
+        const myrecipe = state.recipesObj[recipe]
+        console.log(myrecipe.title, title)
+        if (myrecipe.title.toLowerCase().includes(title.toLowerCase())) {
+          Vue.set(state.RecipesByTitle, recipe, myrecipe)
+          console.log(state.RecipesByTitle)
+        }
+      }
     }
+
   },
 
   getters: {
     recipes (state) {
       const recipes = Object.keys(state.recipesObj).map((id) => {
         return {id, ...state.recipesObj[id]}
+      })
+      return recipes
+    },
+    searchedByTitle (state) {
+      const recipes = Object.keys(state.RecipesByTitle).map((id) => {
+        return {id, ...state.RecipesByTitle[id]}
       })
       return recipes
     }
@@ -170,9 +224,9 @@ const recipes = {
         context.commit('EDIT_RECIPE', { recipe })
       })
     },
-    // editRecipeIngr (context, recipe) {
-    //   context.commit('EDIT_RECIPE', { recipe })
-    // },
+    editRecipeIngr (context, recipe) {
+      context.commit('EDIT_RECIPE', { recipe })
+    },
 
     updateShoppingList ({ commit }) {
       log('this is getting called')
@@ -194,13 +248,23 @@ const recipes = {
       })
     },
     addToList (context, item) {
-      context.commit('ADD_TO_LIST', {item})
+      context.commit('ADD_TO_LIST', { item })
       axios.post('http://localhost:3001/shoppinglist', item).then(response => {
-        console.log('add to list action')
-        context.commit('ADD_TO_LIST', {item})
+        context.commit('ADD_TO_LIST', { item })
       }).catch(error => {
         console.log(error)
       })
+    },
+
+    addToSearchList (context, item) {
+      context.commit('ADD_TO_SEARCH', { item })
+    },
+    removeFromSearchList (context, index) {
+      context.commit('REMOVE_FROM_SEARCH', { index })
+    },
+
+    findByTitle (context, title) {
+      context.commit('FIND_BY_TITLE', { title })
     }
   }
 

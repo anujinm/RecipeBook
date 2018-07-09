@@ -39,6 +39,7 @@ export default {
 <style lang="scss">
 @import "./styles/main";
 #app {
+  font-family: 'Roboto', sans-serif;
   height: auto;
   .phone { visibility: hidden; }
   @media #{$mobile} {

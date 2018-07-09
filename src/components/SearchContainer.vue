@@ -1,53 +1,43 @@
 <template lang="pug">
-  .recipes
+  .recipes  
     .row.justify-content-center  
       .outerbox
       .insidebox
     .row.justify-content-center
       .recipeBox
-        .row.justify-content-center
-          recipe-box(v-if="showAddBox " :showAddBox="showAddBox")
-        .row.justify-content-center
-          carousel(v-if="!showAddBox" :navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
-            slide(v-for="(recipe, index) in recipes" :key="'recipe' + index" v-if="!FavClicked")
-              recipe-box(:data="recipe" :mesSystem="mesSystem")
-            slide(v-for="(recipe, index) in recipes" :key="'recipe' + index" v-if="FavClicked && recipe.fav == 'true'")
-              recipe-box(:data="recipe" :mesSystem="mesSystem")
-        
+        carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
+          slide(v-for="(recipe, index) in searchedByTitle" :key="recipe+index")
+            recipe-box(:data="recipe" :mesSystem="mesSystem")
+        button(@click="reload") Go Back
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
-import debug from 'debug'
 import RecipeBox from '@/components/RecipeBox'
 import { Carousel, Slide } from 'vue-carousel'
-let log = debug('component:RecipesContainer')
+import debug from 'debug'
+let log = debug('component:SearchContainer')
 export default {
-  name: 'recipesContainer',
+  name: 'searchContainer',
   props: [
-    'showAddBox',
-    'mesSystem',
-    'FavClicked'
+    'mesSystem'
   ],
   data () {
     return {
     }
   },
-  beforeCreate: function () {
-  },
   mounted: function () {
     log('Mounted')
-    log(this.FavClicked)
   },
   computed: {
     ...mapGetters('recipes', [
-      'recipes'
+      'searchedByTitle'
     ])
-    // ...mapState({
-    //   recipes: state => state.recipes
-    // })
   },
   methods: {
+    reload () {
+      window.location.reload()
+    }
   },
   components: {
     'recipe-box': RecipeBox,
@@ -67,7 +57,16 @@ export default {
   flex-direction: column;
   justify-content: center;
 
-  .recipeBox {
+  button {
+    outline: none;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    background: linear-gradient(transparent, white);
+    box-shadow: 1px 1px 1px gray;
+}
+
+.recipeBox {
     width: 1300px;
     display: inline-block;
     position: relative;

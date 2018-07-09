@@ -5,7 +5,8 @@
     transition(name="slide" type="animation")
       .show(v-if="showMenu")
         router-link(to="/" v-bind:class="{ isInactive: !isRoot }") My Recipes
-        router-link(to="/shoppinglist") ShoppingList
+        router-link(to="/shoppinglist") Shopping List
+        router-link(to="/mykitchen") In My Kitchen
         router-link(to="/about") About
         input.searchbar(placeholder="  Search...") 
         i.fas.fa-search

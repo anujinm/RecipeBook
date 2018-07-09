@@ -9,10 +9,10 @@
     button.deleteBtn(v-if="showDelete" @click="deleteRecipe") Delete
 
     input.name(v-if="showAddBox" v-model="newTitleVal" placeholder="title")
-    button.fav.camera(v-if="showAddBox")
-      i.fas.fa-camera
+    // button.fav.camera(v-if="showAddBox")
+    //   i.fas.fa-camera
       
-    h5.name(v-if="!showAddBox") {{data.title}}
+    h5.name(v-if="!showAddBox") {{data.title}} 
     // img(:src='image')
     
     

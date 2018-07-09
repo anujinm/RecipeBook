@@ -64,6 +64,12 @@ class RecipeController {
     })
   }
 
+  // getSearchedRecipes (req, res) {
+  //   res.setHeader('Content-Type', 'application/json')
+
+  //   query(`SELECT * FROM All_Ingredients WHERE `)
+  // }
+
   postRecipe (req, res) {
     res.setHeader('Content-Type', 'application/json')
     const recipe = req.body
@@ -170,24 +176,24 @@ class RecipeController {
     res.send(recipe)
   }
 
-  editRecipeIngr (req, res) {
-    res.setHeader('Content-Type', 'application/json')
-    const recipe = req.body
-    const { id } = recipe
-    console.log(recipe.fav, typeof(id.toString()))
-    // Realized I actually don't need to update the db, so nothing to do here
+  // editRecipeIngr (req, res) {
+  //   res.setHeader('Content-Type', 'application/json')
+  //   const recipe = req.body
+  //   const { id } = recipe
+  //   console.log(recipe.fav, typeof(id.toString()))
+  //   // Realized I actually don't need to update the db, so nothing to do here
 
-    /* recipe.ingredients.forEach((ingredient) => {
-       query("UPDATE ingredients SET amount = " + ingredient.amount + " WHERE recipe_id = " + id.toString())
-       .then( recipe => {
-         console.log('recipe ingredients updated', ingredient.amount)
-       })
-       .catch(error => {
-        console.log(error)
-       })
-     }) */
-    res.send(recipe)
-  }
+  //   /* recipe.ingredients.forEach((ingredient) => {
+  //      query("UPDATE ingredients SET amount = " + ingredient.amount + " WHERE recipe_id = " + id.toString())
+  //      .then( recipe => {
+  //        console.log('recipe ingredients updated', ingredient.amount)
+  //      })
+  //      .catch(error => {
+  //       console.log(error)
+  //      })
+  //    }) */
+  //   res.send(recipe)
+  // }
 
   addItemToShoppingList (req, res) {
     res.setHeader('Content-Type', 'application/json')

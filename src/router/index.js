@@ -26,6 +26,11 @@ const router = new Router({
       path: '/shoppinglist',
       name: 'ShoppingList',
       component: pages.shoppinglist
+    },
+    {
+      path: '/mykitchen',
+      name: 'InMyKitchen',
+      component: pages.inmykitchen
     }
   ]
 })

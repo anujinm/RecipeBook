@@ -1,11 +1,12 @@
 <template lang="pug">
   .nav
     router-link(to="/" v-bind:class="{ isInactive: !isRoot }") My Recipes
-    router-link(to="/shoppinglist") ShoppingList
+    router-link(to="/shoppinglist") Shopping List
+    router-link(to="/mykitchen") In My Kitchen
     router-link(to="/about") About
-    input.searchbar(placeholder="  Search...") 
-    i.fas.fa-search
-      button
+    // input.searchbar(placeholder="  Search...") 
+    // i.fas.fa-search
+    //   button
 </template>
 
 <script>
@@ -93,7 +94,7 @@ i {
     position: absolute;
     top: -20%;
     left: 0%;
-    height: 30px;;
+    height: 30px;
     width: 40px;
   }
 }
