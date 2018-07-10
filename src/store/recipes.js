@@ -66,8 +66,7 @@ const recipes = {
     },
     RecipesByTitle: {},
     searchList: [],
-    searchedRecipes: {
-    }
+    searchedRecipes: {}
   },
   mutations: {
     UPDATE_RECIPES (state, { recipes }) {
@@ -179,6 +178,8 @@ const recipes = {
         if (myrecipe.title.toLowerCase().includes(title.toLowerCase())) {
           Vue.set(state.RecipesByTitle, recipe, myrecipe)
           console.log(state.RecipesByTitle)
+        } else {
+          Vue.delete(state.RecipesByTitle, recipe, myrecipe)
         }
       }
     }

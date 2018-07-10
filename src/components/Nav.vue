@@ -4,9 +4,6 @@
     router-link(to="/shoppinglist") Shopping List
     router-link(to="/mykitchen") In My Kitchen
     router-link(to="/about") About
-    // input.searchbar(placeholder="  Search...") 
-    // i.fas.fa-search
-    //   button
 </template>
 
 <script>
@@ -65,46 +62,17 @@ a {
   font-size: 20px;
   font-weight: 100;
   padding: 15px 15px 5px 15px;
-  color: $gray90;
-  text-shadow: 1px 1px 6px $gray50;
+  color: $gray80;
+  // text-shadow: 1px 1px 6px $gray50;
 }
-.searchbar {
-  font-size: 15px;
-  border-radius: 5px;
-  height: 23px;
-  width: 130px;
-  margin-top: 13px;
-  position: relative;
-  left: 55%;
-  border: none;
-  box-shadow: 2px 2px 2px $gray50;
-}
-i {
-  position: relative;
-  left: 55.5%;
-  top: 18px;
-  color: $gray90;
-  font-size: 16px;
-  text-shadow: 1px 1px 6px $gray70;
-  button {
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    outline: none;
-    position: absolute;
-    top: -20%;
-    left: 0%;
-    height: 30px;
-    width: 40px;
-  }
-}
+
 .router-link-active {
   background: $black;
   color: $white;
-  text-shadow: 1px 1px 1px $gray80;
+  // text-shadow: 1px 1px 1px $gray90;
   &.isInactive {
     background: transparent;
-    color:$gray90;
+    color: white;
   }
 }
 </style>

@@ -148,7 +148,7 @@ export default {
 
     .add button {
       box-shadow: 2px 2px 2px $gray60;
-      margin-top: 18px;
+      margin-top: 20px;
       margin-left: 90%;
     }
     .close button {

@@ -72,7 +72,7 @@ export default {
     display: inline-block;
     position: relative;
     margin-top: 30px;
-    margin-left: 60px;
+    margin-left: 120px;
   }
   .outerbox {
     border: none;
@@ -129,6 +129,7 @@ export default {
 @import "../styles/_variables";
 .VueCarousel{
   width: 1300px;
+  // not so sure if this navigation-button even working ....
   .VueCarousel-navigation-button {
     color: $gray20;
     margin-right: 70px;

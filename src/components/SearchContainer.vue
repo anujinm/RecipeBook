@@ -1,9 +1,10 @@
 <template lang="pug">
   .recipes  
-    .row.justify-content-center  
+    h5(v-if="Object.keys(searchedByTitle).length == 0") No recipes found.
+    .row.justify-content-center(v-if="Object.keys(searchedByTitle).length != 0")
       .outerbox
       .insidebox
-    .row.justify-content-center
+    .row.justify-content-center(v-if="Object.keys(searchedByTitle).length != 0")
       .recipeBox
         carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
           slide(v-for="(recipe, index) in searchedByTitle" :key="recipe+index")
