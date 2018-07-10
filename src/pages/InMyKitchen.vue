@@ -2,7 +2,7 @@
   .kitchen
     .row.justify-content-center
       .search
-        input.searchbar(placeholder="Search..." ref="searchInput")
+        input.searchbar(placeholder="Search by ingredients..." ref="searchInput")
         i.fas.fa-search
           button(@click="addToSearch")
     .row.justify-content-center
@@ -85,7 +85,11 @@ export default {
 @import "../styles/_mixins";
 .kitchen {
   height: 910px;
-  background: linear-gradient(transparent, #DEE1E2);
+  // background: linear-gradient(transparent, #DEE1E2);
+  background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/cooking-background-images-13.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   font-family: 'Roboto', sans-serif;
   button {
     cursor: pointer;
@@ -97,24 +101,24 @@ export default {
     margin-top: 50px;
     .searchbar {
       font-size: 20px;
-      border-radius: 5px;
+      border-radius: 25px;
       height: 43px;
-      width: 230px;
+      width: 280px;
       // margin-top: 50px;
       padding-left: 15px;
       position: relative;
       border: none;
-      box-shadow: 2px 2px 2px $gray50;
+      box-shadow: inset 0px 0 2px #a3a2a2;
       outline: none;
       color: rgb(88, 88, 88);
     }
     i {
       position: relative;
-      // margin-top: 60px;
-      margin-left: 10px;
+      top: 5%;
+      margin-left: -35px;
       color: $gray90;
       font-size: 26px;
-      text-shadow: 1px 1px 6px $gray10;
+      text-shadow: 1px 1px 1px $gray30;
       button {
         position: absolute;
         bottom: 0;
@@ -156,14 +160,14 @@ export default {
   }
   .outerbox {
     border: none;
-    background-image: linear-gradient(to right bottom, transparent,#A37E44, #598043);
+    background: radial-gradient( #dab296 , transparent);
     width: 1400px;
     height: 650px;
     border-radius: 18px;
     z-index: 0;
     position: absolute;
     margin-top: 20px;
-    box-shadow: 5px 5px 6px $gray30;
+    box-shadow: 5px 5px 6px $gray10;
   }
   .insidebox {
     margin-top: 2px;
@@ -172,14 +176,14 @@ export default {
     width: 1395px;
     height: 645px;
     border-radius: 18px;
-    background: linear-gradient($white, #DEE1E2);
+    // background: white;
     z-index: 1;
   
     .recipeBox{
       // width: 1200px;
       // display: inline-block;
       // position: relative;
-      margin-top: 10px;
+      margin-top: 40px;
       margin-left: 60px;
       z-index: 2;
     }
@@ -207,7 +211,7 @@ export default {
       height: 597px;
       width: 335px;
       .recipeBox {
-        margin-top: 0px;
+        margin-top: 10px;
         width: 340px;
         margin-left: 15px;
       }
@@ -218,14 +222,18 @@ export default {
 <style lang="scss">
 @import "../styles/_variables";
 .VueCarousel{
-  .VueCarousel-navigation-button {
-    color: $gray20;
-    margin-right: 70px;
+  .VueCarousel-navigation {
+    button {
+      color: $gray20;
+      margin-right: 50px;
+    }
   }
   @media #{$tablet} {
     width: 605px;
-    .VueCarousel-navigation-button {
-      margin-right: 0px;
+    .VueCarousel-navigation {
+      button {
+       margin-right: 0px;
+      }
     }
   }
   @media #{$mobile} {

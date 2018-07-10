@@ -76,7 +76,7 @@ export default {
   }
   .outerbox {
     border: none;
-    background-image: linear-gradient(to right bottom, transparent,#A37E44, #598043);
+    background-image: radial-gradient(rgb(189, 186, 182),transparent);
     width: 1400px;
     height: 650px;
     border-radius: 18px;
@@ -90,7 +90,7 @@ export default {
     width: 1395px;
     height: 645px;
     border-radius: 18px;
-    background: linear-gradient($white, #DEE1E2);
+    // background: linear-gradient($white, #DEE1E2);
     z-index: 0;
   }
   @media #{$tablet} {

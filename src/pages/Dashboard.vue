@@ -1,23 +1,23 @@
 <template lang="pug">
   .dashboard
     .row.justify-content-center.menubar
-      .col-sm-2.favs
+      .col--md-2.favs
         i.fas.fa-heart
           button(@click="FavClicked = !FavClicked") Favorites
-      .col-sm-4.sort
+      .col-md-4.sort
         input.searchRecipe(placeholder="Search recipes..." ref="inputTitle")
         i.fas.fa-search
           button(@click="findRecipe")
       
-      .col-sm-1.add
+      .col-md-1.add
         button(v-if="!showAddBox" @click="showAddBox = ! showAddBox") +
-      .col-sm-1.close(v-if="showAddBox")
+      .col-md-1.close(v-if="showAddBox")
         button(@click="showAddBox = false") Close
-      .col-sm-1.mesSystem(v-if="!showAddBox")
+      .col-md-1.mesSystem(v-if="!showAddBox")
         select.select(@change="getSystem")
           option(value="imperial") Imperial
           option(value="metric") Metric
-      .com-sm-2
+      .com-md-2
     
     .row.justify-content-center(v-if="!searchClicked")
       r-container.r-container(:showAddBox="showAddBox" :mesSystem="mesSystem" :FavClicked="FavClicked")
@@ -89,7 +89,14 @@ export default {
   // height: 0px;
   display: block;
   padding-bottom: 210px;
-  background: linear-gradient(transparent, #DEE1E2);
+  // background: linear-gradient(transparent, #DEE1E2, transparent);
+
+  // background-image: url("https://image.freepik.com/free-photo/board-amidst-cooking-ingredients_23-2147749529.jpg");
+  background-image: url("https://media.gettyimages.com/photos/herbs-condiments-and-spices-picture-id517302832?b=1&k=6&m=517302832&s=612x612&w=0&h=1w8bzO19N1L38roYQF9eg3NWS2avZeB9XyP8eSMgVMk=");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  // background: white;
   button {
     cursor: pointer;
     outline: none;
@@ -97,10 +104,10 @@ export default {
     background: transparent;
   }
   .row.menubar {
-    margin-top: 70px;
+    padding-top: 70px;
     margin-bottom: 40px;
     button {
-      background: linear-gradient($white, $gray90);
+      // background: linear-gradient($white, $gray90);
       font-size: 20px;
       border-radius: 5px;
     }
@@ -108,21 +115,24 @@ export default {
       margin: 10px 5px;
       &:hover { transform: scale(1.1,1.1); }
       i { color: #990000; }
-      button { background: transparent; }
+      button { background: transparent; font-weight: 800; color: black;
+ }
     }
   
     .sort {
       margin-top: 10px;
       .searchRecipe {
+        &::placeholder {color: rgb(78, 78, 78);}
+        background: transparent;
         font-size: 20px;
-        border-radius: 5px;
+        border-radius: 20px;
         height: 35px;
-        width: 200px;
+        width: 230px;
         // margin-top: 50px;
         padding-left: 15px;
         position: relative;
         border: none;
-        box-shadow: inset 0px 0 2px #a3a2a2;
+        box-shadow: inset 0px 0 2px #616060;
         // box-shadow: 2px 2px 2px 2px $gray50;
         outline: none;
         color: rgb(88, 88, 88);
@@ -130,10 +140,10 @@ export default {
       i {
          position: relative;
       // margin-top: 60px;
-        margin-left: 10px;
+        margin-left: -30px;
         color: $gray90;
-        font-size: 26px;
-        text-shadow: 1px 1px 1px $gray10;
+        font-size: 20px;
+        text-shadow: 1px 1px 1px $gray30;
         button {
           position: absolute;
           background: transparent;
@@ -147,7 +157,7 @@ export default {
     }
 
     .add button {
-      box-shadow: 2px 2px 2px $gray60;
+      box-shadow: 1px 1px 2px $gray30;
       margin-top: 20px;
       margin-left: 90%;
     }

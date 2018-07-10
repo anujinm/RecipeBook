@@ -119,10 +119,10 @@ export default {
 @import "../styles/_mixins";
 .box {
   width: 300px;
-  height: 500px;
+  height: 520px;
   // border: 1px solid $gray80;
   background: $white;
-  box-shadow:  3px 4px 10px 3px $gray60;
+  box-shadow:  3px 3px 4px 1px $gray30;
   position: relative;
   display: inline-block;
   z-index: 1;
@@ -134,7 +134,7 @@ export default {
     position: relative;
     overflow-y: scroll;
     overflow-x: hidden;
-    height: 380px;
+    height: 400px;
     width: 280px;
     margin: 10px;
   }

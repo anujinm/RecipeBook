@@ -33,6 +33,7 @@ export default {
   height: 50px;
   width: 100%;
   text-align: right;
-  padding: 20px 50px;
+  padding-top: 20px;
+  padding-right: 20px;
 }
 </style>

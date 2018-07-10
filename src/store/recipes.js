@@ -106,6 +106,7 @@ const recipes = {
       log('mutation EDIT_RECIPE', recipe)
       const { id } = recipe
       Vue.set(state.recipesObj, id, recipe)
+      Vue.set(state.RecipesByTitle, id, recipe)
     },
     // EDIT_RECIPE_INGR (state, {recipe}) {
     //   log('mutation EDIT_RECIPE_INGR', recipe)

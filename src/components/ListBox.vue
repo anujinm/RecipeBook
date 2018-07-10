@@ -86,7 +86,7 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .listbox {
-  background: linear-gradient(transparent, #DEE1E2);
+  // background: linear-gradient(transparent, #DEE1E2);
   .add {
     margin: 20px;
     height: 35px;
@@ -100,17 +100,27 @@ export default {
     button {
       outline: none;
       max-width: 70px;
-      border-radius: 10px;
-      background: linear-gradient(to right bottom,#fff, rgb(131, 219, 163));
-      border: 1px solid black;
+      border-radius: 5px;
+      color: #03355e;
+      // background: linear-gradient(to right bottom,#fff, rgb(131, 219, 163));
+      background: #fff;
+      border: 2px solid #03355e;
+      // border: 1px solid black;
       margin-left: 20px;
       cursor: pointer;
       &:hover {
-        background: linear-gradient(to right bottom,#fff, rgb(67, 172, 105));
+        // background: linear-gradient(to right bottom,#fff, rgb(67, 172, 105));
+        color: #fff;
+        background: #f6b93b;
+        border-color: #f6b93b;
+        transition: all 0.4s ease 0s;
         transform: scale(1.03,1.03)
       }
       &:active {
-        background: linear-gradient(to right bottom,#fff, rgb(19, 172, 75));
+        // background: linear-gradient(to right bottom,#fff, rgb(19, 172, 75));
+        background: #eea30e;
+        border-color: #eea30e;
+
         transform: translateY(0.5px);
       }
     }
@@ -126,8 +136,8 @@ export default {
   .outer-container {
     width: 650px;
     height: 750px;
-    background: linear-gradient(to right bottom, #185D31, #fff);
-    box-shadow: 5px 5px 6px $gray30;
+    background: linear-gradient(to right bottom,transparent, #533716, transparent);
+    box-shadow: 5px 5px 6px $gray10;
     border-radius: 10px;
     margin-top: 30px;
     margin-bottom: 250px;
@@ -138,6 +148,7 @@ export default {
     height: 690px;
     border-radius: 10px;
     background: #fff;
+    box-shadow: inset 5px 5px 5px $gray90;
     position: absolute;
     top: 20%;
     z-index: 1;

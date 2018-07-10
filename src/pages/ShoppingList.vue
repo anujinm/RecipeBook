@@ -34,10 +34,14 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .shoppinglist {
+  background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/cooking-background-images-13.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   text-align: center;
   h4 {
     margin-left: -300px;
-    margin-top: 50px;
+    padding-top: 50px;
     font-weight: 500;
     text-shadow: 2px 2px 2px $gray70;
     }
