@@ -44,7 +44,7 @@
           option ml
           option L
       .col-3
-        input.amount-empty.name(v-model="newNameVal")
+        input.amount-empty.name(v-model="newNameVal" autocomplete="on")
 </template>
 
 <script>

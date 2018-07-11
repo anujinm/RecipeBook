@@ -12,7 +12,6 @@
             button(@click="removeItem(index)")
     .row.justify-content-center  
       .outerbox
-      .insidebox
         .recipeBox
           .row.justify-content-center
             carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
@@ -160,41 +159,23 @@ export default {
   }
   .outerbox {
     border: none;
-    background: radial-gradient( #dab296 , transparent);
+    // background: radial-gradient( #dab296 , transparent);
     width: 1400px;
     height: 650px;
     border-radius: 18px;
-    z-index: 0;
     position: absolute;
     margin-top: 20px;
-    box-shadow: 5px 5px 6px $gray10;
-  }
-  .insidebox {
-    margin-top: 2px;
-    position: absolute;
-    margin-top: 23px;
-    width: 1395px;
-    height: 645px;
-    border-radius: 18px;
-    // background: white;
-    z-index: 1;
+    box-shadow: 0px 0px 8px $gray10;
   
     .recipeBox{
-      // width: 1200px;
-      // display: inline-block;
-      // position: relative;
       margin-top: 40px;
       margin-left: 60px;
-      z-index: 2;
     }
   }
 
   @media #{$tablet} {
     .outerbox {
       width: 700px;
-    }
-    .insidebox{
-      width: 697px;
       .recipeBox{
         width: 605px;
         margin-left: 45px;
@@ -206,10 +187,6 @@ export default {
     .outerbox {
       width: 340px;
       height: 600px;
-    }
-    .insidebox{
-      height: 597px;
-      width: 335px;
       .recipeBox {
         margin-top: 10px;
         width: 340px;

@@ -107,6 +107,7 @@ const recipes = {
       const { id } = recipe
       Vue.set(state.recipesObj, id, recipe)
       Vue.set(state.RecipesByTitle, id, recipe)
+      Vue.set(state.searchedRecipes, id, recipe)
     },
     // EDIT_RECIPE_INGR (state, {recipe}) {
     //   log('mutation EDIT_RECIPE_INGR', recipe)

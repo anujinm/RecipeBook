@@ -3,13 +3,12 @@
     h5(v-if="Object.keys(searchedByTitle).length == 0") No recipes found.
     .row.justify-content-center(v-if="Object.keys(searchedByTitle).length != 0")
       .outerbox
-      .insidebox
-    .row.justify-content-center(v-if="Object.keys(searchedByTitle).length != 0")
-      .recipeBox
-        carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
-          slide(v-for="(recipe, index) in searchedByTitle" :key="recipe+index")
-            recipe-box(:data="recipe" :mesSystem="mesSystem")
-        button(@click="reload") Go Back
+        .row.justify-content-center(v-if="Object.keys(searchedByTitle).length != 0")
+          .recipeBox
+            carousel(:navigation-enabled="true" :per-page="3" :per-page-custom="[[360,1],[800,2],[1400,3]]")
+              slide(v-for="(recipe, index) in searchedByTitle" :key="recipe+index")
+                recipe-box(:data="recipe" :mesSystem="mesSystem")
+            button(@click="reload") Go Back
 </template>
 
 <script>
@@ -76,23 +75,15 @@ export default {
   }
   .outerbox {
     border: none;
-    background-image: radial-gradient(rgb(189, 186, 182),transparent);
+    // background-image: radial-gradient(rgb(189, 186, 182),transparent);
     width: 1400px;
-    height: 650px;
+    height: 640px;
     border-radius: 18px;
     z-index: 0;
-    position: absolute;
-    box-shadow: 5px 5px 6px $gray30;
+    // position: absolute;
+    box-shadow: 0px 0px 8px $gray10;
   }
-  .insidebox {
-    margin-top: 2px;
-    position: absolute;
-    width: 1395px;
-    height: 645px;
-    border-radius: 18px;
-    // background: linear-gradient($white, #DEE1E2);
-    z-index: 0;
-  }
+
   @media #{$tablet} {
     width: 650px;
     .recipeBox{
@@ -101,9 +92,6 @@ export default {
     }
     .outerbox {
       width: 700px;
-    }
-    .insidebox{
-      width: 697px;
     }
   }
   @media #{$mobile} {
@@ -115,12 +103,7 @@ export default {
     }
     .outerbox {
       width: 320px;
-      height: 600px;
-    }
-    .insidebox{
-      // left: 33px;
-      height: 597px;
-      width: 315px;
+      height: 620px;
     }
   }
 }
