@@ -4,6 +4,24 @@ class RecipeController {
   constructor () {
     console.log('constructor called')
   }
+    
+  getAllIngredients (req, res) {
+    res.setHeader('Content-Type', 'application/json')
+    query(`SELECT name FROM All_Ingredients`)
+    .then(results => {
+      const ingrList = []
+      if (results) {
+        results.forEach((item) => {
+          ingrList.push(Object.values(item)[0])
+        })
+      }
+      res.send(JSON.stringify(ingrList))
+    })
+    .catch((error) => {
+      console.log(error, response.data)
+      res.send( { error: 'Something bad happened', status: 500 })
+    })
+  }
 
   getShoppingList (req, res) {
     res.setHeader('Content-Type', 'application/json')
@@ -135,24 +153,31 @@ class RecipeController {
   deleteRecipe (req, res) {
     res.setHeader('Content-Type', 'application/json')
     const recipeID = req.body
-    // console.log(req.body, recipeID.id)
-    query(`DELETE FROM ingredients WHERE recipe_id = ` + recipeID.id.toString())
-    .then(recipe => {
-      console.log('Recipe Removed!')
-    })
-    .catch(error => {
+    console.log(req.body, recipeID.id)
+
+    Promise.all([
+      query(`DELETE FROM ingredients WHERE recipe_id = ` + recipeID.id.toString())
+      .then(recipe => {
+        console.log('recipe_id removed from ingredients!')
+      })
+      .then(() =>{
+        
+      }),
+      query(`DELETE FROM recipes WHERE id = ` + recipeID.id.toString())
+      .then(recipe => {
+        console.log('Recipe Removed!')
+      })
+      .catch(error => {
+        console.log(error)
+        res.send({ error: 'Something bad happened', status: 500 })
+      })
+    ]).then(() => {
+      res.send({ recipeID, status: 200 })
+    }).catch(error => {
       console.log(error)
       res.send({ error: 'Something bad happened', status: 500 })
     })
 
-    query(`DELETE FROM recipes WHERE id = ` + recipeID.id.toString())
-    .then(recipe => {
-      console.log('Recipe Removed!')
-    })
-    .catch(error => {
-      console.log(error)
-      res.send({ error: 'Something bad happened', status: 500 })
-    })
     // res.send(recipeID)
   }
 
@@ -199,29 +224,34 @@ class RecipeController {
     res.setHeader('Content-Type', 'application/json')
     const item = Object.keys(req.body)[0].toString()
     console.log(item)
-    query("INSERT INTO shopping_list (ingredient_id, ingredient_name) VALUES (1,'"+item+"')")
-    .then(item => {
-      console.log('Item added to Shopping List with id 1 and name!')
-    })
-    .catch(error => {
-      console.log(error)
-      res.send({ error: 'Something bad happened', status: 500 })
-    })
 
-    query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+item+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+item+"') LIMIT 1 ")
-    .then(recipe => {
-      console.log('ingredient added!!!')
-    })
-    .catch(error => {
-      console.log(error)
-      res.send({ error: 'Something bad happened', status: 500 })
-    })
-
-    query("UPDATE shopping_list INNER JOIN All_Ingredients ON ingredient_name = All_Ingredients.name SET shopping_list.ingredient_id = All_Ingredients.id")
-    .then(item => {
-      console.log('Item id updated!')
-    })
-    .catch(error => {
+    Promise.all([
+      query("INSERT INTO shopping_list (ingredient_id, ingredient_name) VALUES (1,'"+item+"')")
+      .then(item => {
+        console.log('Item added to Shopping List with id 1 and name!')
+      })
+      .then(() => {
+        
+      }),
+      query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+item+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+item+"') LIMIT 1 ")
+      .then(recipe => {
+        console.log('ingredient added!!!')
+      })
+      .catch(error => {
+        console.log(error)
+        res.send({ error: 'Something bad happened', status: 500 })
+      }),
+      query("UPDATE shopping_list INNER JOIN All_Ingredients ON ingredient_name = All_Ingredients.name SET shopping_list.ingredient_id = All_Ingredients.id")
+      .then(item => {
+        console.log('Item id updated!')
+      })
+      .catch(error => {
+        console.log(error)
+        res.send({ error: 'Something bad happened', status: 500 })
+      })
+    ]).then(() => {
+      res.send({ item, status: 200 })
+    }).catch(() => {
       console.log(error)
       res.send({ error: 'Something bad happened', status: 500 })
     })

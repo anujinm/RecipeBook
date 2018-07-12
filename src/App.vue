@@ -22,6 +22,7 @@ export default {
     this.$store.dispatch('loading', false)
     this.$store.dispatch('recipes/updateAllRecipes')
     this.$store.dispatch('recipes/updateShoppingList')
+    this.$store.dispatch('recipes/updateIngredients')
   },
   computed: {
   },

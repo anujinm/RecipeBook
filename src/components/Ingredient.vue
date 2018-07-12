@@ -44,13 +44,15 @@
           option ml
           option L
       .col-3
-        input.amount-empty.name(v-model="newNameVal" autocomplete="on")
+        AutoComplete.autocomplete(v-model="newNameVal"  ref="search" :items="AllIngredientsList")
+        // input.amount-empty.name(v-model="newNameVal" autocomplete="on")
 </template>
 
 <script>
 import _ from 'lodash'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import debug from 'debug'
+import AutoComplete from '@/components/AutoComplete'
 let log = debug('component:RecipeBoxIngredient')
 export default {
   name: 'recipeBoxIngredient',
@@ -77,9 +79,9 @@ export default {
     log('Mounted', this.added)
   },
   computed: {
-    // ...mapState('recipes', [
-    //   'shoppingList'
-    // ]),
+    ...mapState('recipes', [
+      'AllIngredientsList'
+    ]),
     amount () {
       return this.convertNumber(this.item.amount)
     }
@@ -174,6 +176,7 @@ export default {
     }
   },
   components: {
+    AutoComplete
   }
 }
 </script>
@@ -228,7 +231,10 @@ export default {
      padding-left: 5px;} 
     &.measurement { margin-left: 10px; width: 45px; height: 25px;padding-left: 10px;}
   }
-
+  .autocomplete {
+    margin-top: 5px;
+    margin-left: 9px;
+  }
   .amount-empty {
     white-space: normal;
     font-size: 15px;

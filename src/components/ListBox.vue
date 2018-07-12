@@ -57,7 +57,7 @@ export default {
       //   this.addToList(newItem)
       // }
       this.addToList(newItem)
-      document.location.reload(true)
+      // document.location.reload(true)
       this.clearText()
     },
     UpdateList () {

@@ -13,6 +13,7 @@ app.use(bodyParser.json())
 app.use(cors())
 
 // routes
+app.get('/allingredients', RecipeController.getAllIngredients)
 app.get('/recipes', RecipeController.getRecipes)
 app.post('/recipes', RecipeController.postRecipe)
 app.delete('/recipes', RecipeController.deleteRecipe)

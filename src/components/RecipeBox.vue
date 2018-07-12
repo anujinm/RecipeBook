@@ -72,19 +72,23 @@ export default {
       }
       if (Array.isArray(newIngredientVals)) {
         newIngredientVals.forEach((ingredient) => {
-          console.log('ingredient is:', ingredient)
+          console.log('ingredient is:', ingredient.$children[0].search)
           if (ingredient.newNameVal !== '' && ingredient.newAmountFracVal !== '' && ingredient.newAmountWholeVal !== '' && ingredient.newMeasurementVal !== '') {
             const { newNameVal, newAmountFracVal, newAmountWholeVal, newMeasurementVal } = ingredient
             let newFracVal = this.convertAmount(newAmountFracVal)
             const newAmountVal = String(parseFloat(newAmountWholeVal) + parseFloat(newFracVal))
-            myRecipe.ingredients.push({ name: newNameVal, amount: newAmountVal, measurement: newMeasurementVal })
+            let searchNameVal = newNameVal
+            searchNameVal = ingredient.$children[0].search
+            myRecipe.ingredients.push({ name: searchNameVal, amount: newAmountVal, measurement: newMeasurementVal })
           }
         })
       } else {
         const { newNameVal, newAmountFracVal, newAmountWholeVal, newMeasurementVal } = newIngredientVals
         let newFracVal = this.convertAmount(newAmountFracVal)
         const newAmountVal = String(parseFloat(newAmountWholeVal) + parseFloat(newFracVal))
-        myRecipe.ingredients.push({ name: newNameVal, amount: newAmountVal, measurement: newMeasurementVal })
+        let searchNameVal = newNameVal
+        searchNameVal = newIngredientVals[0].$children[0].search
+        myRecipe.ingredients.push({ name: searchNameVal, amount: newAmountVal, measurement: newMeasurementVal })
       }
       this.addRecipe(myRecipe)
       // document.location.reload(true)

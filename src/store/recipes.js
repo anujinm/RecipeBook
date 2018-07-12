@@ -10,8 +10,8 @@ const recipes = {
 
   namespaced: true,
   state: {
-    newItem: '',
     shoppingList: [],
+    AllIngredientsList: [],
     recipesObj: {
       // '000': {
       //   title: 'Cookies',
@@ -184,6 +184,13 @@ const recipes = {
           Vue.delete(state.RecipesByTitle, recipe, myrecipe)
         }
       }
+    },
+
+    UPDATE_INGREDIENTS_LIST (state, { responseList }) {
+      log('mutation UPDATE_INGREDIENTS_LIST')
+      if (responseList && Array.isArray(responseList)) {
+        state.AllIngredientsList = responseList
+      }
     }
 
   },
@@ -220,6 +227,8 @@ const recipes = {
     removeRecipe (context, recipeid) {
       axios.delete('http://localhost:3001/recipes', {data: {id: recipeid}}).then(response => {
         context.commit('REMOVE_RECIPE', { recipeid })
+      }).catch((error) => {
+        console.log(error)
       })
     },
     editRecipeFav (context, recipe) {
@@ -232,7 +241,6 @@ const recipes = {
     },
 
     updateShoppingList ({ commit }) {
-      log('this is getting called')
       axios.get('http://localhost:3001/shoppinglist').then(response => {
         const responseList = response.data
         commit('UPDATE_SHOPPING_LIST', { responseList })
@@ -268,7 +276,18 @@ const recipes = {
 
     findByTitle (context, title) {
       context.commit('FIND_BY_TITLE', { title })
+    },
+
+    updateIngredients ({commit}) {
+      console.log('updateIngrediens is called!!!!')
+      axios.get('http://localhost:3001/allingredients').then(response => {
+        const responseList = response.data
+        commit('UPDATE_INGREDIENTS_LIST', { responseList })
+      }).catch(error => {
+        console.log(error)
+      })
     }
+
   }
 
 }

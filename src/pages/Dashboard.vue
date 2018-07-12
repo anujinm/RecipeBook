@@ -18,7 +18,7 @@
           option(value="imperial") Imperial
           option(value="metric") Metric
       .com-md-2
-    
+      
     .row.justify-content-center(v-if="!searchClicked")
       r-container.r-container(:showAddBox="showAddBox" :mesSystem="mesSystem" :FavClicked="FavClicked")
     .row.justify-content-center(v-if="searchClicked")
