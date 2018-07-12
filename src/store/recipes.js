@@ -251,15 +251,13 @@ const recipes = {
     removeFromList (context, item) {
       const index = this.state.recipes.shoppingList.indexOf(item)
       console.log(item, index)
-      context.commit('REMOVE_FROM_LIST', { index })
       axios.delete('http://localhost:3001/shoppinglist', {data: {ingredient_name: item}}).then(response => {
-        console.log('remove from list action')
+        context.commit('REMOVE_FROM_LIST', { index })
       }).catch(error => {
         console.log(error)
       })
     },
     addToList (context, item) {
-      context.commit('ADD_TO_LIST', { item })
       axios.post('http://localhost:3001/shoppinglist', item).then(response => {
         context.commit('ADD_TO_LIST', { item })
       }).catch(error => {
@@ -279,7 +277,6 @@ const recipes = {
     },
 
     updateIngredients ({commit}) {
-      console.log('updateIngrediens is called!!!!')
       axios.get('http://localhost:3001/allingredients').then(response => {
         const responseList = response.data
         commit('UPDATE_INGREDIENTS_LIST', { responseList })
