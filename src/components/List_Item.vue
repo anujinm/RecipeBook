@@ -47,7 +47,7 @@ export default {
       }
       console.log('Index to be deleted: ', index, item)
       this.removeFromList(item, index)
-      document.location.reload(true)
+      // document.location.reload(true)
       // this.updateList(shlist)
       console.log('after: ', this.list)
     }

@@ -264,6 +264,7 @@ class RecipeController {
     query("DELETE FROM shopping_list WHERE ingredient_name = '" + item + "'")
     .then(item => {
       console.log('Item removed.')
+      res.send(item)
     })
     .catch(error => {
       console.log(error)

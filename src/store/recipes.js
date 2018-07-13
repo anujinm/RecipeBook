@@ -4,6 +4,7 @@ import debug from 'debug'
 let log = debug('store:recipes')
 import Vue from 'vue'
 import axios from 'axios'
+import Config from '../config'
 // import { VueRouter } from 'vue-router/types/router';
 
 const recipes = {
@@ -212,27 +213,27 @@ const recipes = {
 
   actions: {
     updateAllRecipes ({ commit }) {
-      axios.get('http://localhost:3001/recipes').then(response => {
+      axios.get(`${Config.baseURL}/recipes`).then(response => {
         const { recipes } = response.data
         commit('UPDATE_RECIPES', { recipes })
       })
     },
     addRecipe (context, recipe) {
-      axios.post('http://localhost:3001/recipes', recipe).then(response => {
+      axios.post(`${Config.recipeURL}`, recipe).then(response => {
         context.commit('ADD_RECIPE', { recipe })
       }).catch(error => {
         console.log(error)
       })
     },
     removeRecipe (context, recipeid) {
-      axios.delete('http://localhost:3001/recipes', {data: {id: recipeid}}).then(response => {
+      axios.delete(`${Config.recipeURL}`, {data: {id: recipeid}}).then(response => {
         context.commit('REMOVE_RECIPE', { recipeid })
       }).catch((error) => {
         console.log(error)
       })
     },
     editRecipeFav (context, recipe) {
-      axios.put('http://localhost:3001/recipes/fav', recipe).then(response => {
+      axios.put(`${Config.recipeURL}/fav`, recipe).then(response => {
         context.commit('EDIT_RECIPE', { recipe })
       })
     },
@@ -241,7 +242,7 @@ const recipes = {
     },
 
     updateShoppingList ({ commit }) {
-      axios.get('http://localhost:3001/shoppinglist').then(response => {
+      axios.get(`${Config.shoppingListURL}`).then(response => {
         const responseList = response.data
         commit('UPDATE_SHOPPING_LIST', { responseList })
       }).catch(error => {
@@ -251,14 +252,14 @@ const recipes = {
     removeFromList (context, item) {
       const index = this.state.recipes.shoppingList.indexOf(item)
       console.log(item, index)
-      axios.delete('http://localhost:3001/shoppinglist', {data: {ingredient_name: item}}).then(response => {
-        context.commit('REMOVE_FROM_LIST', { index })
+      context.commit('REMOVE_FROM_LIST', { index })
+      axios.delete(`${Config.shoppingListURL}`, {data: {ingredient_name: item}}).then(response => {
       }).catch(error => {
         console.log(error)
       })
     },
     addToList (context, item) {
-      axios.post('http://localhost:3001/shoppinglist', item).then(response => {
+      axios.post(`${Config.shoppingListURL}`, item).then(response => {
         context.commit('ADD_TO_LIST', { item })
       }).catch(error => {
         console.log(error)
@@ -277,7 +278,7 @@ const recipes = {
     },
 
     updateIngredients ({commit}) {
-      axios.get('http://localhost:3001/allingredients').then(response => {
+      axios.get(`${Config.allIngredientsURL}`).then(response => {
         const responseList = response.data
         commit('UPDATE_INGREDIENTS_LIST', { responseList })
       }).catch(error => {
