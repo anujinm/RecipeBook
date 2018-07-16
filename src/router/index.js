@@ -15,7 +15,12 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/dashboard'
+      redirect: '/welcome'
+    },
+    {
+      path: '/welcome',
+      name: 'Welcome',
+      component: pages.welcome
     },
     {
       path: '/dashboard',
@@ -31,6 +36,11 @@ const router = new Router({
       path: '/mykitchen',
       name: 'InMyKitchen',
       component: pages.inmykitchen
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: pages.register
     }
   ]
 })

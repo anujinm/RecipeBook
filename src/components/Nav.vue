@@ -1,9 +1,9 @@
 <template lang="pug">
   .nav
-    router-link(to="/" v-bind:class="{ isInactive: !isRoot }") My Recipes
+    router-link(to="/dashboard" v-bind:class="{ isInactive: !isRoot }") My Recipes
     router-link(to="/shoppinglist") Shopping List
     router-link(to="/mykitchen") In My Kitchen
-    router-link(to="/about") About
+    router-link(to="/welcome") Home
 </template>
 
 <script>

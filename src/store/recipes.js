@@ -252,8 +252,8 @@ const recipes = {
     removeFromList (context, item) {
       const index = this.state.recipes.shoppingList.indexOf(item)
       console.log(item, index)
-      context.commit('REMOVE_FROM_LIST', { index })
       axios.delete(`${Config.shoppingListURL}`, {data: {ingredient_name: item}}).then(response => {
+        context.commit('REMOVE_FROM_LIST', { index })
       }).catch(error => {
         console.log(error)
       })

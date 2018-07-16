@@ -163,7 +163,7 @@ export default {
     width: 1400px;
     height: 650px;
     border-radius: 18px;
-    position: absolute;
+    // position: absolute;
     margin-top: 20px;
     box-shadow: 0px 0px 8px $gray10;
   

@@ -215,18 +215,18 @@ export default {
         i {color: rgb(255, 255, 255); display: flex; margin-left: -3px; margin-bottom: -2px;}
       }
     }
-    &.measurement { margin-left: 10px; width: 40px; }
+    &.measurement { margin-left: 10px; width: 45px; }
   }
   h6 {
     white-space: normal;
     font-size: 15px;
     font-weight: 400;
-    margin-top: 12px;
+    margin-top: 10px;
     border: 1px solid $gray70; 
     border-radius: 5px;
     // height: 25px;
     padding-top: 4px;
-    &.amount{width: 35px; height: 25px; text-align: center;}
+    &.amount{width: 35px; text-align: center;}
     &.name {width: 135px; height: 70%; margin-left: 10px;
      padding-left: 5px;} 
     &.measurement { margin-left: 10px; width: 45px; height: 25px;padding-left: 10px;}
