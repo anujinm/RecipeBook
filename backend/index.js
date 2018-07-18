@@ -1,8 +1,9 @@
 const express = require('express')
-const query = require('./database/connector')
+const Connector = require('./database/connector')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const RecipeController = require('./controllers/recipe-controller')
+const UserController = require('./controllers/user-controller')
 
 const app = express()
 // parse application/x-www-form-urlencoded
@@ -22,8 +23,8 @@ app.put('/recipes/fav', RecipeController.editRecipeFav)
 app.get('/shoppinglist', RecipeController.getShoppingList)
 app.post('/shoppinglist', RecipeController.addItemToShoppingList)
 app.delete('/shoppinglist', RecipeController.deleteItemFromShoppingList)
-
-
+app.post('/users', UserController.checkAndRegisterUser)
+app.get('/users', UserController.getAllUsers)
 // start app
 const port = 3001
 console.log(`app is listening on port ${port}`)

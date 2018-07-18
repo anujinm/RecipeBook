@@ -1,23 +1,26 @@
 <template lang="pug">
   .welcome
-    .row.justify-content-start.top
-      .col-1
-      .outerbox
-        .email.row.justify-content-center
-          .col-4
-            label Email: 
-          .col-6 
-            input 
-        .password.row.justify-content-center
-          .col-4
-            label Password:
-          .col-6
-            input 
-        .row.justify-content-end
-          button Login
-    .bottom
-      .img
-
+    .row.justify-content-center.top
+      .col-3
+      .col-4
+        .welcome
+          h3 Welcome to Anu's RecipeBook!
+        .outerbox
+          .email.row.justify-content-center
+            .col-4
+              label Email: 
+            .col-6 
+              input 
+          .password.row.justify-content-center
+            .col-4
+              label Password:
+            .col-6
+              input 
+          .row.justify-content-end
+            button Login
+          .register
+            h5 Don't have an account? 
+              button(@click="$router.push('/register')") Sign up
 </template>
 
 <script>
@@ -41,25 +44,17 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .welcome {
-  height: 1300px;
+  // height: 1300px;
   .top {
-    height: 560px;
-    background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/cooking-background-images-13.jpg");
+    height: 910px;
+    background-image: url("http://www.tokkoro.com/picsup/3065640-allium_aromatic_background_bear_bunch_cooking_eating_food_forest_fresh_garlic_green_healthy_herb_herbal_ingredient_isolated_kitchen_leaf_leek_onion_organic_plant_ramson_rope_sauce_seasoning_soup_.jpg");
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    // animation: slide 6s linear infinite;
-    
-    // @keyframes slide {
-    //   0%{
-    //     transform: translate3d(0,0,0);
-    //   }
-    //   100%{
-    //     transform: translate3d(0, -500px,0);
-    //   }
-    // }
-
+    .welcome {
+      margin-top: 130px;
+    }
     .outerbox {
       margin-top: 10%; 
       padding: 30px;
@@ -75,6 +70,7 @@ export default {
         text-align: left;
       }
     }
+
     input {
       // outline: none;
       border-radius: 5px;
@@ -93,19 +89,12 @@ export default {
       font-weight: 200;
       cursor: pointer;
     }
-  }
-
-  .bottom {
-    background: rgb(145, 97, 43);
-    height: 680px;
-    padding: 40px;
-    .img {
-      // margin: 40px;
-      height: 600px;
-      background-image: url("https://preview.ibb.co/kxpSPJ/ssrecipes.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
+    .register {
+      margin-top: 50px;
+      button {
+        cursor: pointer;
+        color: black;
+      }
     }
   }
 }

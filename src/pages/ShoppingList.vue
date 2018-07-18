@@ -34,6 +34,7 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .shoppinglist {
+  // height: 90%;
   background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/cooking-background-images-13.jpg");
   background-position: center;
   background-attachment: fixed;

@@ -100,16 +100,18 @@ export default {
     margin-top: 50px;
     .searchbar {
       font-size: 20px;
-      border-radius: 25px;
+      // border-radius: 25px;
       height: 43px;
       width: 280px;
       // margin-top: 50px;
       padding-left: 15px;
       position: relative;
       border: none;
-      box-shadow: inset 0px 0 2px #a3a2a2;
+      border-bottom: 1px solid rgb(70, 69, 69);
+      background: transparent;
+      box-shadow: 0px 1px #7a7a7a;
       outline: none;
-      color: rgb(88, 88, 88);
+      color: #f5f5f5;
     }
     i {
       position: relative;

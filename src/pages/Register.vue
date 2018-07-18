@@ -1,33 +1,32 @@
 <template lang="pug">
   .register
     .row.justify-content-center
+      .col-3
       .outerbox
         .fname.row.justify-content-center
           .col-4
-            label First Name: 
+            label Name: 
           .col-6 
-            input 
-        .lname.row.justify-content-center
-          .col-4
-            label Last Name: 
-          .col-6 
-            input 
+            input(ref="newUserName") 
         .email.row.justify-content-center
           .col-4
             label Email: 
           .col-6 
-            input 
+            input(ref="newUserEmail") 
         .password.row.justify-content-center
           .col-4
             label Password:
           .col-6
-            input 
+            input(ref="newUserPassword")  
         .row.justify-content-end
-          button Register
-
+          button(@click="RegisterUser") Register
+        .login
+          h5 Already have an account? 
+            button(@click="$router.push('/welcome')") Login
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import debug from 'debug'
 let log = debug('component:register')
 export default {
@@ -41,7 +40,19 @@ export default {
   },
   computed: {
   },
-  methods: {}
+  methods: {
+    ...mapActions('user', [
+      'validateUser'
+    ]),
+    RegisterUser () {
+      const user = {
+        name: this.$refs.name,
+        email: this.$refs.email,
+        password: this.$refs.password
+      }
+      this.validateUser(user)
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -49,7 +60,7 @@ export default {
 @import "../styles/_mixins";
 .register {
   height: 910px;
-  background-image: url("http://backgroundcheckall.com/wp-content/uploads/2017/12/cooking-background-images-13.jpg");
+  background-image: url("http://www.tokkoro.com/picsup/3065640-allium_aromatic_background_bear_bunch_cooking_eating_food_forest_fresh_garlic_green_healthy_herb_herbal_ingredient_isolated_kitchen_leaf_leek_onion_organic_plant_ramson_rope_sauce_seasoning_soup_.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -86,6 +97,9 @@ export default {
     margin-right: 80px;
     font-weight: 200;
     cursor: pointer;
+  }
+  .login {
+    margin-top: 70px;
   }
 }
 

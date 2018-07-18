@@ -48,6 +48,7 @@ export default {
   font-size: 15px;
   padding: 10px;
   white-space: normal;
+
   h5 {
     padding:10px;
     font-weight: 400;
@@ -58,14 +59,18 @@ export default {
   .instructionBox {
     height: 150px;
     width: 250px;
+    outline: none;
   }
   .notesBox {
     height: 30px;
     width: 250px;
+    outline: none;
   }
 
 
   @media #{$tablet} {
+    .instructionBox {width: 240px;}
+    .notesBox {width: 240px;}
     width: 260px;
   }
   @media #{$mobile} {

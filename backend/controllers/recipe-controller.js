@@ -1,13 +1,13 @@
-const query = require('../database/connector')
+const Connector = require('../database/connector')
 
 class RecipeController {
   constructor () {
-    console.log('constructor called')
+    console.log('RecipeController constructor called')
   }
     
   getAllIngredients (req, res) {
     res.setHeader('Content-Type', 'application/json')
-    query(`SELECT name FROM All_Ingredients`)
+    Connector.query(`SELECT name FROM All_Ingredients`)
     .then(results => {
       const ingrList = []
       if (results) {
@@ -18,14 +18,14 @@ class RecipeController {
       res.send(JSON.stringify(ingrList))
     })
     .catch((error) => {
-      console.log(error, response.data)
+      console.log(error, res.data)
       res.send( { error: 'Something bad happened', status: 500 })
     })
   }
 
   getShoppingList (req, res) {
     res.setHeader('Content-Type', 'application/json')
-    query(`SELECT ingredient_name FROM shopping_list`)
+    Connector.query(`SELECT ingredient_name FROM shopping_list`)
     .then(results => {
       const shoppingList = []
       if (results) {
@@ -36,15 +36,15 @@ class RecipeController {
       res.send(JSON.stringify(shoppingList))
     })
     .catch((error) => {
-      console.log(error, response.data)
+      console.log(error, res.data)
       res.send( { error: 'Something bad happened', status: 500 })
     })
   }
   
   getRecipes (req, res) {
-    // query(`SELECT * FROM recipes WHERE id = "${userQuery.id}"`)
+    // Connector.query(`SELECT * FROM recipes WHERE id = "${userQuery.id}"`)
     res.setHeader('Content-Type', 'application/json')
-    query(`SELECT * FROM recipes`)
+    Connector.query(`SELECT * FROM recipes`)
       .then(recipeResults => {
         const recipes = []
         if (recipeResults) {
@@ -62,7 +62,7 @@ class RecipeController {
           // for every recipe, grab some extra data
           recipeResults.forEach((recipe) => {
             // query to get all of the recipe's ingredients
-            query(`SELECT * FROM ingredients WHERE recipe_id = '${recipe.id}'`)
+            Connector.query(`SELECT * FROM ingredients WHERE recipe_id = '${recipe.id}'`)
             .then(ingredientList => {
               recipe.ingredients = ingredientList
               recipes.push(recipe)
@@ -85,7 +85,7 @@ class RecipeController {
   // getSearchedRecipes (req, res) {
   //   res.setHeader('Content-Type', 'application/json')
 
-  //   query(`SELECT * FROM All_Ingredients WHERE `)
+  //   Connector.query(`SELECT * FROM All_Ingredients WHERE `)
   // }
 
   postRecipe (req, res) {
@@ -103,7 +103,7 @@ class RecipeController {
     recipe.id = id
     // const { id } = recipe
     console.log(recipe, id)
-    query("INSERT INTO `recipes` (id, title, fav, instructions, notes ) VALUES ('"+recipe.id+"' ,'"+recipe.title+"','" +recipe.fav+"', '"+recipe.instructions+"','"+recipe.notes+"')")
+    Connector.query("INSERT INTO `recipes` (id, title, fav, instructions, notes ) VALUES ('"+recipe.id+"' ,'"+recipe.title+"','" +recipe.fav+"', '"+recipe.instructions+"','"+recipe.notes+"')")
     .then(recipe => {
       console.log('recipe added')
     })
@@ -113,7 +113,7 @@ class RecipeController {
     })
     
     recipe.ingredients.forEach((ingredient) => {
-      query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+ingredient.name+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+ingredient.name+"') LIMIT 1 ")
+      Connector.query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+ingredient.name+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+ingredient.name+"') LIMIT 1 ")
       .then(recipe => {
         console.log('ingredient added!!!')
       })
@@ -123,7 +123,7 @@ class RecipeController {
       })
     })
     recipe.ingredients.forEach((ingredient) => {
-       query("INSERT INTO `ingredients` (recipe_id, ingr_id, name, amount, measurement) VALUES ('"+id+"', '1','"+ingredient.name+"', '"+ingredient.amount+"', '"+ingredient.measurement+"')")
+       Connector.query("INSERT INTO `ingredients` (recipe_id, ingr_id, name, amount, measurement) VALUES ('"+id+"', '1','"+ingredient.name+"', '"+ingredient.amount+"', '"+ingredient.measurement+"')")
       .then(recipe => {
         console.log('ingredient added')
       })
@@ -134,8 +134,8 @@ class RecipeController {
     })
 
     recipe.ingredients.forEach((ingredient) => {
-      // query("UPDATE ingredients SET ingr_id = (SELECT id FROM All_Ingredients WHERE name = name)")
-      query(`UPDATE ingredients
+      // Connector.query("UPDATE ingredients SET ingr_id = (SELECT id FROM All_Ingredients WHERE name = name)")
+      Connector.query(`UPDATE ingredients
               INNER JOIN All_Ingredients ON ingredients.name = All_Ingredients.name
               SET ingredients.ingr_id = All_Ingredients.id`)
       .then(recipe => {
@@ -156,14 +156,14 @@ class RecipeController {
     console.log(req.body, recipeID.id)
 
     Promise.all([
-      query(`DELETE FROM ingredients WHERE recipe_id = ` + recipeID.id.toString())
+      Connector.query(`DELETE FROM ingredients WHERE recipe_id = ` + recipeID.id.toString())
       .then(recipe => {
         console.log('recipe_id removed from ingredients!')
       })
       .then(() =>{
         
       }),
-      query(`DELETE FROM recipes WHERE id = ` + recipeID.id.toString())
+      Connector.query(`DELETE FROM recipes WHERE id = ` + recipeID.id.toString())
       .then(recipe => {
         console.log('Recipe Removed!')
       })
@@ -186,7 +186,7 @@ class RecipeController {
     const recipe = req.body
     const { id } = recipe
     console.log(recipe.fav, id)
-    query(`UPDATE recipes SET fav = 
+    Connector.query(`UPDATE recipes SET fav = 
       (CASE WHEN (fav = "true") THEN "false" 
             WHEN (fav = "false") THEN "true"
             ELSE fav
@@ -209,7 +209,7 @@ class RecipeController {
   //   // Realized I actually don't need to update the db, so nothing to do here
 
   //   /* recipe.ingredients.forEach((ingredient) => {
-  //      query("UPDATE ingredients SET amount = " + ingredient.amount + " WHERE recipe_id = " + id.toString())
+  //      Connector.query("UPDATE ingredients SET amount = " + ingredient.amount + " WHERE recipe_id = " + id.toString())
   //      .then( recipe => {
   //        console.log('recipe ingredients updated', ingredient.amount)
   //      })
@@ -226,14 +226,14 @@ class RecipeController {
     console.log(item)
 
     Promise.all([
-      query("INSERT INTO shopping_list (ingredient_id, ingredient_name) VALUES (1,'"+item+"')")
+      Connector.query("INSERT INTO shopping_list (ingredient_id, ingredient_name) VALUES (1,'"+item+"')")
       .then(item => {
         console.log('Item added to Shopping List with id 1 and name!')
       })
       .then(() => {
         
       }),
-      query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+item+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+item+"') LIMIT 1 ")
+      Connector.query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+item+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+item+"') LIMIT 1 ")
       .then(recipe => {
         console.log('ingredient added!!!')
       })
@@ -241,7 +241,7 @@ class RecipeController {
         console.log(error)
         res.send({ error: 'Something bad happened', status: 500 })
       }),
-      query("UPDATE shopping_list INNER JOIN All_Ingredients ON ingredient_name = All_Ingredients.name SET shopping_list.ingredient_id = All_Ingredients.id")
+      Connector.query("UPDATE shopping_list INNER JOIN All_Ingredients ON ingredient_name = All_Ingredients.name SET shopping_list.ingredient_id = All_Ingredients.id")
       .then(item => {
         console.log('Item id updated!')
       })
@@ -261,7 +261,7 @@ class RecipeController {
     res.setHeader('Content-Type', 'application/json')
     const item = Object.values(req.body)[0]
     console.log(item)
-    query("DELETE FROM shopping_list WHERE ingredient_name = '" + item + "'")
+    Connector.query("DELETE FROM shopping_list WHERE ingredient_name = '" + item + "'")
     .then(item => {
       console.log('Item removed.')
       res.send(item)

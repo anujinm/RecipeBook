@@ -127,6 +127,8 @@ export default {
     width: 110px;
     font-size: 15px;
     outline: none;
+    border-radius: 5px;
+    border: 1px solid #b3b3b3;
   }
 }
 

@@ -86,14 +86,12 @@ export default {
 @import "../styles/_variables";
 @import "../styles/_mixins";
 .listbox {
-  // background: linear-gradient(transparent, #DEE1E2);
   .add {
     margin: 20px;
     height: 35px;
     font-size: 18px;
     .input {
       outline: none;
-      // border: 2px solid red;
       border-radius: 10px;
       max-width: 350px;
     }
@@ -102,14 +100,11 @@ export default {
       max-width: 70px;
       border-radius: 5px;
       color: #03355e;
-      // background: linear-gradient(to right bottom,#fff, rgb(131, 219, 163));
       background: #fff;
       border: 2px solid #03355e;
-      // border: 1px solid black;
       margin-left: 20px;
       cursor: pointer;
       &:hover {
-        // background: linear-gradient(to right bottom,#fff, rgb(67, 172, 105));
         color: #fff;
         background: #f6b93b;
         border-color: #f6b93b;
@@ -117,10 +112,8 @@ export default {
         transform: scale(1.03,1.03)
       }
       &:active {
-        // background: linear-gradient(to right bottom,#fff, rgb(19, 172, 75));
         background: #eea30e;
         border-color: #eea30e;
-
         transform: translateY(0.5px);
       }
     }
@@ -140,7 +133,7 @@ export default {
     box-shadow: 5px 5px 6px $gray10;
     border-radius: 10px;
     margin-top: 30px;
-    margin-bottom: 250px;
+    margin-bottom: 50px;
     z-index: 0;
   }
   .inside-container {

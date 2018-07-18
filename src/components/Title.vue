@@ -146,9 +146,13 @@ export default {
     &:hover{ transform: scale(1.1,1.1)}
   }
   input {
-    border-radius: 5px;
+    // border-radius: 5px;
     background: transparent;
     padding: 5px;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid;
+    &::placeholder {opacity: .7;}
   }
   img {
     width: 2em;

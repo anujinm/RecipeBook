@@ -4,6 +4,7 @@ import debug from 'debug'
 import root from './root'
 import recipes from './recipes'
 import tasks from './tasks'
+import user from './user'
 
 let log = debug('store')
 
@@ -11,7 +12,8 @@ Vue.use(Vuex)
 
 root.modules = {
   tasks,
-  recipes
+  recipes,
+  user
 }
 
 const store = new Vuex.Store(root)
