@@ -10,34 +10,64 @@
             .col-4
               label Email: 
             .col-6 
-              input 
+              input(ref="UserEmail")
           .password.row.justify-content-center
             .col-4
               label Password:
             .col-6
-              input 
+              input(ref="UserPassword")
+          .row.justify-content-center(v-if="Errors.length")
+            h6 {{ Errors[0] }}
           .row.justify-content-end
-            button Login
+            button(@click="LoginValidator") Login
           .register
             h5 Don't have an account? 
               button(@click="$router.push('/register')") Sign up
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import debug from 'debug'
 let log = debug('component:welcome')
 export default {
   name: 'welcome',
   props: [],
   data () {
-    return {}
+    return {
+      Errors: []
+    }
   },
   mounted: function () {
     log('Mounted')
   },
   computed: {
+    ...mapState('user', [
+      'userObj'
+    ])
   },
-  methods: {}
+  methods: {
+    LoginValidator () {
+      this.Errors = []
+      const user = {
+        email: this.$refs.UserEmail.value,
+        password: this.$refs.UserPassword.value
+      }
+
+      Object.keys(this.userObj).forEach(element => {
+        if (this.userObj[element].email === user.email) {
+          if (this.userObj[element].password === user.password) {
+            // valid user
+          } else {
+            // invalid password
+            this.Errors.push('Invalid email or password')
+          }
+        } else {
+          // email is not registered
+          this.Errors.push('Invalid email or password')
+        }
+      })
+    }
+  }
 }
 </script>
 <style scoped lang="scss">
@@ -77,6 +107,11 @@ export default {
       margin-bottom: 10px;
       border: 1px solid ;
       background: transparent;
+    }
+    h6 {
+      font-size: 16px;
+      // display: inline-block;
+      &::before { content: '*'; color: red; font-weight: bold;}
     }
     button {
       background: transparent;
