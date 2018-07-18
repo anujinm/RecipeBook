@@ -18,6 +18,10 @@
             label Password:
           .col-6
             input(ref="newUserPassword")  
+        .row.justify-content-center(v-if="Errors.length")
+          h6(v-for="error in Errors") {{ error }}
+        .row.justify-content-center(v-if="!Errors.length && Success")
+          h5 Account successfully registered! You can login now.
         .row.justify-content-end
           button(@click="RegisterUser") Register
         .login
@@ -26,31 +30,65 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import debug from 'debug'
 let log = debug('component:register')
 export default {
   name: 'register',
   props: [],
   data () {
-    return {}
+    return {
+      UserTaken: false,
+      Errors: [],
+      Success: false
+    }
   },
   mounted: function () {
     log('Mounted')
   },
   computed: {
+    ...mapState('user', [
+      'userObj'
+    ])
   },
   methods: {
     ...mapActions('user', [
       'validateUser'
     ]),
     RegisterUser () {
+      this.UserTaken = false
+      this.Errors = []
+      this.Success = false
       const user = {
-        name: this.$refs.name,
-        email: this.$refs.email,
-        password: this.$refs.password
+        name: this.$refs.newUserName.value,
+        email: this.$refs.newUserEmail.value,
+        password: this.$refs.newUserPassword.value
       }
-      this.validateUser(user)
+      // log errors
+      if (user.name.length < 5) {
+        this.Errors.push('Username must be at least 5 characters.')
+      }
+      if (user.password.length < 6) {
+        this.Errors.push('Password must be at least 6 characters.')
+      }
+      var validator = require('email-validator')
+      if (!user.email) {
+        this.Errors.push('Email required.')
+      } else if (!validator.validate(user.email)) {
+        this.Errors.push('Valid email required.')
+      }
+      // If email is already registered
+      Object.keys(this.userObj).forEach(element => {
+        if (this.userObj[element].email === user.email) {
+          this.UserTaken = true
+          this.Errors.push('This email is taken.')
+        }
+      })
+      // register if no errors
+      if (!this.Errors.length) {
+        this.validateUser(user)
+        this.Success = true
+      }
     }
   }
 }
@@ -86,6 +124,11 @@ export default {
     margin-bottom: 10px;
     border: 1px solid ;
     background: transparent;
+  }
+  h6 {
+    font-size: 16px;
+    // display: inline-block;
+    &::before { content: '*'; color: red; font-weight: bold;}
   }
   button {
     background: transparent;

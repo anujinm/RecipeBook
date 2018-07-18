@@ -1,9 +1,9 @@
 <template lang="pug">
   .welcome
     .row.justify-content-center.top
-      .col-3
-      .col-4
-        .welcome
+      .col-md-3.empty
+      .col-md-4
+        .message
           h3 Welcome to Anu's RecipeBook!
         .outerbox
           .email.row.justify-content-center
@@ -52,7 +52,7 @@ export default {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    .welcome {
+    .message {
       margin-top: 130px;
     }
     .outerbox {
@@ -97,6 +97,36 @@ export default {
       }
     }
   }
+
+  @media #{$tablet} {
+    .top {
+      .outerbox {
+        width: 400px;
+      }
+      input {
+        width: 200px;
+      }
+    }
+  }
+
+  @media #{$mobile} {
+    .top {
+      padding-left: 20px;
+      .outerbox {
+        width: 300px;
+        height: 150px;
+        font-size: 15px;
+      }
+      input { width: 150px;}
+      .message {
+        margin-top: 0px;
+      }
+      .register {
+        button {margin-left: 50px;}
+      }
+    }
+  }
+
 }
 
 </style>

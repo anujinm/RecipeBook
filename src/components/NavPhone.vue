@@ -4,13 +4,10 @@
       hamburger
     transition(name="slide" type="animation")
       .show(v-if="showMenu")
-        router-link(to="/" v-bind:class="{ isInactive: !isRoot }") My Recipes
+        router-link(to="/dashboard" v-bind:class="{ isInactive: !isRoot }") My Recipes
         router-link(to="/shoppinglist") Shopping List
         router-link(to="/mykitchen") In My Kitchen
-        router-link(to="/about") About
-        input.searchbar(placeholder="  Search...") 
-        i.fas.fa-search
-          button
+        router-link(to="/welcome") Home
 </template>
 
 <script>
@@ -101,10 +98,10 @@ export default {
   .router-link-active {
     background: $black;
     color: $white;
-    text-shadow: 2px 1px 5px $gray90;
+    // text-shadow: 2px 1px 5px $gray90;
     &.isInactive {
       background: transparent;
-      color:$gray90;
+      color: white;
     }
   }
 

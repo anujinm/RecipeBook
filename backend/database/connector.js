@@ -35,7 +35,8 @@ class Connector {
         user     : 'anujinm',
         password : 'Shine*3911',
         port: '3306',
-        database : 'RecipeBook'
+        database : 'RecipeBook',
+        timeout: 60000
       })
       this.connection.connect((err) => {
         console.log(err)

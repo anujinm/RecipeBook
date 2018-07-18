@@ -17,6 +17,7 @@
     "@14four/armory-scripts": "^0.1.16",
     "axios": "^0.18.0",
     "debug": "^2.6.3",
+    "email-validator": "^2.0.4",
     "lodash": "^4.17.10",
     "moment": "^2.17.1",
     "plyr": "^2.0.12",

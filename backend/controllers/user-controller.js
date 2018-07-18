@@ -1,32 +1,51 @@
 const Connector = require('../database/connector')
-// const {User, validate} = require('../src/store/user')
 
 class UserController {
   constructor () {
     console.log('userController constructor called')
   }
-
   checkAndRegisterUser (req, res) {
     res.setHeader('Content-Type', 'application/json')
-    // const { error } = validate(req.body)
-    // if (error) return res.status(400).send(error.details[0].message)
-    
-    // let user = await User.findOne({ email: req.body.email })
-    // if (user) return res.status(400).send('User already registered.')
     
     const user = {
+      id: '1',
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,      
     }
+    /* eslint-disable */
+    function guid() {
+      function s4() {
+        return Math.floor((1 + Math.random()) * 0x10000);
+      }
+      return s4() + s4() + s4();
+    }
+    /* eslint-enable */
+    const id = guid()
+    user.id = id
 
-    Connector.query("INSERT INTO Users (id, name, email, password) VALUES ('1', '"+user.name+"', '"+user.email+"', '"+user.password+"')")
-    .then(user => {
-      console.log('user added!!!')
-      res.send(user)
-    }).catch(error => {
-      console.log(error)
-      res.send({error: 'Error happened', status: 500})
+    Connector.query(`SELECT email FROM Users`)
+    .then(emails => {
+      const allUSersEmails = []
+      if (emails) {
+        emails.forEach(element => {
+          allUSersEmails.push(Object.values(element)[0])
+        })
+      }
+      if (!allUSersEmails.includes(user.email)) {
+        Connector.query("INSERT INTO Users (name, email, password) VALUES ('"+user.name+"', '"+user.email+"', '"+user.password+"')")
+        .then(user => {
+          console.log('new user successfully added')
+          res.send(user)
+        }).catch(error => {
+          console.log(error)
+          res.send({error: 'Could not add user', status: 500})
+        })
+      } else {
+        res.send('Email is taken!')
+      }
+    }).catch((error) => {
+      res.send( { error: 'Something bad happened', status: 500 })
     })
   }
 
