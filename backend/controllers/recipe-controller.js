@@ -1,4 +1,5 @@
 const Connector = require('../database/connector')
+const jwt = require('jsonwebtoken')
 
 class RecipeController {
   constructor () {
@@ -25,7 +26,12 @@ class RecipeController {
 
   getShoppingList (req, res) {
     res.setHeader('Content-Type', 'application/json')
-    Connector.query(`SELECT ingredient_name FROM shopping_list`)
+
+    const token = req.headers.authorization
+    const userID = jwt.decode(token, { complete: true }).payload.id
+    console.log('userID: ', userID)
+
+    Connector.query(`SELECT ingredient_name FROM shopping_list WHERE user_id = ${userID}`)
     .then(results => {
       const shoppingList = []
       if (results) {
@@ -44,7 +50,12 @@ class RecipeController {
   getRecipes (req, res) {
     // Connector.query(`SELECT * FROM recipes WHERE id = "${userQuery.id}"`)
     res.setHeader('Content-Type', 'application/json')
-    Connector.query(`SELECT * FROM recipes`)
+    // get the user ID
+    const token = req.headers.authorization
+    const userID = jwt.decode(token, { complete: true }).payload.id
+    console.log('userID: ', userID)
+
+    Connector.query(`SELECT * FROM recipes WHERE user_id = ${userID}`)
       .then(recipeResults => {
         const recipes = []
         if (recipeResults) {
@@ -82,14 +93,9 @@ class RecipeController {
     })
   }
 
-  // getSearchedRecipes (req, res) {
-  //   res.setHeader('Content-Type', 'application/json')
-
-  //   Connector.query(`SELECT * FROM All_Ingredients WHERE `)
-  // }
-
   postRecipe (req, res) {
     res.setHeader('Content-Type', 'application/json')
+
     const recipe = req.body
     /* eslint-disable */
     function guid() {
@@ -101,9 +107,12 @@ class RecipeController {
     /* eslint-enable */
     const id = guid()
     recipe.id = id
-    // const { id } = recipe
-    console.log(recipe, id)
-    Connector.query("INSERT INTO `recipes` (id, title, fav, instructions, notes ) VALUES ('"+recipe.id+"' ,'"+recipe.title+"','" +recipe.fav+"', '"+recipe.instructions+"','"+recipe.notes+"')")
+
+    //get user ID
+    const token = req.headers.authorization
+    const userID = jwt.decode(token, { complete: true }).payload.id
+
+    Connector.query("INSERT INTO `recipes` (id, user_id, title, fav, instructions, notes ) VALUES ('"+recipe.id+"', '"+userID+"', '"+recipe.title+"','" +recipe.fav+"', '"+recipe.instructions+"','"+recipe.notes+"')")
     .then(recipe => {
       console.log('recipe added')
     })
@@ -134,7 +143,6 @@ class RecipeController {
     })
 
     recipe.ingredients.forEach((ingredient) => {
-      // Connector.query("UPDATE ingredients SET ingr_id = (SELECT id FROM All_Ingredients WHERE name = name)")
       Connector.query(`UPDATE ingredients
               INNER JOIN All_Ingredients ON ingredients.name = All_Ingredients.name
               SET ingredients.ingr_id = All_Ingredients.id`)
@@ -201,32 +209,18 @@ class RecipeController {
     res.send(recipe)
   }
 
-  // editRecipeIngr (req, res) {
-  //   res.setHeader('Content-Type', 'application/json')
-  //   const recipe = req.body
-  //   const { id } = recipe
-  //   console.log(recipe.fav, typeof(id.toString()))
-  //   // Realized I actually don't need to update the db, so nothing to do here
-
-  //   /* recipe.ingredients.forEach((ingredient) => {
-  //      Connector.query("UPDATE ingredients SET amount = " + ingredient.amount + " WHERE recipe_id = " + id.toString())
-  //      .then( recipe => {
-  //        console.log('recipe ingredients updated', ingredient.amount)
-  //      })
-  //      .catch(error => {
-  //       console.log(error)
-  //      })
-  //    }) */
-  //   res.send(recipe)
-  // }
-
   addItemToShoppingList (req, res) {
     res.setHeader('Content-Type', 'application/json')
     const item = Object.keys(req.body)[0].toString()
     console.log(item)
 
+    const token = req.headers.authorization
+    console.log(token)
+    const userID = jwt.decode(token, { complete: true }).payload.id
+    console.log('userID: ', userID)
+
     Promise.all([
-      Connector.query("INSERT INTO shopping_list (ingredient_id, ingredient_name) VALUES (1,'"+item+"')")
+      Connector.query("INSERT INTO shopping_list (ingredient_id, ingredient_name, user_id) VALUES (1,'"+item+"', '"+userID+"')")
       .then(item => {
         console.log('Item added to Shopping List with id 1 and name!')
       })
@@ -235,7 +229,7 @@ class RecipeController {
       }),
       Connector.query("INSERT INTO `All_Ingredients` (name) SELECT * FROM (SELECT '"+item+"') AS tmp WHERE NOT EXISTS (SELECT name FROM All_Ingredients WHERE name = '"+item+"') LIMIT 1 ")
       .then(recipe => {
-        console.log('ingredient added!!!')
+        console.log('ingredient added to All_Ingredients')
       })
       .catch(error => {
         console.log(error)

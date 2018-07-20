@@ -20,10 +20,11 @@ export default {
   mounted: function () {
     log('App Mounted')
     this.$store.dispatch('loading', false)
-    this.$store.dispatch('recipes/updateAllRecipes')
-    this.$store.dispatch('recipes/updateShoppingList')
-    this.$store.dispatch('recipes/updateIngredients')
-    // this.$store.dispatch('user/updateAllUsers')
+    if (localStorage.getItem('token').length > 5) {
+      this.$store.dispatch('recipes/updateAllRecipes')
+      this.$store.dispatch('recipes/updateShoppingList')
+      this.$store.dispatch('recipes/updateIngredients')
+    }
   },
   computed: {
   },

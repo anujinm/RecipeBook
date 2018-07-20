@@ -52,12 +52,6 @@ const User = {
         console.log(error)
       })
     },
-    // updateAllUsers ({commit}) {
-    //   axios.get('http://localhost:3001/users').then(response => {
-    //     const Users = response.data
-    //     commit('UPDATE_ALL_USERS', { Users })
-    //   })
-    // },
     login (context, { username, password }) {
       return new Promise((resolve, reject) => {
         axios.post('http://localhost:3001/login', {

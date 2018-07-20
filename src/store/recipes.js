@@ -77,30 +77,14 @@ const recipes = {
           Vue.set(state.recipesObj, recipe.id, recipe)
         })
       }
-      // Vue.set(state, 'recipesObj', recipes)
     },
     ADD_RECIPE (state, { recipe }) {
       log('mutation ADD_RECIPE', recipe)
-      // /* eslint-disable */
-      // function guid() {
-      //   function s4() {
-      //     return Math.floor((1 + Math.random()) * 0x10000)
-      //       .toString(16)
-      //       .substring(1);
-      //   }
-      //   return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-      // }
-      // /* eslint-enable */
-      // const id = guid()
-      // recipe.id = id
-      // // console.log('mutation: ', recipe.id)
-
       Vue.set(state.recipesObj, recipe.id, recipe)
       console.log(state.recipesObj)
     },
     REMOVE_RECIPE (state, { recipeid }) {
       log('mutation REMOVE_RECIPE', recipeid)
-      // const { id } = recipe
       Vue.delete(state.recipesObj, recipeid)
     },
     EDIT_RECIPE (state, { recipe }) {
@@ -215,7 +199,7 @@ const recipes = {
     updateAllRecipes ({ commit }) {
       axios.get(`${Config.baseURL}/recipes`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `${localStorage.getItem('token')}`
         }
       }).then(response => {
         const { recipes } = response.data
@@ -223,7 +207,11 @@ const recipes = {
       })
     },
     addRecipe (context, recipe) {
-      axios.post(`${Config.recipeURL}`, recipe).then(response => {
+      axios.post(`${Config.recipeURL}`, recipe, {
+        headers: {
+          'Authorization': `${localStorage.getItem('token')}`
+        }
+      }).then(response => {
         context.commit('ADD_RECIPE', { recipe })
       }).catch(error => {
         console.log(error)
@@ -246,7 +234,11 @@ const recipes = {
     },
 
     updateShoppingList ({ commit }) {
-      axios.get(`${Config.shoppingListURL}`).then(response => {
+      axios.get(`${Config.shoppingListURL}`, {
+        headers: {
+          'Authorization': `${localStorage.getItem('token')}`
+        }
+      }).then(response => {
         const responseList = response.data
         commit('UPDATE_SHOPPING_LIST', { responseList })
       }).catch(error => {
@@ -264,7 +256,11 @@ const recipes = {
       })
     },
     addToList (context, item) {
-      axios.post(`${Config.shoppingListURL}`, item).then(response => {
+      axios.post(`${Config.shoppingListURL}`, item, {
+        headers: {
+          'Authorization': `${localStorage.getItem('token')}`
+        }
+      }).then(response => {
         context.commit('ADD_TO_LIST', { item })
       }).catch(error => {
         console.log(error)
