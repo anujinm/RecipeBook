@@ -17,7 +17,7 @@
           .col-4
             label Password:
           .col-6
-            input(ref="newUserPassword")  
+            input(ref="newUserPassword" v-model="password")  
         .row.justify-content-center(v-if="Errors.length")
           h6(v-for="error in Errors") {{ error }}
         .row.justify-content-center(v-if="!Errors.length && Success")
@@ -32,6 +32,8 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import debug from 'debug'
+const validator = require('email-validator')
+// const passwordHash = require('password-hash')
 let log = debug('component:register')
 export default {
   name: 'register',
@@ -40,7 +42,8 @@ export default {
     return {
       UserTaken: false,
       Errors: [],
-      Success: false
+      Success: false,
+      password: ''
     }
   },
   mounted: function () {
@@ -59,10 +62,12 @@ export default {
       this.UserTaken = false
       this.Errors = []
       this.Success = false
+      // const mypass = passwordHash.generate(this.$refs.newUserPassword.value)
+      // console.log(mypass)
       const user = {
         name: this.$refs.newUserName.value,
         email: this.$refs.newUserEmail.value,
-        password: this.$refs.newUserPassword.value
+        password: this.password
       }
       // log errors
       if (user.name.length < 5) {
@@ -71,7 +76,6 @@ export default {
       if (user.password.length < 6) {
         this.Errors.push('Password must be at least 6 characters.')
       }
-      var validator = require('email-validator')
       if (!user.email) {
         this.Errors.push('Email required.')
       } else if (!validator.validate(user.email)) {

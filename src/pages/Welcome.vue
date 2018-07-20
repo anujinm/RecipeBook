@@ -15,7 +15,7 @@
             .col-4
               label Password:
             .col-6
-              input(ref="UserPassword")
+              input(ref="UserPassword" type="password")
           .row.justify-content-center(v-if="Errors.length")
             h6 {{ Errors[0] }}
           .row.justify-content-end
@@ -26,7 +26,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import session from '../../backend/index'
+import jwt from 'jsonwebtoken'
+import { mapState, mapActions } from 'vuex'
 import debug from 'debug'
 let log = debug('component:welcome')
 export default {
@@ -46,26 +48,35 @@ export default {
     ])
   },
   methods: {
+    ...mapActions('user', [
+      'login'
+    ]),
     LoginValidator () {
       this.Errors = []
       const user = {
         email: this.$refs.UserEmail.value,
         password: this.$refs.UserPassword.value
       }
-
-      Object.keys(this.userObj).forEach(element => {
-        if (this.userObj[element].email === user.email) {
-          if (this.userObj[element].password === user.password) {
-            // valid user
-          } else {
-            // invalid password
-            this.Errors.push('Invalid email or password')
-          }
-        } else {
-          // email is not registered
+      // const jwt = require('jsonwebtoken')
+      this.login({
+        username: user.email,
+        password: user.password
+      })
+      .then((response) => {
+        if (response.data.error) {
+          console.log(response)
           this.Errors.push('Invalid email or password')
+        } else {
+          this.Errors = []
+          console.log(jwt.decode(response.data, { complete: true }).payload.id)
+          this.redirect(true)
         }
       })
+    },
+    redirect (bool) {
+      if (bool) {
+        window.location.href = 'dashboard'
+      }
     }
   }
 }

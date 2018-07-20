@@ -1,4 +1,6 @@
 const Connector = require('../database/connector')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 class UserController {
   constructor () {
@@ -6,12 +8,14 @@ class UserController {
   }
   checkAndRegisterUser (req, res) {
     res.setHeader('Content-Type', 'application/json')
+
+    const { name, email, password } = req.body
     
     const user = {
       id: '1',
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,      
+      name,
+      email,
+      password: bcrypt.hashSync(password, 10)      
     }
     /* eslint-disable */
     function guid() {
@@ -23,7 +27,7 @@ class UserController {
     /* eslint-enable */
     const id = guid()
     user.id = id
-
+    // get all emails from db and check if given email already exists 
     Connector.query(`SELECT email FROM Users`)
     .then(emails => {
       const allUSersEmails = []
@@ -32,6 +36,7 @@ class UserController {
           allUSersEmails.push(Object.values(element)[0])
         })
       }
+      // add user if not found in db
       if (!allUSersEmails.includes(user.email)) {
         Connector.query("INSERT INTO Users (name, email, password) VALUES ('"+user.name+"', '"+user.email+"', '"+user.password+"')")
         .then(user => {
@@ -47,6 +52,30 @@ class UserController {
     }).catch((error) => {
       res.send( { error: 'Something bad happened', status: 500 })
     })
+  }
+
+  authenticateUser (req, res) {
+    res.setHeader('Content-Type', 'application/json')
+    const { username, password } = req.body
+    const userQuery = `SELECT * FROM Users WHERE email = "${username}";`
+    Connector.query(userQuery)
+      .then(users => {
+        if (users.length === 0) {
+          res.send({ error: 'Invalid username or password' })  
+        } else {
+          const user = users[0]
+          const isValid = bcrypt.compareSync(password, user.password)
+          if (isValid) {
+            const token = jwt.sign({ id: users[0].id }, 'jwtPrivateKey')
+            res.send(token)
+          } else {
+            res.send({ error: 'Invalid username or password' })
+          }
+        }
+      })
+      .catch(err => {
+        res.send({ error: 'Something went wrong', status: 500 })
+      })
   }
 
   getAllUsers (req, res) {

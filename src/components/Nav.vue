@@ -1,12 +1,14 @@
 <template lang="pug">
   .nav
-    router-link(to="/dashboard" v-bind:class="{ isInactive: !isRoot }") My Recipes
-    router-link(to="/shoppinglist") Shopping List
-    router-link(to="/mykitchen") In My Kitchen
-    router-link(to="/welcome") Home
+    router-link(to="/dashboard" v-bind:class="{ isInactive: !isRoot }" v-if="isLogedin") My Recipes
+    router-link(to="/shoppinglist" v-if="isLogedin") Shopping List
+    router-link(to="/mykitchen" v-if="isLogedin") In My Kitchen
+    router-link(to="/welcome" v-if="!isLogedin") Home
+    router-link(to="/welcome" @click.native="logout" v-if="isLogedin") Logout
 </template>
 
 <script>
+import {mapState} from 'vuex'
 import debug from 'debug'
 let log = debug('component:Nav')
 export default {
@@ -19,14 +21,27 @@ export default {
   beforeCreate: function () {
   },
   mounted: function () {
-    log('Mounted')
+    log('Mounted', this.token)
   },
   computed: {
+    ...mapState('user', [
+      'token'
+    ]),
     isRoot () {
       return this.$store.state.route.path === '/dashboard'
+    },
+    isLogedin () {
+      if (localStorage.token.length > 5) {
+        return true
+      } return false
     }
   },
   methods: {
+    logout () {
+      console.log('logging out')
+      localStorage.setItem('token', null)
+      window.location.reload()
+    }
     // search () {
 
     //   const list = []

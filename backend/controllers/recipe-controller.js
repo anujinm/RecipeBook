@@ -193,7 +193,7 @@ class RecipeController {
             END)
         WHERE id = ` + id.toString())
     .then( recipe => {
-      console.log('set to false')
+      console.log('fav changed')
     })
     .catch(error => {
       console.log(error)

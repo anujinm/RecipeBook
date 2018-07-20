@@ -213,7 +213,11 @@ const recipes = {
 
   actions: {
     updateAllRecipes ({ commit }) {
-      axios.get(`${Config.baseURL}/recipes`).then(response => {
+      axios.get(`${Config.baseURL}/recipes`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      }).then(response => {
         const { recipes } = response.data
         commit('UPDATE_RECIPES', { recipes })
       })

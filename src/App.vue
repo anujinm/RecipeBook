@@ -23,7 +23,7 @@ export default {
     this.$store.dispatch('recipes/updateAllRecipes')
     this.$store.dispatch('recipes/updateShoppingList')
     this.$store.dispatch('recipes/updateIngredients')
-    this.$store.dispatch('user/updateAllUsers')
+    // this.$store.dispatch('user/updateAllUsers')
   },
   computed: {
   },
