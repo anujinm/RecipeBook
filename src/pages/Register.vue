@@ -12,12 +12,12 @@
           .col-4
             label Email: 
           .col-6 
-            input(ref="newUserEmail" type="password") 
+            input(ref="newUserEmail") 
         .password.row.justify-content-center
           .col-4
             label Password:
           .col-6
-            input(ref="newUserPassword" v-model="password")  
+            input(ref="newUserPassword" v-model="password" type="password")  
         .row.justify-content-center(v-if="Errors.length")
           h6(v-for="error in Errors") {{ error }}
         .row.justify-content-center(v-if="!Errors.length && Success")

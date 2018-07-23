@@ -20,10 +20,14 @@ export default {
   mounted: function () {
     log('App Mounted')
     this.$store.dispatch('loading', false)
-    if (localStorage.getItem('token').length > 5) {
-      this.$store.dispatch('recipes/updateAllRecipes')
-      this.$store.dispatch('recipes/updateShoppingList')
-      this.$store.dispatch('recipes/updateIngredients')
+    if (localStorage.getItem('token')) {
+      if (localStorage.getItem('token').length > 5) {
+        this.$store.dispatch('recipes/updateAllRecipes')
+        this.$store.dispatch('recipes/updateShoppingList')
+        this.$store.dispatch('recipes/updateIngredients')
+      }
+    } else {
+      localStorage.setItem('token', '')
     }
   },
   computed: {
