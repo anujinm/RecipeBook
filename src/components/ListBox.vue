@@ -42,23 +42,19 @@ export default {
       'addToList'
     ]),
     clicked (index) {
-      console.log(this.bought)
       this.bought = true
-      console.log(this.bought)
       const ShList = _.cloneDeep(this.shoppingList)
       ShList.splice(index, 1)
       this.updateList(ShList)
     },
     addItem () {
-      // console.log('click')
-      const newItem = this.$refs.newitem.value
-      // console.log(newItem)
-      // if (newItem.length !== 0) {
-      //   this.addToList(newItem)
-      // }
-      this.addToList(newItem)
-      // document.location.reload(true)
-      this.clearText()
+      if (this.$refs.newitem) {
+        if (this.$refs.newitem.value !== '') {
+          const newItem = this.$refs.newitem.value
+          this.addToList(newItem)
+          this.clearText()
+        }
+      }
     },
     UpdateList () {
       const update = this.clicked()

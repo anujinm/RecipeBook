@@ -78,17 +78,18 @@ class UserController {
       })
   }
 
-  getAllUsers (req, res) {
-    res.setHeader('Content-Type', 'application/json')
-    Connector.query(`SELECT * FROM Users`)
-    .then(users => {
-      console.log('got the users')
-      res.send(users)
-    }).catch(error => {
-      console.log(error)
-      res.send({error: 'Error happened', status: 500})
-    })
-  }
+  // getUserName (req, res) {
+  //   res.setHeader('Content-Type', 'application/json')
+  //   const userID = req.body.data
+  //   console.log('id: ', req.body)
+  //   Connector.query(`SELECT name FROM Users WHERE id = ${userID}`)
+  //   .then(username => {
+  //     res.send(username)
+  //   }).catch(error => {
+  //     console.log(error)
+  //     res.send({error: 'Could not get username', status: 500})
+  //   })
+  // }
 }
 
 module.exports = new UserController()

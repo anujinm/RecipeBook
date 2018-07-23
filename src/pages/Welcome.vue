@@ -41,6 +41,7 @@ export default {
   },
   mounted: function () {
     log('Mounted')
+    this.setupListeners()
   },
   computed: {
     ...mapState('user', [
@@ -76,6 +77,14 @@ export default {
     redirect (bool) {
       if (bool) {
         window.location.href = 'dashboard'
+      }
+    },
+    setupListeners () {
+      window.addEventListener('keypress', this.onKeyPress.bind(this))
+    },
+    onKeyPress (event) {
+      if (event.code === 'Enter') {
+        this.LoginValidator()
       }
     }
   }

@@ -29,6 +29,14 @@ class Config {
   get allIngredientsURL () {
     return `${this.baseURL}/allingredients`
   }
+
+  get usersURL () {
+    return `${this.baseURL}/users`
+  }
+
+  get loginURL () {
+    return `${this.baseURL}/login`
+  }
 }
 
 export default new Config()

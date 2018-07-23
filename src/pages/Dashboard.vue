@@ -56,12 +56,13 @@ export default {
     getSystem (event) {
       const { value } = event.target
       this.mesSystem = value
-      console.log(this.mesSystem)
     },
     findRecipe () {
-      if (this.$refs.inputTitle.value !== '') {
-        this.searchClicked = true
-        this.findByTitle(this.$refs.inputTitle.value)
+      if (this.$refs.inputTitle) {
+        if (this.$refs.inputTitle.value !== '') {
+          this.searchClicked = true
+          this.findByTitle(this.$refs.inputTitle.value)
+        }
       }
     },
     setupListeners () {

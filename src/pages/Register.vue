@@ -12,7 +12,7 @@
           .col-4
             label Email: 
           .col-6 
-            input(ref="newUserEmail") 
+            input(ref="newUserEmail" type="password") 
         .password.row.justify-content-center
           .col-4
             label Password:
@@ -48,6 +48,7 @@ export default {
   },
   mounted: function () {
     log('Mounted')
+    this.setupListeners()
   },
   computed: {
     ...mapState('user', [
@@ -92,6 +93,14 @@ export default {
       if (!this.Errors.length) {
         this.validateUser(user)
         this.Success = true
+      }
+    },
+    setupListeners () {
+      window.addEventListener('keypress', this.onKeyPress.bind(this))
+    },
+    onKeyPress (event) {
+      if (event.code === 'Enter') {
+        this.RegisterUser()
       }
     }
   }

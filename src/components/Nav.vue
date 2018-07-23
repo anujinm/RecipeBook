@@ -1,5 +1,6 @@
 <template lang="pug">
   .nav
+    // h6(v-if="isLogedin") Welcome {{ getName() }}
     router-link(to="/dashboard" v-bind:class="{ isInactive: !isRoot }" v-if="isLogedin") My Recipes
     router-link(to="/shoppinglist" v-if="isLogedin") Shopping List
     router-link(to="/mykitchen" v-if="isLogedin") In My Kitchen
@@ -8,7 +9,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import debug from 'debug'
 let log = debug('component:Nav')
 export default {
@@ -37,24 +38,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions('user', [
+      'getUsername'
+    ]),
     logout () {
       console.log('logging out')
       localStorage.setItem('token', null)
       window.location.reload()
+    },
+    getName () {
+      if (this.isLogedin) {
+        const name = this.getUsername()
+        console.log(name)
+        return name
+      }
     }
-    // search () {
-
-    //   const list = []
-    //   const keys = Object.keys(recipesObj)
-    //   for (let i = 0; i < keys.length; i++) {
-    //     const key = keys[i]
-    //     const recipe = recipesObj[key]
-    //     recipe.ingredients.forEach((ingredient) => {
-    //       // if ingredient matches add recipe to list, otherwise dont do anything
-    //       break
-    //     })
-    //   }
-    // }
   },
   components: {
   }
@@ -71,6 +69,9 @@ export default {
     .searchbar { left: 28%; }
     i { left: 30%;}
   }
+}
+h6 {
+  color: white;
 }
 a {
   display: inline-block;

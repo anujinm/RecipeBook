@@ -4,6 +4,7 @@ import debug from 'debug'
 let log = debug('store:user')
 import axios from 'axios'
 import Vue from 'vue'
+import Config from '../config'
 import { isString } from 'util'
 // const passwordHash = require('password-hash')
 // import axios from 'axios'
@@ -17,12 +18,12 @@ const User = {
     }
   },
   mutations: {
-    UPDATE_ALL_USERS (state, {Users}) {
-      log('mutation UPDATE_ALL_USERS')
-      if (Users && Array.isArray(Users)) {
-        state.userObj = Users
-      }
-    },
+    // UPDATE_ALL_USERS (state, {Users}) {
+    //   log('mutation UPDATE_ALL_USERS')
+    //   if (Users && Array.isArray(Users)) {
+    //     state.userObj = Users
+    //   }
+    // },
     ADD_USER (state, { user }) {
       log('mutation ADD_USER', user, state.userObj)
       Vue.set(state.userObj, user.email, user)
@@ -34,12 +35,15 @@ const User = {
         localStorage.setItem('token', token.data)
         console.log('token: ', token.data)
       }
+    },
+    GET_USERNAME (state, { response }) {
+      log('mutation GET_USERNAME', response)
     }
   },
   getters: {},
   actions: {
     validateUser (context, { name, email, password }) {
-      axios.post('http://localhost:3001/users', {
+      axios.post(`${Config.usersURL}`, {
         name,
         email,
         password
@@ -54,7 +58,7 @@ const User = {
     },
     login (context, { username, password }) {
       return new Promise((resolve, reject) => {
-        axios.post('http://localhost:3001/login', {
+        axios.post(`${Config.loginURL}`, {
           username,
           password
         }).then((token) => {
@@ -63,6 +67,15 @@ const User = {
         }).catch(reject)
       })
     }
+    // getUsername ({commit}) {
+    //   console.log('calling')
+    //   const userid = this.state.userid
+    //   axios.get(`${Config.usersURL}`, {userid}).then(response => {
+    //     commit('GET_USERNAME', { response })
+    //   }).catch(error => {
+    //     console.log(error)
+    //   })
+    // }
   }
 }
 
