@@ -221,13 +221,13 @@ export default {
     white-space: normal;
     font-size: 15px;
     font-weight: 400;
-    margin-top: 12px;
+    margin-top: 9px;
     border: 1px solid $gray70; 
     border-radius: 5px;
     height: 25px;
     padding-top: 4px;
     &.amount{width: 35px; text-align: center;}
-    &.name {width: 135px; height: 72%; margin-left: 10px;
+    &.name {width: 135px; height: 74%; margin-left: 10px;
      padding-left: 5px;} 
     &.measurement { margin-left: 10px; width: 45px; height: 25px;padding-left: 10px;}
   }
