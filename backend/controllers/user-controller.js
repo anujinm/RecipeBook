@@ -1,6 +1,6 @@
 const Connector = require('../database/connector')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 class UserController {
   constructor () {
