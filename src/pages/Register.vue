@@ -157,6 +157,18 @@ export default {
   .login {
     margin-top: 70px;
   }
+  @media #{$mobile} {
+    .outerbox {
+      width: 300px;
+      height: 320px;
+      margin-left: -100px;
+    }
+    input { width: 150px;}
+    label {
+      font-size: 18px;
+      margin-left: -20px;
+    }
+  }
 }
 
 </style>

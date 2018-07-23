@@ -6,6 +6,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import Config from '../config'
 import { isString } from 'util'
+
 // const passwordHash = require('password-hash')
 // import axios from 'axios'
 // import Config from '../config'
@@ -14,6 +15,7 @@ const User = {
   namespaced: true,
   state: {
     token: '',
+    username: [],
     userObj: {
     }
   },
@@ -30,14 +32,15 @@ const User = {
     },
     LOGIN_USER (state, { token }) {
       log('mutation LOGIN_USER')
-      state.token = token.data
       if (isString(token.data)) {
+        state.token = token.data
         localStorage.setItem('token', token.data)
-        console.log('token: ', token.data)
       }
     },
     GET_USERNAME (state, { response }) {
-      log('mutation GET_USERNAME', response)
+      log('mutation GET_USERNAME', response.data[0].name)
+      state.username.push(response.data[0].name)
+      console.log(state.username)
     }
   },
   getters: {},
@@ -64,18 +67,23 @@ const User = {
         }).then((token) => {
           resolve(token)
           context.commit('LOGIN_USER', {token})
+          // context.commit('GET_USERNAME', {userID})
+          context.commit
         }).catch(reject)
       })
+    },
+    getUsername ({commit}) {
+      console.log('calling')
+      axios.get(`${Config.usersURL}`, {
+        headers: {
+          'Authorization': `${localStorage.getItem('token')}`
+        }
+      }).then(response => {
+        commit('GET_USERNAME', { response })
+      }).catch(error => {
+        console.log(error)
+      })
     }
-    // getUsername ({commit}) {
-    //   console.log('calling')
-    //   const userid = this.state.userid
-    //   axios.get(`${Config.usersURL}`, {userid}).then(response => {
-    //     commit('GET_USERNAME', { response })
-    //   }).catch(error => {
-    //     console.log(error)
-    //   })
-    // }
   }
 }
 

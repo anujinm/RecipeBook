@@ -91,7 +91,7 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 910px;
+  height: 920px;
   
   button {
     cursor: pointer;
@@ -197,6 +197,7 @@ export default {
       .add button{ margin-left: 0px;}
       .mesSystem {margin-left: 0px;}
     }
+    height: 1000px;
   }
 }
 </style>
