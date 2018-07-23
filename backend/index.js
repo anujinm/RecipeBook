@@ -36,7 +36,7 @@ app.get('/shoppinglist', RecipeController.getShoppingList)
 app.post('/shoppinglist', RecipeController.addItemToShoppingList)
 app.delete('/shoppinglist', RecipeController.deleteItemFromShoppingList)
 app.post('/users', UserController.checkAndRegisterUser)
-// app.get('/users', UserController.getUserName)
+app.get('/users', UserController.getUserName)
 app.post('/login', UserController.authenticateUser)
 // start app
 const port = 3001

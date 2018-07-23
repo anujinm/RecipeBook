@@ -50,7 +50,8 @@ export default {
   },
   methods: {
     ...mapActions('user', [
-      'login'
+      'login',
+      'getUsername'
     ]),
     LoginValidator () {
       this.Errors = []
@@ -70,6 +71,7 @@ export default {
         } else {
           this.Errors = []
           console.log(jwt.decode(response.data, { complete: true }).payload.id)
+          this.getUsername()
           this.redirect(true)
         }
       })

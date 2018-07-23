@@ -1,32 +1,34 @@
 <template lang="pug">
   .nav
-    // h6(v-if="isLogedin") Welcome {{ getName() }}
+    h6(v-if="isLogedin" v-for="name in username") Welcome, {{ name }}!
+    // h6(v-if="isLogedin") {{ uname }}
     router-link(to="/dashboard" v-bind:class="{ isInactive: !isRoot }" v-if="isLogedin") My Recipes
     router-link(to="/shoppinglist" v-if="isLogedin") Shopping List
     router-link(to="/mykitchen" v-if="isLogedin") In My Kitchen
     router-link(to="/welcome" v-if="!isLogedin") Home
-    router-link(to="/welcome" @click.native="logout" v-if="isLogedin") Logout
+    router-link.logout(to="/welcome" @click.native="logout" v-if="isLogedin") Logout
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import debug from 'debug'
 let log = debug('component:Nav')
 export default {
-  name: 'nav',
+  name: 'navigation',
   props: [],
   data () {
     return {
+      uname: this.getUsername()
     }
   },
   beforeCreate: function () {
   },
   mounted: function () {
-    log('Mounted', this.token)
+    log('Mounted')
   },
   computed: {
     ...mapState('user', [
-      'token'
+      'username'
     ]),
     isRoot () {
       return this.$store.state.route.path === '/dashboard'
@@ -44,12 +46,13 @@ export default {
     logout () {
       console.log('logging out')
       localStorage.setItem('token', null)
+      // this.getName()
       window.location.reload()
     },
     getName () {
       if (this.isLogedin) {
-        const name = this.getUsername()
-        console.log(name)
+        this.name = this.state.username
+        console.log('name: ', name)
         return name
       }
     }
@@ -71,7 +74,14 @@ export default {
   }
 }
 h6 {
-  color: white;
+  text-transform: uppercase;
+  padding: 10px;
+  font-family: 'Roboto', sans-serif;
+  color: rgb(248, 205, 140);
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: 8px;
 }
 a {
   display: inline-block;
@@ -81,6 +91,9 @@ a {
   color: $gray80;
   // text-shadow: 1px 1px 6px $gray50;
 }
+  .logout {
+    // color: red;
+  }
 
 .router-link-active {
   background: $black;
